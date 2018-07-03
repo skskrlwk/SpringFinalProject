@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==== #26. mapper 기본설정 ==== -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<!-- ==== #27. 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
+<mapper namespace="kim">
+
+	<resultMap type="HashMap" id="scheduleMap">
+		<result property="seq_schedule_detail"	column="seq_schedule_detail"	javaType="String" />
+		<result property="fk_seq_schedule"		column="fk_seq_schedule"		javaType="String" />
+		<result property="fk_category"			column="fk_category"			javaType="String" />
+		<result property="days"					column="days"					javaType="String" />
+	</resultMap>
+	
+	<select id="getScheduleList" resultMap="scheduleMap">
+		select seq_schedule_detail, fk_seq_schedule, fk_category, days
+		from tbl_schedule_detail
+		where fk_seq_schedule = 1
+	</select>
+
+</mapper>
