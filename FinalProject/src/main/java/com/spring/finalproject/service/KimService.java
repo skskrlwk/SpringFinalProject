@@ -12,7 +12,7 @@ import com.spring.finalproject.model.InterCategoryDAO;
 public class KimService implements InterKimService {
 
 	@Autowired
-	InterCategoryDAO dao;
+	private InterCategoryDAO dao;
 
 	@Override
 	public List<HashMap<String, String>> getScheduleList() {

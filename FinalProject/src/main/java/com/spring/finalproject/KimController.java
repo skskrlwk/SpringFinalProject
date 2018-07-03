@@ -23,7 +23,7 @@ public class KimController {
 	@RequestMapping(value="/index.action", method={RequestMethod.GET})  
 	public String index(HttpServletRequest req) {
 		
-		return "main/index.tiles";
+		return "index.tiles";
  
 	}
 	
@@ -34,7 +34,7 @@ public class KimController {
 		List<HashMap<String, String>> schedulelist = service.getScheduleList();
 		req.setAttribute("schedulelist", schedulelist);
 		
-		return "main/selectCategory.notiles";
+		return "category/selectCategory.tiles";
  
 	}
 

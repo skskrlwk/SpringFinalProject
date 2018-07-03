@@ -42,8 +42,8 @@
 	
 	<!-- ===== #17. mapper 파일 위치 지정하기 ===== -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
-		<property name="mapperLocations" value="classpath*:com/spring/gittest/mapper/*.xml" />
-		<property name="dataSource" ref="dataSource" />    
+		<property name="mapperLocations" value="classpath*:com/spring/finalproject/mapper/*.xml" />
+		<property name="dataSource" ref="dataSource" />
 	</bean>
 		
 	<!-- ===== #18. sqlSessionTemplate 의존 객체 설정하기 ===== -->	
