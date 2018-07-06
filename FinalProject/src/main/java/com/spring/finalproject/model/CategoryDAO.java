@@ -19,4 +19,28 @@ public class CategoryDAO implements InterCategoryDAO {
 		return schedulelist;
 	}
 
+	@Override
+	public List<HashMap<String, String>> getFoodlist(String country) {
+		List<HashMap<String, String>> foodlist = sqlsession.selectList("kim.getFoodlist", country);
+		return foodlist;
+	}
+
+	@Override
+	public List<HashMap<String, String>> getPlacelist(String country) {
+		List<HashMap<String, String>> placelist = sqlsession.selectList("kim.getPlacelist", country);
+		return placelist;
+	}
+
+	@Override
+	public List<HashMap<String, String>> getShoppinglist(String country) {
+		List<HashMap<String, String>> shoppinglist = sqlsession.selectList("kim.getShoppinglist", country);
+		return shoppinglist;
+	}
+
+	@Override
+	public List<HashMap<String, String>> getTourlist(String country) {
+		List<HashMap<String, String>> tourlist = sqlsession.selectList("kim.getTourlist", country);
+		return tourlist;
+	}
+
 }

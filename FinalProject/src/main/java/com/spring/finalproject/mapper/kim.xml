@@ -11,12 +11,73 @@
 		<result property="fk_seq_schedule"		column="fk_seq_schedule"		javaType="String" />
 		<result property="fk_category"			column="fk_category"			javaType="String" />
 		<result property="days"					column="days"					javaType="String" />
+		<result property="countryname"			column="countryname"			javaType="String" />
 	</resultMap>
 	
 	<select id="getScheduleList" resultMap="scheduleMap">
-		select seq_schedule_detail, fk_seq_schedule, fk_category, days
-		from tbl_schedule_detail
+		select A.seq_schedule_detail, A.fk_seq_schedule, A.fk_category, A.days, B.name as countryname
+		from tbl_schedule_detail A join tbl_world B
+		on A.fk_category = B.category
 		where fk_seq_schedule = 1
+	</select>
+	
+	<resultMap type="HashMap" id="foodMap">
+		<result property="seq_food"		column="seq_food"		javaType="String" />
+		<result property="fk_category"	column="fk_category"	javaType="String" />
+		<result property="name"			column="name"			javaType="String" />
+		<result property="image"		column="image"			javaType="String" />
+		<result property="comments"		column="comments"		javaType="String" />
+	</resultMap>
+	
+	<select id="getFoodlist" parameterType="String" resultMap="foodMap">
+		select seq_food, fk_category, name, image, comments
+		from tbl_food
+		where fk_category = #{country}
+	</select>
+	
+	<resultMap type="HashMap" id="placeMap">
+		<result property="seq_tourlist"	column="seq_tourlist"	javaType="String" />
+		<result property="fk_category"	column="fk_category"	javaType="String" />
+		<result property="name"			column="name"			javaType="String" />
+		<result property="image"		column="image"			javaType="String" />
+		<result property="comments"		column="comments"		javaType="String" />
+	</resultMap>
+	
+	<select id="getPlacelist" parameterType="String" resultMap="placeMap">
+		select seq_tourlist, fk_category, name, image, comments
+		from tbl_tourlist
+		where fk_category = #{country}
+	</select>
+	
+	<resultMap type="HashMap" id="shoppingMap">
+		<result property="seq_shop"		column="seq_shop"		javaType="String" />
+		<result property="fk_category"	column="fk_category"	javaType="String" />
+		<result property="name"			column="name"			javaType="String" />
+		<result property="image"		column="image"			javaType="String" />
+		<result property="comments"		column="comments"		javaType="String" />
+		<result property="addr"			column="addr"			javaType="String" />
+		<result property="worktime"		column="worktime"		javaType="String" />
+	</resultMap>
+	
+	<select id="getShoppinglist" parameterType="String" resultMap="shoppingMap">
+		select seq_shop, fk_category, name, image, comments, addr, worktime
+		from tbl_shop
+		where fk_category = #{country}
+	</select>
+	
+	<resultMap type="HashMap" id="tourMap">
+		<result property="seq_tour"		column="seq_tour"		javaType="String" />
+		<result property="fk_category"	column="fk_category"	javaType="String" />
+		<result property="name"			column="name"			javaType="String" />
+		<result property="image"		column="image"			javaType="String" />
+		<result property="price"		column="price"			javaType="String" />
+		<result property="addr"			column="addr"			javaType="String" />
+	</resultMap>
+	
+	<select id="getTourlist" parameterType="String" resultMap="tourMap">
+		select seq_tour, fk_category, name, image, price, addr
+		from tbl_tour
+		where fk_category = #{country}
 	</select>
 
 </mapper>
