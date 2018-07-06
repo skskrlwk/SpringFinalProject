@@ -25,8 +25,9 @@
 				
 				$.each(json, function(entryIndex, entry){
 					html += "<div align='center' style='display: inline-block; margin-right: 2%;'>";
-					html += "<img id='food"+entryIndex+"' src='/finalproject/resources/img/"+entry.image+"' width='150' height='200'><br/>";
-					html += "<label for='food"+entryIndex+"'>"+entry.name+"</label>";
+					html += "<input type='checkbox' id='chk_food"+entryIndex+"' name='chk_food' value='"+entry.seq_food+"'>";
+					html += "<label for='chk_food"+entryIndex+"'><img id='food"+entryIndex+"' src='/finalproject/resources/img/"+entry.image+"' width='150' height='200'></label><br/>";
+					html += "<label for='chk_food"+entryIndex+"'>"+entry.name+"</label>";
 					html += "</div>";
 				});
 				
@@ -51,8 +52,9 @@
 				
 				$.each(json, function(entryIndex, entry){
 					html += "<div align='center' style='display: inline-block; margin-right: 2%;'>";
-					html += "<img id='place"+entryIndex+"' src='/finalproject/resources/img/"+entry.image+"' width='150' height='200'><br/>";
-					html += "<label for='place"+entryIndex+"'>"+entry.name+"</label>";
+					html += "<input type='checkbox' id='chk_tourlist"+entryIndex+"' name='chk_tourlist' value='"+entry.seq_tourlist+"'>";
+					html += "<label for='chk_place"+entryIndex+"'><img id='place"+entryIndex+"' src='/finalproject/resources/img/"+entry.image+"' width='150' height='200'></label><br/>";
+					html += "<label for='chk_place"+entryIndex+"'>"+entry.name+"</label>";
 					html += "</div>";
 				});
 				
@@ -77,8 +79,9 @@
 				
 				$.each(json, function(entryIndex, entry){
 					html += "<div align='center' style='display: inline-block; margin-right: 2%;'>";
-					html += "<img id='shopping"+entryIndex+"' src='/finalproject/resources/img/"+entry.image+"' width='150' height='200'><br/>";
-					html += "<label for='shopping"+entryIndex+"'>"+entry.name+"</label>";
+					html += "<input type='checkbox' id='chk_shop"+entryIndex+"' name='chk_shop' value='"+entry.seq_shop+"'>";
+					html += "<label for='chk_shopping"+entryIndex+"'><img id='shopping"+entryIndex+"' src='/finalproject/resources/img/"+entry.image+"' width='150' height='200'></label><br/>";
+					html += "<label for='chk_shopping"+entryIndex+"'>"+entry.name+"</label>";
 					html += "</div>";
 				});
 				
@@ -103,8 +106,9 @@
 				
 				$.each(json, function(entryIndex, entry){
 					html += "<div align='center' style='display: inline-block; margin-right: 2%;'>";
-					html += "<img id='tour"+entryIndex+"' src='/finalproject/resources/img/"+entry.image+"' width='150' height='200'><br/>";
-					html += "<label for='tour"+entryIndex+"'>"+entry.name+"</label>";
+					html += "<input type='checkbox' id='chk_tour"+entryIndex+"' name='chk_tour' value='"+entry.seq_tour+"'>";
+					html += "<label for='chk_tour"+entryIndex+"'><img id='tour"+entryIndex+"' src='/finalproject/resources/img/"+entry.image+"' width='150' height='200'></label><br/>";
+					html += "<label for='chk_tour"+entryIndex+"'>"+entry.name+"</label>";
 					html += "</div>";
 				});
 				
@@ -116,6 +120,45 @@
 				alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
 			}
 		});
+		
+	}
+	
+	function goSubmit() {
+		
+		var food = "";
+		var place = "";
+		var shopping = "";
+		var tour = "";
+		
+		$('input:checkbox[name=chk_food]').each(function() {
+			if($(this).is(':checked'))
+			food += "," + ($(this).val());
+		});
+		
+		$('input:checkbox[name=chk_place]').each(function() {
+			if($(this).is(':checked'))
+			place += "," + ($(this).val());
+		});
+		
+		$('input:checkbox[name=chk_shopping]').each(function() {
+			if($(this).is(':checked'))
+			shopping += "," + ($(this).val());
+		});
+		
+		$('input:checkbox[name=chk_tour]').each(function() {
+			if($(this).is(':checked'))
+			tour += "," + ($(this).val());
+		});
+		
+		$("#foodtxt").val(food.substring(1));
+		$("#placetxt").val(place.substring(1));
+		$("#shoppingtxt").val(shopping.substring(1));
+		$("#tourtxt").val(tour.substring(1));
+		
+		var frm = document.writeFrm;
+		frm.action = "temp.action";
+		frm.method = "post";
+		frm.submit();
 		
 	}
 
@@ -145,8 +188,8 @@
 							<div id="div_tourlist"></div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn-info">확인</button>&nbsp;&nbsp;&nbsp;
-							<button type="button" class="btn-danger">취소</button>
+							<button type="button" class="btn-info" onClick="goSubmit();">확인</button>&nbsp;&nbsp;&nbsp;
+							<button type="button" class="btn-danger close" data-dismiss="modal">취소</button>
 						</div>
 					</div>
 				</div>
@@ -155,6 +198,13 @@
 			<hr/>
 			
 		</c:forEach>
+		
+		<form name="selectedFrm">
+			<input type="text" id="foodtxt" />
+			<input type="text" id="placetxt" />
+			<input type="text" id="shoppingtxt" />
+			<input type="text" id="tourtxt" />
+		</form>
 		
 	</div>
 	
