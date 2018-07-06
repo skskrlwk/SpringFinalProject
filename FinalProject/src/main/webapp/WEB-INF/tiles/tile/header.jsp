@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +15,6 @@
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/plugins/OwlCarousel2-2.2.1/animate.css">
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/styles/responsive.css">
-<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/styles/login_styles.css">
 </head>
 
 <body>
@@ -44,19 +42,8 @@
 							</ul>
 						</div>
 						<div class="user_box ml-auto">
-							<c:if test="${sessionScope.loginuser == null}">
-								<div class="user_box_login user_box_link"><a href="<%=request.getContextPath()%>/login.action">Login</a></div>
-								<div class="user_box_register user_box_link"><a href="<%=request.getContextPath()%>/register.action">register</a></div>
-							</c:if>
-							
-							<c:if test="${sessionScope.loginuser != null}">
-								<div>
-									<div class="user_box_myplan user_box_link"><a href="<%=request.getContextPath()%>/myInfoEdit.action">${sessionScope.loginuser.name} 님 환영합니다.</a></div>
-									<div class="user_box_myplan user_box_link"><a href="<%=request.getContextPath()%>/myPlan.action">myPlan</a></div>
-									<div class="user_box_edit user_box_link"><a href="<%=request.getContextPath()%>/myInfoEdit.action">Edit</a></div>
-									<div class="user_box_logout user_box_link"><a href="<%=request.getContextPath()%>/logout.action">LogOut</a></div>
-								</div>
-							</c:if>
+							<div class="user_box_login user_box_link"><a href="#">Login</a></div>
+							<div class="user_box_register user_box_link"><a href="#">register</a></div>
 						</div>
 					</div>
 				</div>
@@ -77,7 +64,7 @@
 								<li class="main_nav_item"><a href="#">Home</a></li>
 								<li class="main_nav_item"><a href="#">플래너 만들기</a></li>
 								<li class="main_nav_item"><a href="#">추천플래너</a></li>
-								<li class="main_nav_item"><a href="<%= request.getContextPath() %>/boardlist.action">게시판</a></li>
+								<li class="main_nav_item"><a href="#">게시판</a></li>
 							</ul>
 						</div>
 						<div class="content_search ml-lg-0 ml-auto">
@@ -121,7 +108,7 @@
 	<div class="menu trans_500">
 		<div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
 			<div class="menu_close_container"><div class="menu_close"></div></div>
-			<div class="logo menu_logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
+			<div class="logo menu_logo"><a href="#"><img src="<%= request.getContextPath() %>/resources/images/logo.png" alt=""></a></div>
 			<ul>
 				<li class="menu_item"><a href="#">home</a></li>
 				<li class="menu_item"><a href="about.html">플래너</a></li>
