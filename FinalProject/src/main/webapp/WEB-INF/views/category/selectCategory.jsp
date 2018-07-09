@@ -42,6 +42,7 @@
 			success: function(json) {
 				
 				if($("#div_foodlist").is(':empty')) {
+					
 					var html = "<h4>음식</h4><hr/>";
 					var html2 = "";
 					
@@ -57,6 +58,7 @@
 					
 					$("#div_foodlist").append(html);
 					$("#div_foodoverlay").append(html2);
+					
 				}
 				
 			},
@@ -73,6 +75,7 @@
 			success: function(json) {
 				
 				if($("#div_placelist").is(':empty')) {
+					
 					var html = "<h4>명소</h4><hr/>";
 					var html2 = "";
 					
@@ -88,7 +91,9 @@
 					
 					$("#div_placelist").append(html);
 					$("#div_placeoverlay").append(html2);
+					
 				}
+				
 			},
 			error: function(request, status, error){
 				alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
@@ -103,6 +108,7 @@
 			success: function(json) {
 				
 				if($("#div_shoppinglist").is(':empty')) {
+					
 					var html = "<h4>쇼핑</h4><hr/>";
 					var html2 = "";
 					
@@ -118,7 +124,9 @@
 					
 					$("#div_shoppinglist").append(html);
 					$("#div_shoppingoverlay").append(html2);
+					
 				}
+				
 			},
 			error: function(request, status, error){
 				alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
@@ -133,6 +141,7 @@
 			success: function(json) {
 				
 				if($("#div_tourlist").is(':empty')) {
+					
 					var html = "<h4>투어</h4><hr/>";
 					var html2 = "";
 					
@@ -148,7 +157,9 @@
 					
 					$("#div_tourlist").append(html);
 					$("#div_touroverlay").append(html2);
+					
 				}
+				
 			},
 			error: function(request, status, error){
 				alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
