@@ -15,22 +15,13 @@
 </style>
 
 <script>
-
-	$(document).ready(function() {
-		
-		$("#div_foodoverlay").hide();
-		$("#div_placeoverlay").hide();
-		$("#div_shoppingoverlay").hide();
-		$("#div_touroverlay").hide();
-		
-	});
 	
-	function getCategory(country, countryname) {
+	function getCategory(country, countryname, index) {
 		
-		$("#div_title").empty();
+		$("#div_title" + index).empty();
 		
 		var html_title = "<h4 class='modal-title'>" + countryname + "에서 경험해보자!</h4>";
-		$("#div_title").append(html_title);
+		$("#div_title" + index).append(html_title);
 		
 		var data_form = {country : country};
 		
@@ -41,26 +32,26 @@
 			dataType: "JSON",
 			success: function(json) {
 				
-				if($("#div_foodlist").is(':empty')) {
+				if($("#foodtxt" + index).val() == "") {
 					
 					var html = "<h4>음식</h4><hr/>";
 					var html2 = "";
 					
 					$.each(json, function(entryIndex, entry){
 						html += "<div align='center' style='width: 165px; display: inline-block; margin-right: 2%;'>";
-						html += "<input type='checkbox' id='chk_food"+entryIndex+"' name='chk_food' value='"+entry.seq_food+"' onClick='chkOnOff_food("+entryIndex+");'>";
-						html += "<label for='chk_food"+entryIndex+"'><img id='foodimg"+entryIndex+"' class='foodimg' src='/finalproject/resources/img/"+entry.image+"' width='150' height='200'></label><br/>";
-						html += "<label for='chk_food"+entryIndex+"'>"+entry.name+"</label>";
+						html += "<input type='checkbox' id='chk_food"+index+entryIndex+"' name='chk_food"+index+"' value='"+entry.seq_food+"' onClick='chkOnOff_food("+index+", "+entryIndex+");'>";
+						html += "<label for='chk_food"+index+entryIndex+"'><img id='foodimg"+index+entryIndex+"' class='foodimg' src='/finalproject/resources/img/"+entry.image+"' width='150' height='200'></label><br/>";
+						html += "<label for='chk_food"+index+entryIndex+"'>"+entry.name+"</label>";
 						html += "</div>";
 						
-						html2 += "<img id='overlay"+entryIndex+"' class='overlay' src='/finalproject/resources/img/img_checkbox.png' width='100' height='100' />";
+						html2 += "<img id='overlay"+index+entryIndex+"' class='overlay' src='/finalproject/resources/img/img_checkbox.png' width='100' height='100' />";
 					});
 					
-					$("#div_foodlist").append(html);
-					$("#div_foodoverlay").append(html2);
-					
+					$("#div_foodlist" + index).html(html);
+					$("#div_foodoverlay" + index).html(html2);
+
 				}
-				
+					
 			},
 			error: function(request, status, error){
 				alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
@@ -74,23 +65,23 @@
 			dataType: "JSON",
 			success: function(json) {
 				
-				if($("#div_placelist").is(':empty')) {
+				if($("#foodtxt" + index).val() == "") {
 					
 					var html = "<h4>명소</h4><hr/>";
 					var html2 = "";
 					
 					$.each(json, function(entryIndex, entry){
 						html += "<div align='center' style='width: 165px; display: inline-block; margin-right: 2%;'>";
-						html += "<input type='checkbox' id='chk_place"+entryIndex+"' name='chk_place' value='"+entry.seq_tourlist+"' onClick='chkOnOff_place("+entryIndex+");'>";
-						html += "<label for='chk_place"+entryIndex+"'><img id='placeimg"+entryIndex+"' class='placeimg' src='/finalproject/resources/img/"+entry.image+"' width='150' height='200'></label><br/>";
-						html += "<label for='chk_place"+entryIndex+"'>"+entry.name+"</label>";
+						html += "<input type='checkbox' id='chk_place"+index+entryIndex+"' name='chk_place"+index+"' value='"+entry.seq_tourlist+"' onClick='chkOnOff_place("+index+", "+entryIndex+");'>";
+						html += "<label for='chk_place"+index+entryIndex+"'><img id='placeimg"+index+entryIndex+"' class='placeimg' src='/finalproject/resources/img/"+entry.image+"' width='150' height='200'></label><br/>";
+						html += "<label for='chk_place"+index+entryIndex+"'>"+index+entry.name+"</label>";
 						html += "</div>";
 	
 						html2 += "<img id='overlay"+entryIndex+"' class='overlay' src='/finalproject/resources/img/img_checkbox.png' width='100' height='100' />";
 					});
 					
-					$("#div_placelist").append(html);
-					$("#div_placeoverlay").append(html2);
+					$("#div_placelist").html(html);
+					$("#div_placeoverlay").html(html2);
 					
 				}
 				
@@ -107,23 +98,23 @@
 			dataType: "JSON",
 			success: function(json) {
 				
-				if($("#div_shoppinglist").is(':empty')) {
+				if($("#foodtxt" + index).val() == "") {
 					
 					var html = "<h4>쇼핑</h4><hr/>";
 					var html2 = "";
 					
 					$.each(json, function(entryIndex, entry){
 						html += "<div align='center' style='width: 165px; display: inline-block; margin-right: 2%;'>";
-						html += "<input type='checkbox' id='chk_shopping"+entryIndex+"' name='chk_shopping' value='"+entry.seq_shop+"' onClick='chkOnOff_shopping("+entryIndex+");'>";
-						html += "<label for='chk_shopping"+entryIndex+"'><img id='shoppingimg"+entryIndex+"' class='shoppingimg' src='/finalproject/resources/img/"+entry.image+"' width='150' height='200'></label><br/>";
-						html += "<label for='chk_shopping"+entryIndex+"'>"+entry.name+"</label>";
+						html += "<input type='checkbox' id='chk_shopping"+index+entryIndex+"' name='chk_shopping"+index+"' value='"+entry.seq_shop+"' onClick='chkOnOff_shopping("+index+", "+entryIndex+");'>";
+						html += "<label for='chk_shopping"+index+entryIndex+"'><img id='shoppingimg"+index+entryIndex+"' class='shoppingimg' src='/finalproject/resources/img/"+entry.image+"' width='150' height='200'></label><br/>";
+						html += "<label for='chk_shopping"+index+entryIndex+"'>"+index+entry.name+"</label>";
 						html += "</div>";
 	
 						html2 += "<img id='overlay"+entryIndex+"' class='overlay' src='/finalproject/resources/img/img_checkbox.png' width='100' height='100' />";
 					});
 					
-					$("#div_shoppinglist").append(html);
-					$("#div_shoppingoverlay").append(html2);
+					$("#div_shoppinglist").html(html);
+					$("#div_shoppingoverlay").html(html2);
 					
 				}
 				
@@ -140,23 +131,23 @@
 			dataType: "JSON",
 			success: function(json) {
 				
-				if($("#div_tourlist").is(':empty')) {
+				if($("#foodtxt" + index).val() == "") {
 					
 					var html = "<h4>투어</h4><hr/>";
 					var html2 = "";
 					
 					$.each(json, function(entryIndex, entry){
 						html += "<div align='center' style='width: 165px; display: inline-block; margin-right: 2%;'>";
-						html += "<input type='checkbox' id='chk_tour"+entryIndex+"' name='chk_tour' value='"+entry.seq_tour+"' onClick='chkOnOff_tour("+entryIndex+");'>";
-						html += "<label for='chk_tour"+entryIndex+"'><img id='tourimg"+entryIndex+"' class='tourimg' src='/finalproject/resources/img/"+entry.image+"' width='150' height='200'></label><br/>";
-						html += "<label for='chk_tour"+entryIndex+"'>"+entry.name+"</label>";
+						html += "<input type='checkbox' id='chk_tour"+index+entryIndex+"' name='chk_tour' value='"+entry.seq_tour+"' onClick='chkOnOff_tour("+index+", "+entryIndex+");'>";
+						html += "<label for='chk_tour"+index+entryIndex+"'><img id='tourimg"+entryIndex+"' class='tourimg' src='/finalproject/resources/img/"+entry.image+"' width='150' height='200'></label><br/>";
+						html += "<label for='chk_tour"+index+entryIndex+"'>"+index+entry.name+"</label>";
 						html += "</div>";
 	
 						html2 += "<img id='overlay"+entryIndex+"' class='overlay' src='/finalproject/resources/img/img_checkbox.png' width='100' height='100' />";
 					});
 					
-					$("#div_tourlist").append(html);
-					$("#div_touroverlay").append(html2);
+					$("#div_tourlist").html(html);
+					$("#div_tour").html(html2);
 					
 				}
 				
@@ -168,94 +159,91 @@
 		
 	}
 	
-	function goSubmit() {
+	function goSubmit(index) {
 		
 		var food = "";
 		var place = "";
 		var shopping = "";
 		var tour = "";
 		
-		$('input:checkbox[name=chk_food]').each(function() {
+		$('input:checkbox[name=chk_food'+index+']').each(function() {
 			if($(this).is(':checked'))
 			food += "," + ($(this).val());
 		});
 		
-		$('input:checkbox[name=chk_place]').each(function() {
+		$('input:checkbox[name=chk_place'+index+']').each(function() {
 			if($(this).is(':checked'))
 			place += "," + ($(this).val());
-		});
 		
-		$('input:checkbox[name=chk_shopping]').each(function() {
+		$('input:checkbox[name=chk_shopping'+index+']').each(function() {
 			if($(this).is(':checked'))
 			shopping += "," + ($(this).val());
 		});
 		
-		$('input:checkbox[name=chk_tour]').each(function() {
+		$('input:checkbox[name=chk_tour'+index+']').each(function() {
 			if($(this).is(':checked'))
 			tour += "," + ($(this).val());
 		});
 		
-		$("#foodtxt").val(food.substring(1));
-		$("#placetxt").val(place.substring(1));
-		$("#shoppingtxt").val(shopping.substring(1));
-		$("#tourtxt").val(tour.substring(1));
-		
-		$("#close").click();
+		$("#foodtxt" + index).val(food.substring(1));
+		$("#placetxt" + index).val(place.substring(1));
+		$("#shoppingtxt" + index).val(shopping.substring(1));
+		$("#tourtxt" + index).val(tour.substring(1));
 		
 	}
 	
-	function chkOnOff_food(chkbox) {
+	function chkOnOff_food(index, chkbox) {
 		
-		if($("#chk_food" + chkbox).prop("checked")) {
-			$("#foodimg" + chkbox).before($("#overlay" + chkbox));
-			$(".overlay" + chkbox).show();
+		if($("#chk_food" + index + chkbox).prop("checked")) {
+			$("#foodimg" + index + chkbox).before($("#overlay" + index + chkbox));
+			$("#overlay" + index + chkbox).show();
 		}
 		
 		else {
-			$("#foodimg" + chkbox).after($("#overlay" + chkbox));
-			$(".overlay" + chkbox).hide();
-		}
-		
-	}
-	
-	function chkOnOff_place(chkbox) {
-		
-		if($("#chk_place" + chkbox).prop("checked")) {
-			$("#placeimg" + chkbox).before($("#overlay" + chkbox));
-			$(".overlay" + chkbox).show();
-		}
-		
-		else {
-			$("#placeimg" + chkbox).after($("#overlay" + chkbox));
-			$(".overlay" + chkbox).hide();
+			$("#foodimg" + index + chkbox).after($("#overlay" + index + chkbox));
+			$("#overlay" + index + chkbox).hide();
 		}
 		
 	}
 	
-	function chkOnOff_shopping(chkbox) {
+	function chkOnOff_place(index, chkbox) {
 		
-		if($("#chk_shopping" + chkbox).prop("checked")) {
-			$("#shoppingimg" + chkbox).before($("#overlay" + chkbox));
-			$(".overlay" + chkbox).show();
+		if($("#chk_place" + index + chkbox).prop("checked")) {
+			$("#placeimg" + index + chkbox).before($("#overlay" + index + chkbox));
+			$("#overlay" + index + chkbox).show();
 		}
 		
 		else {
-			$("#shoppingimg" + chkbox).after($("#overlay" + chkbox));
-			$(".overlay" + chkbox).hide();
+			$("#placeimg" + index + chkbox).after($("#overlay" + index + chkbox));
+			$("#overlay" + index + chkbox).hide();
 		}
 		
 	}
 	
-	function chkOnOff_tour(chkbox) {
+	function chkOnOff_shopping(index, chkbox) {
 		
-		if($("#chk_tour" + chkbox).prop("checked")) {
-			$("#tourimg" + chkbox).before($("#overlay" + chkbox));
-			$(".overlay" + chkbox).show();
+		if($("#chk_shopping" + index + chkbox).prop("checked")) {
+			$("#shoppingimg" + index + chkbox).before($("#overlay" + index + chkbox));
+			$("#overlay" + index + chkbox).show();
 		}
 		
 		else {
-			$("#tourimg" + chkbox).after($("#overlay" + chkbox));
-			$(".overlay" + chkbox).hide();
+			$("#shoppingimg" + index + chkbox).after($("#overlay" + index + chkbox));
+			$("#overlay" + index + chkbox).hide();
+		}
+		
+	}
+	
+	function chkOnOff_tour(index, chkbox) {
+		
+		if($("#chk_tour" + index + chkbox).prop("checked")) {
+			$("#tourimg" + index + chkbox).before($("#overlay" + index + chkbox));
+			$("#overlay" + index + chkbox).show();
+		}
+		
+		else {
+			$("#tourimg" + index + chkbox).after($("#overlay" + index + chkbox));
+			$("#overlay" + index + chkbox).hide();
 		}
 		
 	}
@@ -269,37 +257,36 @@
 		<c:forEach var="schedule" items="${schedulelist}" varStatus="status">
 			
 			DAYS&nbsp;:&nbsp;<input type="number" value="${schedule.days}" />일&nbsp;&nbsp;
-			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#categorylistModal" onclick="getCategory(${schedule.fk_category}, '${schedule.countryname}');">${schedule.countryname}</button>
+			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#categorylistModal${status.index}" onclick="getCategory(${schedule.fk_category}, '${schedule.countryname}', ${status.index});">${schedule.countryname}</button>
 			
 			<!-- Modal -->
-			<div class="modal fade" id="categorylistModal" role="dialog">
+			<div class="modal fade" id="categorylistModal${status.index}" role="dialog">
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content" style="overflow-x: auto; overflow-y: hidden;">
 						<div class="modal-header">
-							<div id="div_title"></div>
-							<button type="button" class="close" data-dismiss="modal" onClick="goSubmit();">&times;</button>
+							<div id="div_title${status.index}"></div>
+							<button type="button" class="close" data-dismiss="modal" onClick="goSubmit(${status.index});">&times;</button>
 						</div>
 						<div class="modal-body">
-							<div id="div_placelist" style="overflow-x: auto; white-space: nowrap;"></div><hr/><br/>
-							<div id="div_foodlist" style="overflow-x: auto; white-space: nowrap;"></div><hr/><br/>
-							<div id="div_shoppinglist" style="overflow-x: auto; white-space: nowrap;"></div><hr/><br/>
-							<div id="div_tourlist" style="overflow-x: auto; white-space: nowrap;"></div>
+							<div id="div_placelist${status.index}" style="overflow-x: auto; white-space: nowrap;"></div><hr/><br/>
+							<div id="div_foodlist${status.index}" style="overflow-x: auto; white-space: nowrap;"></div><hr/><br/>
+							<div id="div_shoppinglist${status.index}" style="overflow-x: auto; white-space: nowrap;"></div><hr/><br/>
+							<div id="div_tourlist${status.index}" style="overflow-x: auto; white-space: nowrap;"></div>
 						</div>
-						<div class="modal-footer">
-							<div id="div_foodoverlay" /></div>
-							<div id="div_placeoverlay" /></div>
-							<div id="div_shoppingoverlay" /></div>
-							<div id="div_touroverlay" /></div>
-						</div>
+						
+						<div id="div_foodoverlay${status.index}" /></div>
+						<div id="div_placeoverlay${status.index}" /></div>
+						<div id="div_shoppingoverlay${status.index}" /></div>
+						<div id="div_touroverlay${status.index}" /></div>
 					</div>
 				</div>
 			</div>
 			
 			<div id="selectedData">
-				<input type="text" id="foodtxt" />
-				<input type="text" id="placetxt" />
-				<input type="text" id="shoppingtxt" />
-				<input type="text" id="tourtxt" />
+				<input type="text" id="foodtxt${status.index}" />
+				<input type="text" id="placetxt${status.index}" />
+				<input type="text" id="shoppingtxt${status.index}" />
+				<input type="text" id="tourtxt${status.index}" />
 			</div>
 
 			<hr/>
@@ -315,4 +302,3 @@
 	</div>
 	
 </div>
-

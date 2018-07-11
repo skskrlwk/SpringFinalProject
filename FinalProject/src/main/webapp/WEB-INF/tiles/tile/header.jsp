@@ -15,6 +15,14 @@
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/plugins/OwlCarousel2-2.2.1/animate.css">
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/styles/responsive.css">
+
+<script src="<%= request.getContextPath() %>/resources/js/jquery-3.2.1.min.js"></script>
+<script src="<%= request.getContextPath() %>/resources/styles/bootstrap4/popper.js"></script>
+<script src="<%= request.getContextPath() %>/resources/styles/bootstrap4/bootstrap.min.js"></script>
+<script src="<%= request.getContextPath() %>/resources/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="<%= request.getContextPath() %>/resources/plugins/easing/easing.js"></script>
+<script src="<%= request.getContextPath() %>/resources/js/custom.js"></script>
+
 </head>
 
 <body>
