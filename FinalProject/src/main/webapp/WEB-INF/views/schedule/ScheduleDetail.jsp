@@ -589,16 +589,17 @@
 	
 <!-- 전체 -->
 <div align="center">
+<div class="home_slider_background" style="background-image:url(<%= request.getContextPath() %>/resources/images/ScheduleDetail.jpg)"></div>
 	<div style="display: inline-block;">
 
 		<!-- 지도 -->
-		<div id="googleMap" style="border: 0px solid red; margin-bottom:20px; margin-top:200px;  width: 550px; height: 550px; float: left;">
+		<div id="googleMap" style="border-radius: 6px; border: 0px solid red; margin-bottom:20px; margin-top:200px;  width: 600px; height: 600px; float: left; ">
 		
 		
 		
 		</div>
 		<!-- 캘린더 -->
-		<div style="border: 0px solid red; margin-bottom:20px; margin-top:200px; margin-left:20px;  width: 550px; height: 550px;float: left; ">
+		<div style="border-radius: 6px; background-color: white; border: 0px solid red; margin-bottom:20px; margin-top:200px; margin-left:20px;  width: 600px; height: 600px;float: left; ">
 			<div id='calendar' style='margin: 3em 0; font-size: 13px;' ></div>
 		
 		</div>
@@ -611,7 +612,7 @@
 
 
 
-	<div id="bucketList" class="tabcontent"  align="left" style="width:70%; border: 1px solid #e5e5e5; padding-top: 20px; padding-left: 10px; padding-right: 10px; padding-bottom: 20px;">
+	<div id="bucketList" class="tabcontent"  align="left" style="background-color: white; width:70%; border: 1px solid #e5e5e5; padding-top: 20px; padding-left: 10px; padding-right: 10px; padding-bottom: 20px;">
 		<!-- 명소 -->				
 		<span style="font-size: 14pt; font-weight: bold; color: black; text-align: left; margin-left: 20px;">명소</span><br/>	
 		<c:if test="${show_tourList != null}">
@@ -704,7 +705,7 @@
  
 	
 	<!-- 일정표 	-->
-	<div id="scheduler" class="tabcontent" align="left" style="width:70%; border: 1px solid #e5e5e5; padding-top: 20px; padding-left: 10px; padding-right: 10px; padding-bottom: 20px;">
+	<div id="scheduler" class="tabcontent" align="left" style="background-color: white; width:70%; border: 1px solid #e5e5e5; padding-top: 20px; padding-left: 10px; padding-right: 10px; padding-bottom: 20px;">
 		<!-- 일정표 1 -->				
 		<div id="scheduler1" style="width: 90%; display: inline-block; margin-left: 50px; margin-right: 25px;">
 			<table class="table table-bordered">
