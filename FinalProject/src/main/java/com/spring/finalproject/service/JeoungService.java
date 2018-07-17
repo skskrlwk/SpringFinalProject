@@ -1,6 +1,7 @@
 package com.spring.finalproject.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -123,14 +124,15 @@ public class JeoungService implements InterJeoungService {
 	@Override
 	public int del(String seq_board) {
 		int result1=0, result2=0, n=0;
-		String[] listArr = null;
-		List<String> list = new ArrayList<String>();
+		List<String> list = null;
+	
+		list = null;
 		
 		do {
 			
-			if(list != null || !list.isEmpty()) {
+			if(list != null) {
 				
-				listArr = list.toArray(new String[list.size()]);
+				String[] listArr = list.toArray(new String[list.size()]);
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("listArr", listArr);
 				boolean bool = false;
@@ -146,7 +148,9 @@ public class JeoungService implements InterJeoungService {
 						n = 1;
 				
 				list = dao.fk_seq2(map); // List<String>
-				
+				if(list == null || list.isEmpty()) {
+					break;
+				}
 			}else {
 				boolean bool = false;
 				
@@ -163,19 +167,13 @@ public class JeoungService implements InterJeoungService {
 						n = 1;
 				
 				list = dao.fk_seq(seq_board); // List<String>
-			}
-									
-			
-			
-			/*if(list!=null) {
-				for(int i = 0; i<list.size();i++) {
-					if(i==0) {
-						seq_board = list.get(i);
-					}else {
-						seq_board +=","+list.get(i);
-					}
+				
+				if(list == null || list.isEmpty()) {
+					break;
 				}
-			}*/
+				
+			}
+
 			
 		} while (list != null);
 

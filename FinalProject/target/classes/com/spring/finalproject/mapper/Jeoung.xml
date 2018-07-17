@@ -196,7 +196,7 @@
 		(
 		select title, rownum as RNO
 		from tbl_board
-		where status = 1
+		where status = 1 and click_count > 0
 		order by click_count desc, seq_board asc
 		)V
 		where RNO<![CDATA[<=]]>10
@@ -211,13 +211,13 @@
 	<select id="fk_seq" parameterType="String" resultType="String">
 		select seq_board
 		from tbl_board
-		where status = 1 and seq_board = #{seq_board}
+		where status = 1 and fk_seq = #{seq_board}
 	</select>
 	
 	<select id="isExistsComment2" parameterType="HashMap" resultType="Integer">
 		select count(*)
 		from tbl_comment
-		where fk_seq_board in 
+		where status=1 and fk_seq_board in 
 		<foreach collection="listArr" index="i" open="(" separator="," close=")">
 			${listArr[i]}
 		</foreach>
@@ -242,7 +242,7 @@
 	<select id="fk_seq2" parameterType="HashMap" resultType="String">
 		select seq_board
 		from tbl_board
-		where status = 1 and seq_board in
+		where status = 1 and fk_seq in
 		<foreach collection="listArr" index="i" open="(" separator="," close=")">
 			${listArr[i]}
 		</foreach>
