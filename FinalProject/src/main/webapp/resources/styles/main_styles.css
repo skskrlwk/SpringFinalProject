@@ -419,6 +419,36 @@ section
 	height: 9px;
 	content: '';
 }
+.user_box_myplan
+{
+	margin-right: 15px;
+}
+.user_box_myplan::after
+{
+	display: block;
+	position: absolute;
+	top: 15px;
+	right: -9px;
+	background: #FFFFFF;
+	width: 1px;
+	height: 9px;
+	content: '';
+}
+.user_box_edit
+{
+	margin-right: 15px;
+}
+.user_box_edit::after
+{
+	display: block;
+	position: absolute;
+	top: 15px;
+	right: -9px;
+	background: #FFFFFF;
+	width: 1px;
+	height: 9px;
+	content: '';
+}
 .main_nav_col
 {
 	height: 143px;

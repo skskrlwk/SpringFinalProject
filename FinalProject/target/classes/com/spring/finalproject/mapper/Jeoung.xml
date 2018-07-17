@@ -2,6 +2,250 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="young">
+<mapper namespace="Jeoung">
 
+	<insert id="boardadd" parameterType="com.spring.finalproject.model.BoardVO">
+	<if test='fk_seq.equals("")'>
+		insert into tbl_board(seq_board, fk_userid, name, title, comments, readcount, regdate, status, groupno, fk_seq, depthno,click_count)
+		values(seq_tbl_board.nextval, #{fk_userid}, #{name}, #{title}, #{comments}, default, default, default, #{groupno}, default, default,default)	
+	</if>
+	
+	<if test='!fk_seq.equals("")'>
+		insert into tbl_board(seq_board, fk_userid, name, title, comments, readcount, regdate, status, groupno, fk_seq, depthno,click_count)
+		values(seq_tbl_board.nextval, #{fk_userid}, #{name}, #{title}, #{comments}, default, default, default, #{groupno}, #{fk_seq}, #{depthno}+1,default)	
+	</if>
+	</insert>
+	
+	<insert id="boardadd_withFile" parameterType="com.spring.finalproject.model.BoardVO">
+		<if test='fk_seq.equals("")'>
+			insert into tbl_board(seq_board, fk_userid, name, title, comments, readcount, regdate, status, groupno, fk_seq, depthno, filename, orgfilename, filesize,click_count)
+			values(seq_tbl_board.nextval, #{fk_userid}, #{name}, #{title}, #{comments}, default, default, default, #{groupno}, default, default, #{filename}, #{orgfilename}, #{filesize},default)	
+		</if>
+		
+		<if test='!fk_seq.equals("")'>
+			insert into tbl_board(seq_board, fk_userid, name, title, comments, readcount, regdate, status, groupno, fk_seq, depthno, filename, orgfilename, filesize,click_count)
+			values(boardSeq.nextval, #{fk_userid}, #{name}, #{title}, #{comments}, default, default, default, #{groupno}, #{fk_seq}, #{depthno}+1, #{filename}, #{orgfilename}, #{filesize},default)	
+		</if>		
+	</insert>
+	
+	<select id="getGroupMaxno" resultType="Integer">
+		select nvl(max(groupno),0)	
+		from tbl_board		
+	</select>
+	
+	<select id="getTotalCount" resultType="Integer">
+		select count(*)
+		from tbl_board
+		where status = 1
+	</select>
+	
+	<select id="getTotalCount2" parameterType="HashMap" resultType="Integer">
+		select count(*)
+		from tbl_board
+		where status = 1
+		and ${colname} like '%'|| #{search} ||'%'
+	</select>
+	
+	<select id="boardlist" parameterType="HashMap" resultType="com.spring.finalproject.model.BoardVO">
+		select  seq_board, name, title, readcount, regdate, commentcount
+		      , groupno, fk_seq, depthno
+		      , filename, orgfilename, filesize
+			from 
+			(
+				select rownum as RNO
+				     , V.seq_board, V.name, V.title, V.comments, V.readcount, V.regdate, V.commentcount
+			         , V.groupno, V.fk_seq, V.depthno
+			         , V.filename, V.orgfilename, V.filesize
+				from 
+				(
+				select seq_board, name 
+				     , case when length(title) > 20 then substr(title, 1, 18)||'..'
+				            else title end as title
+				     , comments , readcount
+				     , to_char(regdate, 'yyyy-mm-dd') as regdate
+				     , commentcount
+		         , groupno, fk_seq, depthno
+		         ,filename, orgfilename, filesize
+				from tbl_board
+				where status = 1				  
+		    	start with fk_seq = 0                         
+		    	connect by prior seq_board = fk_seq                  
+				order siblings by groupno desc, seq_board asc        
+				) V
+			) T
+		where T.RNO >= #{startRno} and T.RNO <![CDATA[<=]]> #{endRno}
+	</select>
+	
+	<select id="boardlist2" parameterType="HashMap" resultType="com.spring.finalproject.model.BoardVO">
+		select  seq_board, name, title, readcount, regdate, commentcount
+		      , groupno, fk_seq, depthno
+		      , filename, orgfilename, filesize
+			from 
+			(
+				select rownum as RNO
+				     , V.seq_board, V.name, V.title, V.comments, V.readcount, V.regdate, V.commentcount
+			         , V.groupno, V.fk_seq, V.depthno
+			         , V.filename, V.orgfilename, V.filesize
+				from 
+				(
+				select seq_board, name 
+				     , case when length(title) > 20 then substr(title, 1, 18)||'..'
+				            else title end as title
+				     , comments , readcount
+				     , to_char(regdate, 'yyyy-mm-dd') as regdate
+				     , commentcount
+		         , groupno, fk_seq, depthno
+		         ,filename, orgfilename, filesize
+				from tbl_board
+				where status = 1
+				and ${colname} like '%'|| #{search} ||'%'					  
+		    	start with fk_seq = 0                         
+		    	connect by prior seq_board = fk_seq                  
+				order siblings by groupno desc, seq_board asc        
+				) V
+			) T
+		where T.RNO >= #{startRno} and T.RNO <![CDATA[<=]]> #{endRno}
+	</select>
+	
+	<update id="setAddReadCount" parameterType="String">
+		update tbl_board set readcount = readcount+1
+		where status = 1 and seq_board = #{seq_board}
+	</update>
+	
+	<select id="getView" parameterType="String" resultType="com.spring.finalproject.model.BoardVO">
+		select seq_board, fk_userid, name, title, comments, readcount,
+				to_char(regdate, 'yyyy-mm-dd') as regdate, status, groupno, fk_seq, depthno, filename, orgfilename, filesize
+		from tbl_board
+		where status = 1 and seq_board = #{seq_board}
+	</select>
+	
+	<select id="listComment" parameterType="String" resultType="com.spring.finalproject.model.CommentVO">
+		select seq_comment, fk_seq_board, fk_userid, name, comments, to_char(regdate, 'yyyy-mm-dd hh:mi') as regdate, status 
+		from tbl_comment
+		where status = 1 and fk_seq_board = #{seq_board}
+		order by seq_comment asc 
+	</select>
+	
+	<insert id="addComment" parameterType="com.spring.finalproject.model.BoardCommentVO">
+		insert into tbl_comment(seq_comment, fk_seq_board, fk_userid, name, comments, regdate, status) 
+	 	values(seq_tbl_comment.nextval, #{fk_seq_board}, #{fk_userid}, #{name}, #{comments}, default, default)
+	</insert>
+	
+	<update id="updateCommentCount" parameterType="String">
+		update tbl_board set commentcount = commentcount + 1
+	 	where seq_board = #{fk_seq_board}
+	</update>
+	
+	<update id="updateComments">
+		update tbl_board set title = #{title}, comments = #{comments}
+	    where seq_board = #{seq_board}
+	</update>
+	
+	<select id="isExistsComment" parameterType="String" resultType="Integer">
+		select count(*)
+		from tbl_comment
+		where fk_seq_board = #{seq_board}
+	</select>
+	
+	<update id="deleteContent" parameterType="String">
+		update tbl_board set status = 0
+	 	where seq_board = #{seq_board}
+	</update>
+	
+	<update id="deleteComment" parameterType="String">
+		update tbl_comment set status = 0
+	 	where fk_seq_board = #{seq_board}
+	</update>
+	
+	<select id="readseqcomment" parameterType="com.spring.finalproject.model.BoardCommentVO" resultType="String">
+		select max(seq_comment)
+		from tbl_comment
+		where status = 1 and fk_userid = #{fk_userid} 
+	</select>
+	
+	<update id="delcomment" parameterType="String" >
+		update tbl_comment set status = 0
+	 	where seq_comment = #{seq_comment}
+	</update>
+	
+	<select id="viewcommentcount" parameterType="String" resultType="Integer">
+		select count(*)
+		from tbl_comment
+		where status = 1 and fk_seq_board = #{seq_board}	
+	</select>
+	
+	<update id="updatecomment">
+		update tbl_comment set comments = #{comments}
+		where status = 1 and seq_comment = #{seq_comment}
+	</update>
+	
+	<select id="titleList" parameterType="String" resultType="String">
+		select title
+		from tbl_board
+		where title like '%'||#{search}||'%'
+	</select>
+	
+	<update id="updateclicksearch" parameterType="HashMap">
+		update tbl_board set click_count = click_count+1
+		where status = 1 and title = #{search}
+	</update>
+	
+	<select id="nowsearch" resultType="String">
+		select V.title
+		from
+		(
+		select title, rownum as RNO
+		from tbl_board
+		where status = 1
+		order by click_count desc, seq_board asc
+		)V
+		where RNO<![CDATA[<=]]>10
+	</select>
+	
+	<select id="ynseq_board" parameterType="String" resultType="Integer">
+		select count(*)
+		from tbl_board
+		where status = 1 and seq_board = #{seq_board}
+	</select>
+	
+	<select id="fk_seq" parameterType="String" resultType="String">
+		select seq_board
+		from tbl_board
+		where status = 1 and seq_board = #{seq_board}
+	</select>
+	
+	<select id="isExistsComment2" parameterType="HashMap" resultType="Integer">
+		select count(*)
+		from tbl_comment
+		where fk_seq_board in 
+		<foreach collection="listArr" index="i" open="(" separator="," close=")">
+			${listArr[i]}
+		</foreach>
+	</select>
+	
+	<update id="deleteContent2" parameterType="HashMap">
+		update tbl_board set status = 0
+	 	where seq_board in 
+		<foreach collection="listArr" index="i" open="(" separator="," close=")">
+			${listArr[i]}
+		</foreach>
+	</update>
+	
+	<update id="deleteComment2" parameterType="HashMap">
+		update tbl_comment set status = 0
+	 	where fk_seq_board in
+		<foreach collection="listArr" index="i" open="(" separator="," close=")">
+			${listArr[i]}
+		</foreach>
+	</update>
+	
+	<select id="fk_seq2" parameterType="HashMap" resultType="String">
+		select seq_board
+		from tbl_board
+		where status = 1 and seq_board in
+		<foreach collection="listArr" index="i" open="(" separator="," close=")">
+			${listArr[i]}
+		</foreach>
+	</select>
+	
 </mapper>

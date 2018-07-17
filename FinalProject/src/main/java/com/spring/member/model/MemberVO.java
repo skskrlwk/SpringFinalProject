@@ -2,22 +2,22 @@ package com.spring.member.model;
 
 /*
    VO(Value Object) 
-   ¶Ç´Â 
+   ë˜ëŠ” 
    DTO(Data Transfer Object)
-   »ı¼ºÇÏ±â 
+   ìƒì„±í•˜ê¸° 
  */
 
 public class MemberVO {
 	
-	private String userid;    		 // È¸¿ø¾ÆÀÌµğ
-	private String password;      	 // ºñ¹Ğ¹øÈ£
-	private String name;     		 // È¸¿ø¸í
-	private String email;    		 // ÀÌ¸ŞÀÏ
-	private String tel;       		 // ÇÚµåÆù
-	private int gender;    		 // ¼ºº° (³²ÀÚ:1, ¿©ÀÚ:2)
-	private String birthday;  		 // »ıÀÏ
-	private String registerday; 	 // °¡ÀÔÀÏÀÚ
-	private int quitYN;      		 // È¸¿ø»ç¿ë°¡´É À¯¹«, 1:»ç¿ë°¡´É / 0:»ç¿ëºÒ´É
+	private String userid;    		 // íšŒì›ì•„ì´ë””
+	private String password;      	 // ë¹„ë°€ë²ˆí˜¸
+	private String name;     		 // íšŒì›ëª…
+	private String email;    		 // ì´ë©”ì¼
+	private String tel;       		 // í•¸ë“œí°
+	private int gender;    		 // ì„±ë³„ (ë‚¨ì:1, ì—¬ì:2)
+	private String birthday;  		 // ìƒì¼
+	private String registerday; 	 // ê°€ì…ì¼ì
+	private int quitYN;      		 // íšŒì›ì‚¬ìš©ê°€ëŠ¥ ìœ ë¬´, 1:ì‚¬ìš©ê°€ëŠ¥ / 0:ì‚¬ìš©ë¶ˆëŠ¥
 	
 	
 	

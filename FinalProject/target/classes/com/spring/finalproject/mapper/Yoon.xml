@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==== mapper 기본설정 ==== -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<!-- ==== 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
+<mapper namespace="Yoon">
+	
+	
+	<!-- ===== 로그인 여부 알아오기 ===== -->
+	<select id="getLoginMemeber" parameterType="HashMap" resultType="com.spring.member.model.MemberVO" >
+		select userid, password, name, email, tel, gender,
+			   birthday,
+		       to_char(registerday, 'yyyy-mm-dd') as registerday,
+		       quitYN
+		from tbl_userinfo
+		where quitYN = 1 and
+		      userid = #{userid} and
+		      password = #{password}
+	</select>
+	
+	<select id="idCheck" parameterType="String" resultType="Integer">
+		select count(*)
+		from tbl_userinfo
+		where quitYN = 1 and userid = #{userid}
+	</select>
+	
+	<insert id="registerMember" parameterType="com.spring.member.model.MemberVO">
+		insert into tbl_userinfo(userid, password, name, email, tel, gender, birthday, registerday, quitYN)
+		values(#{userid}, #{password}, #{name}, #{email}, #{tel}, #{gender}, #{birthday}, default, default)
+	</insert>
+	
+	<select id="getUserid" parameterType="HashMap" resultType="String" >
+		select userid
+		from tbl_userinfo
+		where quitYN = 1 and
+		      name = #{name} and
+		      tel = #{tel}
+	</select>
+	
+	<select id="isUserExists" parameterType="HashMap" resultType="Integer">
+		select count(*)
+		from tbl_userinfo
+		where quitYN = 1 and 
+			  userid = #{userid} and
+			  email = #{email}
+	</select>
+	
+	<update id="updatePwdUser" parameterType="HashMap">
+		update tbl_userinfo set password = #{pwd}
+		where quitYN = 1 and userid = #{userid}
+	</update>
+	
+	<update id="editMember" parameterType="com.spring.member.model.MemberVO">
+		update tbl_userinfo set password = #{password}, email = #{email}, tel = #{tel}, gender = #{gender}
+		where quitYN = 1 and userid = #{userid}
+	</update>
+	
+	<update id="memberQuit" parameterType="HashMap">
+		update tbl_userinfo set quitYN = 0
+		where quitYN = 1 and password = #{password} and userid = #{userid}
+	</update>
+	
+</mapper>
+
+
+
+
+
+ 
+ 
+ 
+ 

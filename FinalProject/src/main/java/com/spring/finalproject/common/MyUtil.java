@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class MyUtil {
 
-	// *** µ¹¾Æ°¥ URL ÆäÀÌÁöÀÇ °ªÀ» ¾Ë±â À§ÇØ¼­ ¸ÕÀú ÇöÀç URL ÁÖ¼Ò¸¦ ¾ò¾î¿À´Â ¸Ş¼Òµå *** //
+	// *** ï¿½ï¿½ï¿½Æ°ï¿½ URL ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë±ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ URL ï¿½Ö¼Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼Òµï¿½ *** //
 	public static String getCurrentURL(HttpServletRequest request) {
 	
 	   String currentURL = request.getRequestURL().toString();                 
@@ -35,7 +35,7 @@ public class MyUtil {
 	}// end of String getCurrentURL()---------------
 	
 	
-	// ===== *** ÆäÀÌÁö¹Ù ¸¸µé±â *** ======= //
+	// ===== *** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ *** ======= //
 	public static String getPageBar(String url
 			                      , int currentShowPageNo
 			                      , int sizePerPage
@@ -48,7 +48,7 @@ public class MyUtil {
 		int loop = 1;
 		
 		pageNo = ((currentShowPageNo - 1) / blockSize) * blockSize + 1;
-		// °ø½ÄÀÓ.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 		
 		//     currentShowPageNo      pageNo
 		//    -------------------------------
@@ -71,7 +71,7 @@ public class MyUtil {
 			pageBar += "";
 		}
 		else {
-			pageBar += "&nbsp;<a href=\""+url+"?currentShowPageNo="+(pageNo-1)+"&sizePerPage="+sizePerPage+"\">[ÀÌÀü]</a>";
+			pageBar += "&nbsp;<a href=\""+url+"?currentShowPageNo="+(pageNo-1)+"&sizePerPage="+sizePerPage+"\">[ï¿½ï¿½ï¿½ï¿½]</a>";
 		}
 		
 		while( !(loop > blockSize || pageNo > totalPage) ) {
@@ -91,7 +91,7 @@ public class MyUtil {
 			pageBar += "";
 		}
 		else {
-			pageBar += "&nbsp;<a href=\""+url+"?currentShowPageNo="+pageNo+"&sizePerPage="+sizePerPage+"\">[´ÙÀ½]</a>";
+			pageBar += "&nbsp;<a href=\""+url+"?currentShowPageNo="+pageNo+"&sizePerPage="+sizePerPage+"\">[ï¿½ï¿½ï¿½ï¿½]</a>";
 		}
 
 		return pageBar;
@@ -100,7 +100,7 @@ public class MyUtil {
 	
 	
 	
-	// ===== *** °Ë»ö¾î°¡ Æ÷ÇÔµÈ ÆäÀÌÁö¹Ù ¸¸µé±â *** ======= //
+	// ===== *** ï¿½Ë»ï¿½ï¿½î°¡ ï¿½ï¿½ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ *** ======= //
 	public static String getSearchPageBar(String url
 			                            , int currentShowPageNo
 			                            , int sizePerPage
@@ -114,7 +114,7 @@ public class MyUtil {
 		int loop = 1;
 		
 		pageNo = ((currentShowPageNo - 1) / blockSize) * blockSize + 1;
-		// °ø½ÄÀÓ.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 		
 		//     currentShowPageNo      pageNo
 		//    -------------------------------
@@ -137,7 +137,7 @@ public class MyUtil {
 			pageBar += "";
 		}
 		else {
-			pageBar += "&nbsp;<a href=\""+url+"?currentShowPageNo="+(pageNo-1)+"&sizePerPage="+sizePerPage+"&colname="+colname+"&search="+search+"&period="+period+"\">[ÀÌÀü]</a>";
+			pageBar += "&nbsp;<a href=\""+url+"?currentShowPageNo="+(pageNo-1)+"&sizePerPage="+sizePerPage+"&colname="+colname+"&search="+search+"&period="+period+"\">[ï¿½ï¿½ï¿½ï¿½]</a>";
 		}
 		
 		while( !(loop > blockSize || pageNo > totalPage) ) {
@@ -157,7 +157,7 @@ public class MyUtil {
 			pageBar += "";
 		}
 		else {
-			pageBar += "&nbsp;<a href=\""+url+"?currentShowPageNo="+pageNo+"&sizePerPage="+sizePerPage+"&colname="+colname+"&search="+search+"&period="+period+"\">[´ÙÀ½]</a>";
+			pageBar += "&nbsp;<a href=\""+url+"?currentShowPageNo="+pageNo+"&sizePerPage="+sizePerPage+"&colname="+colname+"&search="+search+"&period="+period+"\">[ï¿½ï¿½ï¿½ï¿½]</a>";
 		}
 
 		return pageBar;
@@ -165,11 +165,11 @@ public class MyUtil {
 	}// end of getPageBar(String url, int currentShowPageNo, int sizePerPage, int totalPage, int blockSize)-------------------	
 	
 	
-	// *** ¼ıÀÚ¸¦ ÀÔ·Â¹Ş¾Æ¼­ ¼¼ÀÚ¸® ¸¶´Ù ÄŞ¸¶(,)¸¦ Âï¾î¼­ ¸®ÅÏ½ÃÄÑÁÖ´Â ¸Ş¼Òµå *** // 
+	// *** ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½Ô·Â¹Ş¾Æ¼ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¸ï¿½(,)ï¿½ï¿½ ï¿½ï¿½î¼­ ï¿½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ş¼Òµï¿½ *** // 
 	public static String getMoney(long number) {
 		
 		DecimalFormat df = new DecimalFormat("#,###");
-		// ¼ıÀÚ·Î µÇ¾îÁø µ¥ÀÌÅÍ¸¦ ¼¼ÀÚ¸® ¸¶´Ù ÄŞ¸¶(,)¸¦ Âï¾îÁÖ´Â °´Ã¼ »ı¼ºÇÔ.
+		// ï¿½ï¿½ï¿½Ú·ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¸ï¿½(,)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 		
 		String result = df.format(number);
 		
@@ -177,12 +177,77 @@ public class MyUtil {
 	}// end of getMoney(long number)---------------
 	
 	
-	// ****  ÇöÀç½Ã°¢À» ³ªÅ¸³»±â  **** //
+	// ****  ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½  **** //
 	public static String getNowTime() {
 		Date now = new Date();
 		String today = String.format("%tF %tT", now, now);
         return today;
 	}
+	
+	// ===== *** í˜ì´ì§€ë°” ë§Œë“¤ê¸° *** ======= ê²€ìƒ‰ì´ì—†ëŠ” í˜ì´ì§€ë°” //
+		public static String getPageBar1(String url
+				                      , int currentShowPageNo
+				                      , int sizePerPage
+				                      , int totalPage
+				                      , int blockSize) {
+			
+			String pageBar = "";
+		    
+			int pageNo = 1;
+			int loop = 1;
+			
+			pageNo = ((currentShowPageNo - 1) / blockSize) * blockSize + 1;
+			// ê³µì‹ì„.
+			
+			//     currentShowPageNo      pageNo
+			//    -------------------------------
+			//           1                  1
+			//           2                  1
+			//          ..                 ..
+			//          10                  1
+			//          
+			//          11                 11
+			//          12                 11
+			//          ..                 ..
+			//          20                 11
+			//          
+			//          21                 21                 
+			//          22                 21 
+			//          ..                 ..
+			//          30                 21 
+			
+			if(pageNo == 1) {
+				pageBar += "";
+			}
+			else {
+				pageBar += "&nbsp;<a href=\""+url+"?currentShowPageNo="+(pageNo-1)+"&sizePerPage="+sizePerPage+"\">[ì´ì „]</a>";
+					
+			}
+			
+			while( !(loop > blockSize || pageNo > totalPage) ) {
+				
+				if(pageNo == currentShowPageNo) {
+					pageBar += "&nbsp;<span style=\"color: purple; font-size: 20pt; font-weight: bold; text-decoration: underline;  border: 2px solid purple;\">"+pageNo+"</span>&nbsp;";
+				}
+				else {
+					pageBar += "&nbsp;<a href=\""+url+"?currentShowPageNo="+pageNo+"&sizePerPage="+sizePerPage+"\">"+pageNo+"</a>&nbsp;";
+				}
+				
+				pageNo++;
+				loop++;
+			}// end of while-------------------------
+			
+			if(pageNo > totalPage) {
+				pageBar += "";
+			}
+			else {
+				pageBar += "&nbsp;<a href=\""+url+"?currentShowPageNo="+pageNo+"&sizePerPage="+sizePerPage+"\">[ë‹¤ìŒ]</a>";
+			}
+
+			return pageBar;
+			
+		}// end of getPageBar(String url, int currentShowPageNo, int sizePerPage, int totalPage, int blockSize)-------------------	
+		
 	
 	
 }

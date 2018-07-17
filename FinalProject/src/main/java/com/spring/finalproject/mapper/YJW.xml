@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==== #26. mapper 기본설정 ==== -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<!-- ==== #27. 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
+<mapper namespace="YJW">
+
+	
+	<resultMap type="HashMap" id="getScheduleMap">
+		<result property="seq_schedule" 	column="seq_schedule"  	javaType="String" />
+		<result property="fk_userid" 		column="fk_userid"  	javaType="String" />
+		<result property="title" 			column="title"  		javaType="String" />
+		<result property="startday" 		column="startday"  		javaType="String" />
+		<result property="registerday" 		column="registerday"  	javaType="String" />
+		<result property="imagearr" 		column="imagearr"  		javaType="String" />
+	</resultMap>	
+	<select id="getSchedule" parameterType="String" resultMap="getScheduleMap">
+		select seq_schedule, fk_userid, title, startday, registerday, imagearr
+		from tbl_schedule
+		where seq_schedule = #{seq}
+	</select>
+	
+	
+	<resultMap type="HashMap" id="detail2Map">
+		<result property="category" 	column="category"  		javaType="String" />
+		<result property="category_seq" column="category_seq"  javaType="String" />
+		<result property="categoryname" column="categoryname"  javaType="String" />
+	</resultMap>	
+	
+	<select id="getSchedule_detail2List" parameterType="String" resultMap="detail2Map">
+		select  category, category_seq, substr(category,5) as categoryname
+		from tbl_schedule A join tbl_schedule_detail B
+		on A.seq_schedule = B.fk_seq_schedule
+		join tbl_schedule_detail2 C
+		on b.seq_schedule_detail = C.fk_schedule_detail
+		where seq_schedule = #{seq}
+		order by fk_category, category
+	</select>
+	
+	
+	<!-- 음식 -->
+	<resultMap type="HashMap" id="getFoodMap">
+		<result property="seq_food" 	column="seq_food"  		javaType="String" />
+		<result property="fk_category" 	column="fk_category"  	javaType="String" />
+		<result property="name" 		column="name"  			javaType="String" />
+		<result property="image" 		column="image"  		javaType="String" />
+		<result property="comments" 	column="comments"  		javaType="String" />
+	</resultMap>	
+	<select id="getFood" parameterType="HashMap" resultMap="getFoodMap">
+		select seq_food, fk_category, name, image, comments
+		from ${category}
+		where seq_food = #{category_seq}
+	</select>	
+
+	
+	<!-- 쇼핑 -->
+	<resultMap type="HashMap" id="getShopMap">
+		<result property="seq_shop" 	column="seq_shop"  		javaType="String" />
+		<result property="fk_category" 	column="fk_category"  	javaType="String" />
+		<result property="name" 		column="name"  			javaType="String" />
+		<result property="image" 		column="image"  		javaType="String" />
+		<result property="comments" 	column="comments"  		javaType="String" />
+	</resultMap>	
+	<select id="getShop" parameterType="HashMap" resultMap="getShopMap">
+		select seq_shop, fk_category, name, image, comments
+		from ${category}
+		where seq_shop = #{category_seq}
+	</select>	
+	
+	
+	<!-- 명소 -->
+	<resultMap type="HashMap" id="getTourlistMap">
+		<result property="seq_tourlist" 	column="seq_tourlist"  	javaType="String" />
+		<result property="fk_category" 		column="fk_category"  	javaType="String" />
+		<result property="name" 			column="name"  			javaType="String" />
+		<result property="image" 			column="image"  		javaType="String" />
+		<result property="comments" 		column="comments"  		javaType="String" />
+	</resultMap>	
+	<select id="getTourlist" parameterType="HashMap" resultMap="getTourlistMap">
+		select seq_tourlist, fk_category, name, image, comments
+		from ${category}
+		where seq_tourlist = #{category_seq}
+	</select>
+	
+	<!-- 투어/액티비티 -->
+	<resultMap type="HashMap" id="getTourActivityListMap">
+		<result property="seq_tourlist" 	column="seq_tourlist"  	javaType="String" />
+		<result property="fk_category" 		column="fk_category"  	javaType="String" />
+		<result property="name" 			column="name"  			javaType="String" />
+		<result property="image" 			column="image"  		javaType="String" />
+		<result property="price" 			column="price"  		javaType="String" />
+		<result property="addr" 			column="addr"  			javaType="String" />
+	</resultMap>	
+	<select id="getTourActivityList" parameterType="HashMap" resultMap="getTourActivityListMap">
+		select seq_tour, fk_category, name, image, price, addr
+		from ${category}
+		where seq_tour = #{category_seq}
+	</select>
+	
+	<!-- 셀프북 -->
+	<resultMap type="HashMap" id="getBookListMap">
+		<result property="seq_book" 		column="seq_book"  		javaType="String" />
+		<result property="fk_category" 		column="fk_category"  	javaType="String" />
+		<result property="name" 			column="name"  			javaType="String" />
+		<result property="image" 			column="image"  		javaType="String" />
+		<result property="price" 			column="price"  		javaType="String" />
+		<result property="addr" 			column="addr"  			javaType="String" />
+	</resultMap>	
+	<select id="getBookList" parameterType="HashMap" resultMap="getBookListMap">
+		select seq_book, fk_category, name, image, price, addr
+		from ${category}
+		where seq_book = #{category_seq}
+	</select>
+	
+
+	
+	
+	<!-- 명소 상세정보 -->
+	<resultMap type="HashMap" id="detail_tourlistMap">
+		<result property="w_name" 	 		column="w_name" 			javaType="String" />
+ 		<result property="w_flag"  			column="flag" 				javaType="String" />
+ 		<result property="w_image"  		column="w_image" 			javaType="String" />
+ 		<result property="w_comments"  		column="comments" 			javaType="String" />
+
+ 		<result property="t_fk_category"  	column="fk_category" 		javaType="String" />
+ 		<result property="t_name"  			column="t_name" 			javaType="String" />
+ 		<result property="t_image"  		column="t_image" 			javaType="String" />
+ 		<result property="t_addr"  			column="addr" 				javaType="String" />
+	</resultMap>
+	<select id="detail_tourlist" resultMap="detail_tourlistMap" parameterType="String">
+		select A.name AS w_name, A.flag, A.image AS w_image, A.comments
+		      ,B.fk_category ,B.name AS t_name, B.image AS t_image
+		      ,B.addr
+		from tbl_world A join tbl_tour B
+		on A.category = B.fk_category
+		where B.fk_category = #{fk_category}
+	</select>
+	
+	<!-- 음식 상세정보 -->
+	<resultMap type="HashMap" id="detail_foodMap">
+		<result property="a_seq_food" 	 	column="a_seq_food" 		javaType="String" />
+ 		<result property="a_fk_category"  	column="a_fk_category" 		javaType="String" />
+ 		<result property="a_name"  			column="a_name" 			javaType="String" />
+ 		<result property="a_image"  		column="a_image" 			javaType="String" />
+ 		<result property="a_comments"  		column="a_comments" 		javaType="String" />
+ 		
+ 		<result property="b_name"  			column="b_name" 			javaType="String" />
+ 		<result property="b_image"  		column="b_image" 			javaType="String" />
+ 		<result property="b_comments"  		column="b_comments" 		javaType="String" />
+ 		<result property="b_addr"  			column="b_addr" 			javaType="String" />
+ 		<result property="b_worktime"  		column="b_worktime" 		javaType="String" />
+	</resultMap>
+	<select id="detail_food" resultMap="detail_foodMap" parameterType="String">
+		select A.seq_food AS a_seq_food, A.fk_category AS a_fk_category, A.name AS a_name, A.image AS a_image, A.comments AS a_comments
+		      ,B.name AS b_name, B.image AS b_image, B.comments AS b_comments, B.addr AS b_addr, B.worktime AS b_worktime
+		from tbl_food A join tbl_food_detail B
+		on A.seq_food = B.fk_seq_food
+		where A.seq_food = #{seq_food}
+	</select>
+	
+	<!-- 쇼핑 상세정보 -->
+	<resultMap type="HashMap" id="detail_shopMap">
+		<result property="seq_shop" 	 	column="seq_shop" 		javaType="String" />
+ 		<result property="fk_category"  	column="fk_category" 	javaType="String" />
+ 		<result property="name"  			column="name" 			javaType="String" />
+ 		<result property="image"  			column="image" 			javaType="String" /> 	
+ 		<result property="comments"  		column="comments" 		javaType="String" /> 	
+ 		<result property="addr"  			column="addr" 			javaType="String" /> 	
+ 		<result property="worktime"  		column="worktime" 		javaType="String" /> 	
+	</resultMap>
+	<select id="detail_shop" resultMap="detail_shopMap" parameterType="String">
+	    select seq_shop, fk_category, name, image, comments, addr, worktime
+	    from tbl_shop
+	    where seq_shop = #{seq_shop}   
+	</select>
+	
+	
+	<!-- 일정표 -->
+	<resultMap type="HashMap" id="show_schedulerListMap">
+		<result property="startday" 	 	column="startday" 		javaType="String" />
+ 		<result property="name"  			column="name" 			javaType="String" />
+ 		<result property="schedule"  		column="schedule" 		javaType="String" />
+ 		<result property="transfer"  		column="transfer" 		javaType="String" />
+ 		<result property="days"  			column="days" 			javaType="String" />
+ 		<result property="flag"  			column="flag" 			javaType="String" />
+	</resultMap>
+	<select id="show_schedulerList" resultMap="show_schedulerListMap">
+	    select to_char(A.startday,'yyyy-mm-dd')AS startday
+	          , C.name, C.flag, B.days 
+	          , D.schedule, D.transfer
+	    from tbl_schedule A join tbl_schedule_detail B
+	    on A.seq_schedule = B.fk_seq_schedule
+	    join tbl_world C
+	    on C.category = B.fk_category
+	    join tbl_scheduler D
+	    on A.seq_schedule = D.fk_schedule
+	</select>
+	
+	<!-- 일정표 1 -->
+	<resultMap type="HashMap" id="show_schedulerList1Map">
+		<result property="a_name"	column="a_name"		javaType="String" />
+ 		<result property="a_flag"  	column="a_flag"		javaType="String" />
+ 		
+ 		<result property="b_days"	column="b_days" 	javaType="String" /> 		
+	</resultMap>
+	<select id="show_schedulerList1" resultMap="show_schedulerList1Map" parameterType="HashMap">				
+		select A.name AS a_name, A.flag AS a_flag
+		      ,B.days AS b_days
+		from tbl_world A join tbl_schedule_detail B
+		on A.category = B.fk_category
+		join tbl_schedule C
+		on B.fk_seq_schedule = C.seq_schedule 
+		where C.seq_schedule = #{seq} 
+	</select>
+	
+	
+	
+	<!-- 일정표 2 -->
+	
+	<resultMap type="HashMap" id="show_schedulerList2Map">
+		<result property="a_seq_scheduler"	column="a_seq_scheduler"	javaType="String" />
+ 		<result property="a_fk_schedule"  	column="a_fk_schedule"		javaType="String" /> 				
+ 		<result property="a_schedule"  		column="a_schedule"			javaType="String" /> 				
+ 		<result property="a_transfer"  		column="a_transfer"			javaType="String" /> 				
+	</resultMap>
+	<select id="show_schedulerList2" resultMap="show_schedulerList2Map" parameterType="HashMap">				
+		select A.seq_scheduler AS a_seq_scheduler, A.fk_schedule AS a_fk_schedule, A.schedule AS a_schedule, A.transfer AS a_transfer      
+		from tbl_scheduler A join tbl_schedule B
+		on A.fk_schedule = B.seq_schedule
+		where B.seq_schedule = #{seq} 
+	</select>
+		
+	
+	 <!-- 일정표 수정 -->
+	 <update id="update_scheduler" parameterType="HashMap">
+	 	update tbl_scheduler set schedule = #{schedule},
+                        		 transfer = #{transfer}
+		where seq_scheduler = #{seq_scheduler}
+	 </update>
+	
+	
+</mapper>

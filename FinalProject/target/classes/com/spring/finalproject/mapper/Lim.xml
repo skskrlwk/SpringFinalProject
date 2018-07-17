@@ -6,5 +6,115 @@
 <!-- ==== #27. 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
 <mapper namespace="Lim">
 
+	<resultMap type="HashMap" id="WorldMap">
+		<result property="name" column="name"  javaType="String" />
+		<result property="flag" column="flag"  javaType="String" />
+		<result property="image" column="image"  javaType="String" />
+		<result property="comments" column="comments"  javaType="String" />
+		<result property="latitude" column="latitude"  javaType="String" />
+		<result property="longitude" column="longitude"  javaType="String" />
+		<result property="zindex" column="zindex"  javaType="String" />
+		<result property="fk_category" column="fk_category"  javaType="String" />
+	</resultMap>
+
+	<select id="getWorldMap" resultMap="WorldMap">
+		select name, flag, image, comments, latitude, longitude, zindex, fk_category
+		from tbl_world A join tbl_world_detail B
+		on A.category = B.fk_category
+		order by zindex
+	</select>
+	
+	<resultMap type="HashMap" id="getScheduleMap">
+		<result property="seq_schedule" column="seq_schedule"  javaType="String" />
+		<result property="fk_userid" column="fk_userid"  javaType="String" />
+		<result property="title" column="title"  javaType="String" />
+		<result property="startday" column="startday"  javaType="String" />
+		<result property="registerday" column="registerday"  javaType="String" />
+		<result property="imagearr" column="imagearr"  javaType="String" />
+	</resultMap>
+	
+	<select id="getSchedule" parameterType="String" resultMap="getScheduleMap">
+		select seq_schedule, fk_userid, title, startday, registerday, imagearr
+		from tbl_schedule
+		where seq_schedule = #{seq}
+	</select>
+	
+	<resultMap type="HashMap" id="detail2Map">
+		<result property="category" column="category"  javaType="String" />
+		<result property="category_seq" column="category_seq"  javaType="String" />
+		<result property="categoryname" column="categoryname"  javaType="String" />
+	</resultMap>
+	
+	<select id="getSchedule_detail2List" parameterType="String" resultMap="detail2Map">
+		select  category, category_seq, substr(category,5) as categoryname
+		from tbl_schedule A join tbl_schedule_detail B
+		on A.seq_schedule = B.fk_seq_schedule
+		join tbl_schedule_detail2 C
+		on b.seq_schedule_detail = C.fk_schedule_detail
+		where seq_schedule = #{seq}
+		order by fk_category, category
+	</select>
+	
+	<resultMap type="HashMap" id="getFoodMap">
+		<result property="seq_food" column="seq_food"  javaType="String" />
+		<result property="fk_category" column="fk_category"  javaType="String" />
+		<result property="name" column="name"  javaType="String" />
+		<result property="image" column="image"  javaType="String" />
+		<result property="comments" column="comments"  javaType="String" />
+	</resultMap>
+	
+	<select id="getFood" parameterType="HashMap" resultMap="getFoodMap">
+		select seq_food, fk_category, name, image, comments
+		from ${category}
+		where seq_food = #{category_seq}
+	</select>
+	
+	<resultMap type="HashMap" id="CalendarMap">
+		<result property="name" column="name"  javaType="String" />
+		<result property="flag" column="flag"  javaType="String" />
+		<result property="days" column="days"  javaType="String" />
+	</resultMap>
+	
+	<select id="getCalendar" parameterType="String" resultMap="CalendarMap">
+		select name, flag, days
+		from tbl_schedule A join tbl_schedule_detail B
+		on A.seq_schedule = B.fk_seq_schedule
+		join tbl_world C
+		on B.fk_category = C.category
+		where seq_schedule = #{seq}		
+	</select>
+	
+	<insert id="AddSchedule" parameterType="HashMap">
+		insert into tbl_schedule(seq_schedule, fk_userid, title, startDay, registerday, imageArr)
+		values(seq_tbl_schedule.nextval, #{userid}, #{title}, to_date(#{startDay} , 'yyyy-mm-dd'), default, #{imgArr})
+	</insert>
+
+	<select id="getSeqval" parameterType="String" resultType="String">
+		select max(seq_schedule) as seq
+		from tbl_schedule 
+		where fk_userid = #{userid}
+	</select>
+	
+	<insert id="AddScheduleDetail" parameterType="HashMap">
+		insert into tbl_schedule_detail(seq_schedule_detail, fk_seq_schedule, fk_category, days)
+		values(seq_schedule_detail.nextval, #{seq}, #{world}, #{days})
+	</insert>
+	
+	<select id="getScheduleDetailseq" parameterType="String" resultType="String">
+		select max(seq_schedule_detail) as seq
+		from tbl_schedule_detail
+		where fk_seq_schedule = #{seq} 
+	</select>
+	
+	<insert id="AddScheduleDetail2" parameterType="HashMap">
+		insert into tbl_schedule_detail2(seq_schedule_detail2, fk_schedule_detail, category, category_seq)
+		values(seq_schedule_detail2.nextval, #{seq}, #{category}, #{categoryseq})
+	</insert>
+	
+	<insert id="AddScheduler" parameterType="String">
+		insert into tbl_scheduler(seq_scheduler, fk_schedule, schedule,transfer)
+		values(seq_tbl_scheduler.nextval, #{seq}, '','')		
+	</insert>
+	
 	
 </mapper>

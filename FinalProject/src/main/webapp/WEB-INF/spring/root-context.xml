@@ -13,7 +13,7 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" /> 
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="username" value="myorauser" />
+		<property name="username" value="finaltest" />
 		<property name="password" value="eclass" />
 	</bean> 
 	 --> 
@@ -25,7 +25,7 @@
 	 <bean id="dataSourceSpied" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="username" value="myorauser" />
+		<property name="username" value="finaltest2" />
 		<property name="password" value="eclass" />
 	</bean>
 	
@@ -42,7 +42,7 @@
 	
 	<!-- ===== #17. mapper 파일 위치 지정하기 ===== -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
-		<property name="mapperLocations" value="classpath*:com/spring/gittest/mapper/*.xml" />
+		<property name="mapperLocations" value="classpath*:com/spring/finalproject/mapper/*.xml" />
 		<property name="dataSource" ref="dataSource" />    
 	</bean>
 		
