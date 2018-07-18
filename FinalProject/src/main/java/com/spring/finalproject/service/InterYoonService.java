@@ -23,4 +23,10 @@ public interface InterYoonService {
 
 	int memberQuit(HashMap<String, String> map);	// 회원 탈퇴
 
+	int likecnt(HashMap<String, String> map);		// 좋아요 갯수 가져오기
+
+	int checklike(HashMap<String, String> map);		// 이미 좋아요 눌렀나 체크
+
+	int addlike(HashMap<String, String> map);		// 좋아요 증가 시키기
+
 }

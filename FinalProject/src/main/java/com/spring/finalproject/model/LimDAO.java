@@ -82,6 +82,12 @@ public class LimDAO implements InterLimDAO {
 		return n;
 	}
 
+	@Override
+	public int likecnt(String seq) {
+		int result = sqlsession.selectOne("Yoon.likecnt2", seq);
+		return result;
+	}
+
 
 
 }

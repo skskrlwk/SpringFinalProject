@@ -24,5 +24,4 @@ public interface InterUserinfoDAO {
 	int editMember(MemberVO membervo);				// 회원정보 수정
 
 	int memberQuit(HashMap<String, String> map);	// 회원 탈퇴
-
 }

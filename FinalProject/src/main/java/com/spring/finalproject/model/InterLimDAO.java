@@ -27,5 +27,7 @@ public interface InterLimDAO {
 
 	int AddScheduler(String seq);
 
+	int likecnt(String seq);
+
 
 }

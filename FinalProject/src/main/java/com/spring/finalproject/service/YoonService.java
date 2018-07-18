@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.finalproject.model.InterLikeDAO;
 import com.spring.finalproject.model.InterUserinfoDAO;
 import com.spring.member.model.MemberVO;
 
@@ -15,6 +16,10 @@ public class YoonService implements InterYoonService {
 	// ===== 의존객체 주입하기(DI : Dependency Injection) =====
 	@Autowired
 	private InterUserinfoDAO dao;
+	
+	// ===== 의존객체 주입하기(DI : Dependency Injection) =====
+	@Autowired
+	private InterLikeDAO dao2;
 
 	
 	// ===== 로그인 여부 알아오기  =====
@@ -70,6 +75,27 @@ public class YoonService implements InterYoonService {
 	@Override
 	public int memberQuit(HashMap<String, String> map) {
 		int n = dao.memberQuit(map);
+		return n;
+	}
+
+
+	@Override
+	public int likecnt(HashMap<String, String> map) {
+		int n = dao2.likecnt(map);
+		return n;
+	}
+
+
+	@Override
+	public int checklike(HashMap<String, String> map) {
+		int n = dao2.checklike(map);
+		return n;
+	}
+
+
+	@Override
+	public int addlike(HashMap<String, String> map) {
+		int n = dao2.addlike(map);
 		return n;
 	}
 

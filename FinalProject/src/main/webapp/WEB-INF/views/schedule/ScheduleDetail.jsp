@@ -74,7 +74,53 @@
 	$(document).ready(function () {
 		document.getElementById("defaultOpen").click(); 		
 		google.maps.event.addDomListener(window, 'load', initialize);
-		calendar();	
+		calendar();
+		
+		$("#likecnt").html("${likecnt}");
+		
+		$("#btnLike").click(function(){
+			
+			var seq_scheduler = ${show_schedulerList2.a_fk_schedule};
+			
+			form_data = {seq_schedule : seq_scheduler};
+			
+			$.ajax({
+				
+				url: "<%= request.getContextPath() %>/likeJSON.action",
+				type: "GET",
+				data: form_data,
+				dataType: "JSON",
+				success: function(json){
+					
+					var likeNoLoginMSG = json.likeNoLoginMSG;
+					
+					if(likeNoLoginMSG == 1) {
+						alert("로그인 후 이용해 주세요!!");
+					}
+					else {
+						var checklike = json.checklike;
+						var addlike = json.addlike;
+						var likecnt = json.likecnt;
+						
+						
+						if(checklike == 1){
+							alert("이미 좋아요를 하셨습니다!!");
+						}
+						if(addlike == 1){
+							alert("좋아요 클릭 완료!! 다른 일정도 부탁드려요~");
+						}
+						$("#likecnt").html(likecnt);
+						
+					}
+								
+				},
+				error: function(request, status, error){
+					alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+				}
+				
+			});// end of $.ajax()-------------------------------
+			
+		});
 	});
 
 
@@ -138,7 +184,6 @@
 					html+= "</div>";
 										
 					$("#modal_info").html(html);
-				
 				
 			},
 			error: function(request, status, error){
@@ -579,8 +624,7 @@
 		$(".fc-button-next").html(">");
 
 	}
-	
-	
+
 	
 	
 	
@@ -598,10 +642,13 @@
 		
 		
 		</div>
-		<!-- 캘린더 -->
-		<div style="border-radius: 6px; background-color: white; border: 0px solid red; margin-bottom:20px; margin-top:200px; margin-left:20px;  width: 600px; height: 600px;float: left; ">
-			<div id='calendar' style='margin: 3em 0; font-size: 13px;' ></div>
-		
+		<!-- 캘린더 --> 
+		<div style="border-radius: 6px; background-color: white; border: 0px solid red; margin-bottom:20px; margin-top:200px; margin-left:20px;  width: 600px; height: 600px; float: left; ">
+			<div id='calendar' style='margin: 3em 0 1em 0; font-size: 13px;'></div>
+			<button type="button" id="btnLike">
+				<span>이 일정이 마음에 들면 좋아요!&nbsp;&nbsp;&nbsp;<img src="<%=request.getContextPath()%>/resources/images/like.jpg" width="35px" height="35px"></span> 
+			</button>
+			<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;누적 좋아요! : <span id="likecnt" style="font-size: 12pt; color: red;"></span></span>
 		</div>
 	</div>
 

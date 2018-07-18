@@ -61,6 +61,29 @@
 		where quitYN = 1 and password = #{password} and userid = #{userid}
 	</update>
 	
+	<select id="likecnt" parameterType="HashMap" resultType="Integer">
+		select count(*)
+		from tbl_like
+		where fk_seq_schedule = #{seq_schedule}
+	</select>
+	
+	<select id="likecnt2" parameterType="String" resultType="Integer">
+		select count(*)
+		from tbl_like
+		where fk_seq_schedule = #{seq}
+	</select>
+	
+	<select id="checklike" parameterType="HashMap" resultType="Integer">
+		select count(*)
+		from tbl_like
+		where fk_seq_schedule = #{seq_schedule} and fk_userid = #{userid}
+	</select>
+	
+	<insert id="addlike" parameterType="HashMap">
+		insert into tbl_like(fk_seq_schedule, fk_userid, likecnt)
+		values(#{seq_schedule}, #{userid}, default)
+	</insert>
+	
 </mapper>
 
 

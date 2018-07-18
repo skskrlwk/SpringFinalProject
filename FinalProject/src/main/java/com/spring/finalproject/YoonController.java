@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
@@ -375,8 +376,87 @@ public class YoonController {
 			}
 						
 		}
-		
 		return "memberQuit.notiles";
-	
 	}
+	
+	
+	
+	// ==== 좋아요 갯수 불러오기 ====
+	@RequestMapping(value="/likeJSON.action", method={RequestMethod.GET})  
+	public String likecnt(HttpServletRequest request, HttpServletResponse response) {
+		
+		HttpSession session = request.getSession();
+		
+		String seq_schedule = request.getParameter("seq_schedule");
+		MemberVO membervo = (MemberVO)session.getAttribute("loginuser");
+		
+		
+		JSONObject json = new JSONObject();
+		HashMap<String, String> map = new HashMap<String, String>(); 
+				
+		if(membervo == null) {
+			json.put("likeNoLoginMSG", 1);
+			
+			String str_result = json.toString();
+			
+			System.out.println("str_result : " + str_result);
+			
+			request.setAttribute("str_result", str_result);
+					
+			return "likeNoLoginMSG.notiles";
+		}
+		else {
+			String userid = membervo.getUserid();
+			
+			map.put("seq_schedule", seq_schedule);
+			map.put("userid", userid);			
+			
+			int checklike = service.checklike(map);
+			
+			if(checklike == 1) {
+				json.put("checklike", checklike);
+			}
+			else {
+				json.put("checklike", checklike);
+				int addlike = service.addlike(map);
+				
+				if(addlike == 1) {
+					json.put("addlike", addlike);
+				}
+				else {
+					json.put("addlike", addlike);
+				}
+			}
+			
+			
+			int likecnt = service.likecnt(map);
+			
+			json.put("likecnt", likecnt);
+								
+			String str_result = json.toString();
+			
+			System.out.println("str_result : " + str_result);
+			
+			request.setAttribute("str_result", str_result);
+					
+			return "likecntJSON.notiles";
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -28,6 +28,8 @@ public interface InterLimService {
 
 	int AddScheduler(String seq);
 
+	int likecnt(String seq);
+
 
 	
 	

@@ -55,6 +55,10 @@ public class LimController {
 		
 		String seq = req.getParameter("seq");
 		
+		int likecnt = service.likecnt(seq);
+		
+		req.setAttribute("likecnt", likecnt);
+		
 		if(seq.trim().equals("")) {
 			String msg = "잘못된 접근입니다.";
 			String loc = "javascript:history.back();";
@@ -177,7 +181,7 @@ public class LimController {
 		HashMap<String, String> show_schedulerList2 = service2.show_schedulerList2(map);
 		req.setAttribute("show_schedulerList2", show_schedulerList2);
 	
-		return "schedule/ScheduleDetail.tiles"; 
+		return "schedule/ScheduleDetail.tiles";
 	}
 	
 	@RequestMapping(value = "/scheduleAddEnd.action", method = RequestMethod.POST)

@@ -164,6 +164,12 @@ public class LimService implements InterLimService {
 		int n = dao.AddScheduler(seq);
 		return n;
 	}
+
+	@Override
+	public int likecnt(String seq) {
+		int n = dao.likecnt(seq);
+		return n;
+	}
 	
 	
 }

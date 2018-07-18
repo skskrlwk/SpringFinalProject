@@ -666,7 +666,7 @@ div.pagebar {
 	<div class="container">
 		<div class="row">
 			<div class="col text-center">
-				<h2 class="section_title">what our clients say about us</h2>
+				<h2 class="section_title">Best Plan Top 5 !!</h2>
 			</div>
 		</div>
 		<div class="row">
@@ -677,173 +677,56 @@ div.pagebar {
 				<div class="test_slider_container">
 					<div class="owl-carousel owl-theme test_slider">
 
-						<!-- Testimonial Item -->
-						<div class="owl-item">
+						<c:forEach var="trapvo" items="${traplist}" varStatus="status">
+
+							<c:if test="${trapvo.seq_schedule == 0}">
+								<li data-target=".row intro_items"
+									data-slide-to="${trapvo.seq_schedule}" class="active"></li>
+								<h3>등록된 회원일정이 없습니다.</h3>
+							</c:if>
+							
+							<div class="owl-item">
 							<div class="test_item">
 								<div class="test_image">
 									<img
-										src="<%=request.getContextPath()%>/resources/images/test_1.jpg"
-										alt="https://unsplash.com/@anniegray">
+										src="<%=request.getContextPath()%>/resources/images/city/${trapvo.cityImg}"
+										style="height: 500px;">
 								</div>
 								<div class="test_icon">
 									<img
 										src="<%=request.getContextPath()%>/resources/images/backpack.png"
 										alt="">
-								</div>
+								</div>		
 								<div class="test_content_container">
 									<div class="test_content">
 										<div class="test_item_info">
-											<div class="test_name">carla smith</div>
-											<div class="test_date">May 24, 2017</div>
+											<div class="test_name">${trapvo.FK_USERID}</div>
+											<div class="test_date">${trapvo.REGISTERDAY}</div>
 										</div>
-										<div class="test_quote_title">" Best holliday ever "</div>
-										<p class="test_quote_text">Nullam eu convallis tortor.
-											Suspendisse potenti. In faucibus massa arcu, vitae cursus mi
-											hendrerit nec.</p>
+										<div class="button intro_button" id="btnWrite">
+											<div class="button_bcg"></div>
+											<a href="<%=request.getContextPath()%>/ScheduleDetail.action?seq=${trapvo.SEQ_SCHEDULE}">상세일정
+												보기 </a>
+										</div>
+										<div class="intro_center text-center">
+											<div class="intro_price">${trapvo.FK_USERID}</div>
+											<div class="intro_price" style="margin-top: 5px;">${trapvo.ALLDAYS}일 간</div>
+											<h2>
+												<span style="color: white; font-weight: bold; font-size: 30px;">${trapvo.TITLE}</span>
+											</h2> 
+			
+										</div>
+			
+										<div class="intro_date" style="text-align: center;">출발일 :
+											${trapvo.STARTDAY}</div>
+										<div class="item active"></div>
 									</div>
 								</div>
 							</div>
-						</div>
-
-						<!-- Testimonial Item -->
-						<div class="owl-item">
-							<div class="test_item">
-								<div class="test_image">
-									<img
-										src="<%=request.getContextPath()%>/resources/images/test_2.jpg"
-										alt="https://unsplash.com/@tschax">
-								</div>
-								<div class="test_icon">
-									<img
-										src="<%=request.getContextPath()%>/resources/images/island_t.png"
-										alt="">
-								</div>
-								<div class="test_content_container">
-									<div class="test_content">
-										<div class="test_item_info">
-											<div class="test_name">carla smith</div>
-											<div class="test_date">May 24, 2017</div>
-										</div>
-										<div class="test_quote_title">" Best holliday ever "</div>
-										<p class="test_quote_text">Nullam eu convallis tortor.
-											Suspendisse potenti. In faucibus massa arcu, vitae cursus mi
-											hendrerit nec.</p>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- Testimonial Item -->
-						<div class="owl-item">
-							<div class="test_item">
-								<div class="test_image">
-									<img
-										src="<%=request.getContextPath()%>/resources/images/test_3.jpg"
-										alt="https://unsplash.com/@seefromthesky">
-								</div>
-								<div class="test_icon">
-									<img
-										src="<%=request.getContextPath()%>/resources/images/kayak.png"
-										alt="">
-								</div>
-								<div class="test_content_container">
-									<div class="test_content">
-										<div class="test_item_info">
-											<div class="test_name">carla smith</div>
-											<div class="test_date">May 24, 2017</div>
-										</div>
-										<div class="test_quote_title">" Best holliday ever "</div>
-										<p class="test_quote_text">Nullam eu convallis tortor.
-											Suspendisse potenti. In faucibus massa arcu, vitae cursus mi
-											hendrerit nec.</p>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- Testimonial Item -->
-						<div class="owl-item">
-							<div class="test_item">
-								<div class="test_image">
-									<img
-										src="<%=request.getContextPath()%>/resources/images/test_2.jpg"
-										alt="">
-								</div>
-								<div class="test_icon">
-									<img
-										src="<%=request.getContextPath()%>/resources/images/island_t.png"
-										alt="">
-								</div>
-								<div class="test_content_container">
-									<div class="test_content">
-										<div class="test_item_info">
-											<div class="test_name">carla smith</div>
-											<div class="test_date">May 24, 2017</div>
-										</div>
-										<div class="test_quote_title">" Best holliday ever "</div>
-										<p class="test_quote_text">Nullam eu convallis tortor.
-											Suspendisse potenti. In faucibus massa arcu, vitae cursus mi
-											hendrerit nec.</p>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- Testimonial Item -->
-						<div class="owl-item">
-							<div class="test_item">
-								<div class="test_image">
-									<img
-										src="<%=request.getContextPath()%>/resources/images/test_1.jpg"
-										alt="">
-								</div>
-								<div class="test_icon">
-									<img
-										src="<%=request.getContextPath()%>/resources/images/backpack.png"
-										alt="">
-								</div>
-								<div class="test_content_container">
-									<div class="test_content">
-										<div class="test_item_info">
-											<div class="test_name">carla smith</div>
-											<div class="test_date">May 24, 2017</div>
-										</div>
-										<div class="test_quote_title">" Best holliday ever "</div>
-										<p class="test_quote_text">Nullam eu convallis tortor.
-											Suspendisse potenti. In faucibus massa arcu, vitae cursus mi
-											hendrerit nec.</p>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- Testimonial Item -->
-						<div class="owl-item">
-							<div class="test_item">
-								<div class="test_image">
-									<img
-										src="<%=request.getContextPath()%>/resources/images/test_3.jpg"
-										alt="">
-								</div>
-								<div class="test_icon">
-									<img
-										src="<%=request.getContextPath()%>/resources/images/kayak.png"
-										alt="">
-								</div>
-								<div class="test_content_container">
-									<div class="test_content">
-										<div class="test_item_info">
-											<div class="test_name">carla smith</div>
-											<div class="test_date">May 24, 2017</div>
-										</div>
-										<div class="test_quote_title">" Best holliday ever "</div>
-										<p class="test_quote_text">Nullam eu convallis tortor.
-											Suspendisse potenti. In faucibus massa arcu, vitae cursus mi
-											hendrerit nec.</p>
-									</div>
-								</div>
-							</div>
-						</div>
+						</div>		
+							
+			
+						</c:forEach>
 
 					</div>
 
