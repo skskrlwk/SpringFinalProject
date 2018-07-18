@@ -75,6 +75,7 @@
 		document.getElementById("defaultOpen").click(); 		
 		google.maps.event.addDomListener(window, 'load', initialize);
 		calendar();	
+				
 	});
 
 
@@ -95,9 +96,9 @@
 	}	
 	
 	
-	function tour_info(fk_category, Tourtitle) {
-	  //	alert(fk_category);			
-		form_data = {fk_category : fk_category};
+	function tour_info(seq_tourlist, Tourtitle) {
+	 // alert(seq_tourlist);			
+		form_data = {seq_tourlist : seq_tourlist};
 		
 		$.ajax({
 			url:"<%=request.getContextPath()%>/detail_tourlist.action",
@@ -111,27 +112,28 @@
 				
 				$("#modal_info").empty();
 			  								
-				var html = "<h2>"+data[0].w_name+"</h2><br/>";					
-					html+= "<img src='/finalproject/resources/images/city/"+data[0].w_image+"' width='600' height='345 style='margin-bottom: 20px;' >";
+				var html = "<h2>"+data[0].a_name+"</h2><br/>";					
+					html+= "<img src='/finalproject/resources/images/place/"+data[0].a_image+"' width='600' height='345 style='margin-bottom: 20px;' >";
 			 		html+= "<hr>";
 			 		html+= "<div style='text-align: left; margin-top: 20px; margin-bottom: 20px; margin-left: 30px;'>";
-			 		html+= "	<span style='font-size: 12pt; font-weight: bold; text-align: left;'>"+data[0].w_name+"</span><br/>";
-					html+= "	<span style='text-align: left; width: 200px;'>"+data[0].w_comments+"</span>";				
+			 		html+= "	<span style='font-size: 12pt; font-weight: bold; text-align: left;'>"+data[0].a_name+"</span><br/>";
+					html+= "	<span style='text-align: left; width: 200px;'>"+data[0].a_comments+"</span>";				
 					html+= "</div>";
 					html+= "<hr>";
 			 		html+= "<div style='font-size: 12pt; font-weight: bold; text-align: left; margin-left: 30px; margin-bottom: 20px;  '>";	 
-			 		html+= "	<span>투어</span><br/>";				
+			 		html+= "	<span>관련 투어</span><br/>";				
 					html+= "</div>"; 
 					html+= "<div align='left' style='margin-left: 30px;'>"; 
 				
 					html+= "<div style='overflow-x: auto; white-space: nowrap; '>";
 					
 				$.each(data, function(entryIndex, entry){
-					html+= "	<div style='display: inline-block;'	> "; 
-					html+= "		<img src='/finalproject/resources/images/tour/"+entry.t_image+"' class='img-rounded' width='150' height='200' style='margin-right: 20px;' ><br/>";
-					html+= "		<div style='text-align:center'>";
-					html+= "			<span>"+entry.t_name+"</span>";							
-					html+= "		</div>";
+		//			html+= "	<div style='display: inline-block;'	> "; 
+					html+= "	<div align='left' style='width: 160px; display: inline-block; white-space: normal; vertical-align: top; margin-right: 2%;  text-align: center;'>"; 
+					html+= "		<img src='/finalproject/resources/images/tour/"+entry.b_image+"' class='img-rounded' width='150' height='200' style='margin-right: 20px;' onclick='tourSite(\""+entry.b_addr+"\");'><br/>";
+		//			html+= "		<div style='text-align:center'>";
+					html+= "			<span>"+entry.b_name+"</span>";							
+		//			html+= "		</div>";
 					html+= "	</div>";
 				});
 		 	
@@ -182,11 +184,12 @@
 					html+= "<div style='overflow-x: auto; white-space: nowrap; margin-left: 20px;'>";
 				$.each(data, function(entryIndex, entry){					
 					
-					html+= "	<div style='display: inline-block; text-align: left; width: 160px; vertical-align:top; margin-right: 60px;' >"
+		//			html+= "	<div style='display: inline-block; text-align: left; width: 160px; vertical-align:top; margin-right: 60px;' >"
+					html+= "	<div align='left' style='width: 165px; display: inline-block; white-space: normal; vertical-align: top; margin-right: 2%;'>"; 
 					html+= "		<img src='/finalproject/resources/images/restaurant/"+entry.b_image+"' class='img-rounded' width='150' height='200' style='margin-right: 20px; '><br/>";
 					html+= "		<span style='font-size: 12pt; font-weight: bold;'>"+entry.b_name+"</span><br/>";	
-					html+= "		운영시간 : <span>"+entry.b_worktime+"</span><br/>";						
-					html+= "		주소 :<span style='white-space: pre-line;'>"+entry.b_addr+"</span>";	
+					html+= "		<span style='font-weight: bold;'>운영시간</span> <br/><span>"+entry.b_worktime+"</span><br/>";						
+					html+= "		<span style='font-weight: bold;'>주소 :&nbsp;</span><span style='white-space: pre-line;'>"+entry.b_addr+"</span>";	
 					html+= "	</div>";	
 					
 										
@@ -207,7 +210,7 @@
 	
 	
 	
-	function shopping_info(seq_shop, Shoptitle) {		
+	function shopping_info(seq_shop, Shoptitle, fk_category) {		
 	//	alert(seq_shop);	
 		
 		form_data = {seq_shop : seq_shop};
@@ -223,9 +226,7 @@
 				$("#modal-title").html("<h3>"+Shoptitle+"</h3>");
 				
 				$("#modal_info").empty();
-		
-								
-				
+												
 				var html = "<h2>"+data[0].name+"</h2><br/>";					
 					html+= "<img src='/finalproject/resources/images/shop/"+data[0].image+"' width='600' height='345 style='margin-bottom: 20px;' >";
 			 		html+= "<hr>";			
@@ -235,24 +236,39 @@
 					html+= "</div>";		
 					html+= "	<hr>";
 					html+= "<div style='font-size: 12pt; font-weight: bold; text-align: left; margin-bottom: 20px;  margin-left: 30px;'>";	 
-			 		html+= "	<span>매장</span><br/>";				
+			 		html+= "	<span>매장</span><br/>";	
+			 		
+			 		form_data2 = {fk_category : fk_category};
+			 		$.ajax({
+			 			
+			 			url:"<%=request.getContextPath()%>/detail_shop2.action",
+						type : "GET",
+						data : form_data2,
+						dataType : "JSON", 
+						success: function(data){
+														
+							html+= "<div align='left' style='margin-left: 20px;'>";
+							html+= "<div style='overflow-x: auto; white-space: nowrap; margin-left: 20px;'>";
+							$.each(data, function(entryIndex, entry){
+														
+								html+= "	<div align='left' style='width: 165px; display: inline-block; white-space: normal; vertical-align: top; margin-right: 2%;'>"; 
+								html+= "		<img src='/finalproject/resources/images/shop/"+entry.image+"' align='left' class='img-rounded' width='150' height='200' ><br/>";
+								html+= "		<span style='font-size: 12pt; font-weight: bold;'>"+entry.name+"</span><br/>";					
+								html+= "		<span style='font-weight: bold;'>운영시간</span><br/><span>"+entry.worktime+"</span><br/>";	
+								html+= "		<span style='font-weight: bold;'>주소 :&nbsp;</span><span style='white-space: pre-line;'>"+entry.addr+"</span>";					
+								html+= "	</div>";
+							});
+							html+= "</div>";
+							
+							$("#modal_info").html(html);
+						},
+						error: function(request, status, error){
+					        alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+					    }
+							
+			 		});
+			 		
 					html+= "</div>";
-					
-					html+= "<div align='left' style='margin-left: 20px;'>";
-					
-				$.each(data, function(entryIndex, entry){
-					html+= "	<div style='display: inline-block; text-align: left; width: 160px; vertical-align:top;' >"
-					html+= "		<img src='/finalproject/resources/images/shop/"+entry.image+"' align='left' class='img-rounded' width='150' height='200' ><br/>";
-					html+= "		<span style='font-size: 12pt; font-weight: bold;'>"+entry.name+"</span><br/>";					
-					html+= "		운영시간 : <span>"+entry.worktime+"</span><br/>";	
-					html+= "		주소 : <span style='white-space: pre-line;'>"+entry.addr+"</span>";					
-					html+= "	</div>";	
-				
-				});
-				
-					html+= "</div>";	
-					
-				$("#modal_info").html(html);
 
 			},
 			error: function(request, status, error){
@@ -264,7 +280,7 @@
 	}// end of shopping_info(seq_shop)-----------------
 	
 	
-	function tourSite(addr) {
+	function tourSite(addr) {		
 		
 		window.open(addr);
 		
@@ -283,7 +299,7 @@
 		
 		$.ajax({
 			url:"<%=request.getContextPath()%>/update_scheduler.action",
-			type : "GET",
+			type : "POST",
 			data : form_data,
 			dataType : "JSON", 
 			success: function(data){
@@ -581,27 +597,554 @@
 	}
 	
 	
+	function editTourlist() {
+		var fk_category = "";
+		
+		<c:forEach var="cal" items="${calList}" varStatus='status'>
+			<c:if test="${status.index == 0}">
+				fk_category += ${cal.fk_category};
+			</c:if>
+			<c:if test="${status.index != 0}">
+				fk_category += ","+${cal.fk_category};
+			</c:if>
+			
+		</c:forEach>
+		
+		//alert(fk_category);
+		var seq_tourlist = "";
+		<c:forEach var="tourList" items="${show_tourList}" varStatus='status'>
+			<c:if test="${status.index == 0}">
+			seq_tourlist += ${tourList.seq_tourlist};
+			</c:if>
+			<c:if test="${status.index != 0}">
+			seq_tourlist += ","+${tourList.seq_tourlist};
+			</c:if>			
+		</c:forEach>
+		
+		var seq_tourlistArr = seq_tourlist.split(",");		
+	//	alert("배열크기 : " + seq_tourlistArr.length);
+	//	alert(seq_tourlistArr[0]);
+	//	alert(seq_tourlistArr[1]);
+	//	alert(seq_tourlistArr[2]);
+	//	alert(fk_category);
+			
+		form_data = {fk_category : fk_category};
+					
+		$.ajax({
+			url:"<%=request.getContextPath()%>/editTourlist.action",
+			type : "GET",
+			data : form_data,
+			dataType : "JSON", 
+			success: function(data){
+								
+				$("#modal_info").empty();
+				
+				var html = "<h3>명소 선택</h3>";
+					html +="<span>인기있는 명소를 선택해보세요!</span><hr/>";
+					
+				
+				$.each(data, function(entryIndex, entry){
+				
+					var flag = 0;
+					 for(i=0; i<seq_tourlistArr.length; i++){
+						if(seq_tourlistArr[i] == entry.seq_tourlist){
+							flag = 1;
+							
+						}// end of if
+						
+					}// end of for
+					
+					if(flag == 0) { 
+						html+= "<div align='left' style='width: 160px; display: inline-block; white-space: normal; vertical-align: top; margin-right: 2%;  text-align: center;'>"; 
+						html+= "	<label for='tourlistChk"+entryIndex+"'>";
+						html+= "		<input type='checkbox' name='tourlistChk' id='tourlistChk"+entryIndex+"' value='"+entry.seq_tourlist+"'/>";				
+						html+= "		<input type='hidden' name='tourlist_seq' id='tourlist_seq"+entryIndex+"' value='"+entry.fk_category+"'/>";	
+						html+= "		<img src='/finalproject/resources/images/place/"+entry.image+"' class='img-rounded' width='150' height='200' style='margin-right: 20px; '><br/>";
+						html+= "	</label>";
+						html+= "	<span>"+entry.name+"</span>";				
+						html+= "</div>";
+					}
+													
+					
+				});
+		 		
+			
+				html +="<br/><button type='button' class='btn' style='margin-top:30px; width: 60px; height: 30px; font-size: 10pt;' onClick='addTourlist();'>추가</button>";
+				html +="<button type='button' class='btn' data-dismiss='modal' style='width: 60px; height: 30px; margin-top:30px; margin-left:30px; font-size: 10pt;'>취소</button>";
+				
+				$("#modal_info").html(html);
+				
+			},
+			error: function(request, status, error){
+		        alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+		    }
+						
+		});
+		
 	
+ 	
+ }// end of editTourlist()---------
+
+ 	// 명소 추가하기
+	function addTourlist() {
+		
+	var seq = "";
+	var fk = "";
+	 $('input:checkbox[name=tourlistChk]').each(function () {
+		if($(this).is(':checked')){
+			seq += ","+($(this).val());
+			fk += "," + ($(this).next().val());
+		}
+		
+	});
 	
+		 
+	// $("#tourinput").val(seq.substring(1));
+	// $("#fkinput").val(fk.substring(1));
+ 	
+	var frm = document.editFrm;
+	frm.imgseq.value = seq.substring(1);
+	frm.fk_category.value = fk.substring(1);
+	frm.category.value = "tbl_tourlist";
+	frm.method = "post";
+	frm.action = "<%= request.getContextPath() %>/editDetail2.action";
+	frm.submit();
+ 	}// end of addTourlist() -----------------
+ 	
+ 	
+ 	
+ 	function editFood() {
+		var fk_category = "";
+		
+		<c:forEach var="cal" items="${calList}" varStatus='status'>
+			<c:if test="${status.index == 0}">
+				fk_category += ${cal.fk_category};
+			</c:if>
+			<c:if test="${status.index != 0}">
+				fk_category += ","+${cal.fk_category};
+			</c:if>
+			
+		</c:forEach>
+		
+	//	alert(fk_category);
+		var seq_food = "";
+		<c:forEach var="foodList" items="${show_foodList}" varStatus='status'>
+			<c:if test="${status.index == 0}">
+			seq_food += ${foodList.seq_food};
+			</c:if>
+			<c:if test="${status.index != 0}">
+			seq_food += ","+${foodList.seq_food};
+			</c:if>			
+		</c:forEach>
+		
+		var seq_foodArr = seq_food.split(",");		
+	//	alert("배열크기 : " + seq_foodArr.length);
 	
+		form_data = {fk_category : fk_category};
+					
+		$.ajax({
+			url:"<%=request.getContextPath()%>/editFood.action",
+			type : "GET",
+			data : form_data,
+			dataType : "JSON", 
+			success: function(data){
+								
+				$("#modal_info").empty();
+				
+				var html = "<h3>음식 선택</h3>";
+					html +="<span>인기있는 음식을 선택해보세요!</span><hr/>";
+					
+				
+				$.each(data, function(entryIndex, entry){
+				
+					var flag = 0;
+					for(i=0; i<seq_foodArr.length; i++){
+						if(seq_foodArr[i] == entry.seq_food){
+							flag = 1;
+							
+						}// end of if
+						
+					}// end of for
+					
+					if(flag == 0) { 
+						html+= "<div align='left' style='width: 160px; display: inline-block; white-space: normal; vertical-align: top; margin-right: 2%;  text-align: center;'>"; 
+						html+= "	<label for='foodChk"+entryIndex+"'>";
+						html+= "		<input type='checkbox' name='foodChk' id='foodChk"+entryIndex+"' value='"+entry.seq_food+"'/>";				
+						html+= "		<input type='hidden' name='food_seq' id='food_seq"+entryIndex+"' value='"+entry.fk_category+"'/>";	
+						html+= "		<img src='/finalproject/resources/images/food/"+entry.image+"' class='img-rounded' width='150' height='200' style='margin-right: 20px; '><br/>";
+						html+= "	</label>";
+						html+= "	<span>"+entry.name+"</span>";				
+						html+= "</div>";
+					}
+													
+					
+				});
+		 		
+				
+				html +="<br/><button type='button' class='btn' style='margin-top:30px; width: 60px; height: 30px; font-size: 10pt;' onClick='addFood();'>추가</button>";
+				html +="<button type='button' class='btn' data-dismiss='modal' style='width: 60px; height: 30px; margin-top:30px; margin-left:30px; font-size: 10pt;'>취소</button>";
+				
+				$("#modal_info").html(html);
+				
+			},
+			error: function(request, status, error){
+		        alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+		    }
+						
+		});
+		 	
+ 	}// end of editFood()---------
+ 	
+	// 음식 추가하기
+	function addFood() {
+		
+	var seq = "";
+	var fk = "";
+	 $('input:checkbox[name=foodChk]').each(function () {
+		if($(this).is(':checked')){
+			seq += ","+($(this).val());
+			fk += "," + ($(this).next().val());
+		}
+		
+	});	
+		 	
+	var frm = document.editFrm;
+	frm.imgseq.value = seq.substring(1);
+	frm.fk_category.value = fk.substring(1);
+	frm.category.value = "tbl_food";
+	frm.method = "post";
+	frm.action = "<%= request.getContextPath() %>/editDetail2.action";
+	frm.submit();
+	
+	}// end of addFood() -----------------
+ 
+ 
+	function editShop() {
+		var fk_category = "";
+		
+		<c:forEach var="cal" items="${calList}" varStatus='status'>
+			<c:if test="${status.index == 0}">
+				fk_category += ${cal.fk_category};
+			</c:if>
+			<c:if test="${status.index != 0}">
+				fk_category += ","+${cal.fk_category};
+			</c:if>			
+		</c:forEach>
+		
+		var seq_shop = "";
+		<c:forEach var="shopList" items="${show_shopList}" varStatus='status'>
+			<c:if test="${status.index == 0}">
+			seq_shop += ${shopList.seq_shop};
+			</c:if>
+			<c:if test="${status.index != 0}">
+			seq_shop += ","+${shopList.seq_shop};
+			</c:if>			
+		</c:forEach>
+		
+		var seq_shopArr = seq_shop.split(",");		
+	//	alert("배열크기 : " + seq_foodArr.length);
+	
+		form_data = {fk_category : fk_category};
+					
+		$.ajax({
+			url:"<%=request.getContextPath()%>/editShop.action",
+			type : "GET",
+			data : form_data,
+			dataType : "JSON", 
+			success: function(data){
+								
+				$("#modal_info").empty();
+				
+				var html = "<h3>쇼핑 선택</h3>";
+					html +="<span>인기있는 쇼핑몰을 선택해보세요!</span><hr/>";
+					
+				
+				$.each(data, function(entryIndex, entry){
+				
+					var flag = 0;
+					for(i=0; i<seq_shopArr.length; i++){
+						if(seq_shopArr[i] == entry.seq_shop){
+							flag = 1;
+							
+						}// end of if
+						
+					}// end of for
+					
+					if(flag == 0) { 
+						html+= "<div align='left' style='width: 160px; display: inline-block; white-space: normal; vertical-align: top; margin-right: 2%;  text-align: center;'>"; 
+						html+= "	<label for='shopChk"+entryIndex+"'>";
+						html+= "		<input type='checkbox' name='shopChk' id='shopChk"+entryIndex+"' value='"+entry.seq_shop+"'/>";				
+						html+= "		<input type='hidden' name='shop_seq' id='shop_seq"+entryIndex+"' value='"+entry.fk_category+"'/>";	
+						html+= "		<img src='/finalproject/resources/images/shop/"+entry.image+"' class='img-rounded' width='150' height='200' style='margin-right: 20px; '><br/>";
+						html+= "	</label>";
+						html+= "	<span>"+entry.name+"</span>";				
+						html+= "</div>";
+					}
+													
+					
+				});
+		 		
+				
+				html +="<br/><button type='button' class='btn' style='margin-top:30px; width: 60px; height: 30px; font-size: 10pt;' onClick='addShop();'>추가</button>";
+				html +="<button type='button' class='btn' data-dismiss='modal' style='width: 60px; height: 30px; margin-top:30px; margin-left:30px; font-size: 10pt;'>취소</button>";
+				
+				$("#modal_info").html(html);
+				
+			},
+			error: function(request, status, error){
+		        alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+		    }
+						
+		});
+		 	
+ 	}// end of editShop()---------
+	
+	// 쇼핑 추가하기
+	function addShop() {
+		
+	var seq = "";
+	var fk = "";
+	$('input:checkbox[name=shopChk]').each(function () {
+		if($(this).is(':checked')){
+			seq += ","+($(this).val());
+			fk += "," + ($(this).next().val());
+		}
+		
+	});	
+		 	
+	var frm = document.editFrm;
+	frm.imgseq.value = seq.substring(1);
+	frm.fk_category.value = fk.substring(1);
+	frm.category.value = "tbl_shop";
+	frm.method = "post";
+	frm.action = "<%= request.getContextPath() %>/editDetail2.action";
+	frm.submit();
+	
+	}// end of addShop() -----------------
+ 
+	
+	function editTour() {
+		var fk_category = "";
+		
+		<c:forEach var="cal" items="${calList}" varStatus='status'>
+			<c:if test="${status.index == 0}">
+				fk_category += ${cal.fk_category};
+			</c:if>
+			<c:if test="${status.index != 0}">
+				fk_category += ","+${cal.fk_category};
+			</c:if>			
+		</c:forEach>
+		
+		var seq_tour = "";
+		<c:forEach var="tourList" items="${show_TourActivityList}" varStatus='status'>
+			<c:if test="${status.index == 0}">
+			seq_tour += ${tourList.seq_tour};
+			</c:if>
+			<c:if test="${status.index != 0}">
+			seq_tour += ","+${tourList.seq_tour};
+			</c:if>			
+		</c:forEach>
+		
+		var seq_tourArr = seq_tour.split(",");		
+	//	alert("배열크기 : " + seq_tourArr.length);
+	
+		form_data = {fk_category : fk_category};
+					
+		$.ajax({
+			url:"<%=request.getContextPath()%>/editTour.action",
+			type : "GET",
+			data : form_data,
+			dataType : "JSON", 
+			success: function(data){
+								
+				$("#modal_info").empty();
+				
+				var html = "<h3>투어/액티비티 선택</h3>";
+					html +="<span>인기있는 투어/액티비티를 선택해보세요!</span><hr/>";
+					
+				
+				$.each(data, function(entryIndex, entry){
+				
+					var flag = 0;
+					for(i=0; i<seq_tourArr.length; i++){
+						if(seq_tourArr[i] == entry.seq_tour){
+							flag = 1;
+							
+						}// end of if
+						
+					}// end of for
+					
+					if(flag == 0) { 
+						html+= "<div align='left' style='width: 160px; display: inline-block; white-space: normal; vertical-align: top; margin-right: 2%;  text-align: center;'>"; 
+						html+= "	<label for='tourChk"+entryIndex+"'>";
+						html+= "		<input type='checkbox' name='tourChk' id='tourChk"+entryIndex+"' value='"+entry.seq_tour+"'/>";				
+						html+= "		<input type='hidden' name='tour_seq' id='tour_seq"+entryIndex+"' value='"+entry.fk_category+"'/>";	
+						html+= "		<img src='/finalproject/resources/images/tour/"+entry.image+"' class='img-rounded' width='150' height='200' style='margin-right: 20px; '><br/>";
+						html+= "	</label>";
+						html+= "	<span>"+entry.name+"</span>";				
+						html+= "</div>";
+					}
+													
+					
+				});
+		 		
+				
+				html +="<br/><button type='button' class='btn' style='margin-top:30px; width: 60px; height: 30px; font-size: 10pt;' onClick='addTour();'>추가</button>";
+				html +="<button type='button' class='btn' data-dismiss='modal' style='width: 60px; height: 30px; margin-top:30px; margin-left:30px; font-size: 10pt;'>취소</button>";
+				
+				$("#modal_info").html(html);
+				
+			},
+			error: function(request, status, error){
+		        alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+		    }
+						
+		});
+		 	
+ 	}// end of editTour()---------
+	
+	// 투어/액티비티 추가하기
+	function addTour() {
+		
+	var seq = "";
+	var fk = "";
+	$('input:checkbox[name=tourChk]').each(function () {
+		if($(this).is(':checked')){
+			seq += ","+($(this).val());
+			fk += "," + ($(this).next().val());
+		}
+		
+	});	
+		 	
+	var frm = document.editFrm;
+	frm.imgseq.value = seq.substring(1);
+	frm.fk_category.value = fk.substring(1);
+	frm.category.value = "tbl_tour";
+	frm.method = "post";
+	frm.action = "<%= request.getContextPath() %>/editDetail2.action";
+	frm.submit();
+	
+	}// end of addTour() -----------------
+ 
+	
+	function editBook() {
+		var fk_category = "";
+		
+		<c:forEach var="cal" items="${calList}" varStatus='status'>
+			<c:if test="${status.index == 0}">
+				fk_category += ${cal.fk_category};
+			</c:if>
+			<c:if test="${status.index != 0}">
+				fk_category += ","+${cal.fk_category};
+			</c:if>
+			
+		</c:forEach>
+		
+	//	alert(fk_category);
+		var seq_book = "";
+		<c:forEach var="bookList" items="${show_bookList}" varStatus='status'>
+			<c:if test="${status.index == 0}">
+			seq_book += ${bookList.seq_book};
+			</c:if>
+			<c:if test="${status.index != 0}">
+			seq_book += "," + ${bookList.seq_book};
+			</c:if>			
+		</c:forEach>
+		
+		var seq_bookArr = seq_book.split(",");		
+	//	alert("배열크기 : " + seq_foodArr.length);
+	
+		form_data = {fk_category : fk_category};
+					
+		$.ajax({
+			url:"<%=request.getContextPath()%>/editBook.action",
+			type : "GET",
+			data : form_data,
+			dataType : "JSON", 
+			success: function(data){
+								
+				$("#modal_info").empty();
+				
+				var html = "<h3>셀프북 선택</h3>";
+					html +="<span>인기있는 셀프북을 선택해보세요!</span><hr/>";
+					
+				
+				$.each(data, function(entryIndex, entry){
+				
+					var flag = 0;
+					for(i=0; i<seq_bookArr.length; i++){
+						if(seq_bookArr[i] == entry.seq_book){
+							flag = 1;
+							
+						}// end of if
+						
+					}// end of for
+					
+					if(flag == 0) { 
+						html+= "<div align='left' style='width: 160px; display: inline-block; white-space: normal; vertical-align: top; margin-right: 2%;  text-align: center;'>"; 
+						html+= "	<label for='bookChk"+entryIndex+"'>";
+						html+= "		<input type='checkbox' name='bookChk' id='bookChk"+entryIndex+"' value='"+entry.seq_book+"'/>";				
+						html+= "		<input type='hidden' name='book_seq' id='book_seq"+entryIndex+"' value='"+entry.fk_category+"'/>";	
+						html+= "		<img src='/finalproject/resources/images/book/"+entry.image+"' class='img-rounded' width='150' height='200' style='margin-right: 20px; '><br/>";
+						html+= "	</label>";
+						html+= "	<span>"+entry.name+"</span>";				
+						html+= "</div>";
+					}
+													
+					
+				});
+		 		
+				
+				html +="<br/><button type='button' class='btn' style='margin-top:30px; width: 60px; height: 30px; font-size: 10pt;' onClick='addBook();'>추가</button>";
+				html +="<button type='button' class='btn' data-dismiss='modal' style='width: 60px; height: 30px; margin-top:30px; margin-left:30px; font-size: 10pt;'>취소</button>";
+				
+				$("#modal_info").html(html);
+				
+			},
+			error: function(request, status, error){
+		        alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+		    }
+						
+		});
+		 	
+ 	}// end of editBook()---------
+	
+	// 셀프북 추가하기
+	function addBook() {
+		
+	var seq = "";
+	var fk = "";
+	$('input:checkbox[name=bookChk]').each(function () {
+		if($(this).is(':checked')){
+			seq += ","+($(this).val());
+			fk += "," + ($(this).next().val());
+		}
+		
+	});	
+		 	
+	var frm = document.editFrm;
+	frm.imgseq.value = seq.substring(1);
+	frm.fk_category.value = fk.substring(1);
+	frm.category.value = "tbl_book";
+	frm.method = "post";
+	frm.action = "<%= request.getContextPath() %>/editDetail2.action";
+	frm.submit();
+	
+	}// end of addBook() -----------------
+ 
+ 	
 </script>
 
 	
 <!-- 전체 -->
 <div align="center">
-<div class="home_slider_background" style="background-image:url(<%= request.getContextPath() %>/resources/images/ScheduleDetail.jpg)"></div>
-	<div style="display: inline-block;">
 
+	<div style="display: inline-block;">
 		<!-- 지도 -->
-		<div id="googleMap" style="border-radius: 6px; border: 0px solid red; margin-bottom:20px; margin-top:200px;  width: 600px; height: 600px; float: left; ">
-		
-		
-		
-		</div>
+		<div id="googleMap" style="border: 0px solid red; margin-bottom:20px; margin-top:200px;  width: 550px; height: 550px; float: left;"></div>
 		<!-- 캘린더 -->
-		<div style="border-radius: 6px; background-color: white; border: 0px solid red; margin-bottom:20px; margin-top:200px; margin-left:20px;  width: 600px; height: 600px;float: left; ">
-			<div id='calendar' style='margin: 3em 0; font-size: 13px;' ></div>
-		
+		<div style="border: 0px solid red; margin-bottom:20px; margin-top:200px; margin-left:20px;  width: 550px; height: 550px;float: left; ">
+			<div id='calendar' style='margin: 3em 0; font-size: 13px;'></div>
 		</div>
 	</div>
 
@@ -610,39 +1153,68 @@
 	  <button class="tablinks" onclick="openCity(event, 'scheduler')">일정표</button>
 	</div>
 
-
-
-	<div id="bucketList" class="tabcontent"  align="left" style="background-color: white; width:70%; border: 1px solid #e5e5e5; padding-top: 20px; padding-left: 10px; padding-right: 10px; padding-bottom: 20px;">
-		<!-- 명소 -->				
-		<span style="font-size: 14pt; font-weight: bold; color: black; text-align: left; margin-left: 20px;">명소</span><br/>	
-		<c:if test="${show_tourList != null}">
-			<c:forEach var="show_tourListMap" items="${show_tourList}" varStatus="status">				
-				<div id="tour" style="display: inline-block; margin-left: 5px; text-align: center">									
-				<input id="check_tour${status.index}" type="checkbox" style="visibility:hidden">	<!--  style="visibility:hidden" : 체크박스숨김 -->
-					<label for="check_tour${status.index}"> 
-					<img src="<%=request.getContextPath()%>/resources/images/place/${show_tourListMap.image}" style="margin-top: 10px; margin-bottom: 5px;" width="150" height="200" class="img-rounded" onclick="tour_info(${show_tourListMap.fk_category},'명소');" data-toggle="modal" data-target="#myModal">
-				 	</label> 
-					<br/>
-					${show_tourListMap.name}<br/>												
-				</div>
-			</c:forEach>	
-		</c:if>		
+	
+	<div id="bucketList" class="tabcontent"  align="left" style="width:70%; border: 1px solid #e5e5e5; padding-top: 20px; padding-left: 10px; padding-right: 10px; padding-bottom: 20px;">
+		<!-- 명소 -->		
 		
+		
+		<c:if test="${sessionScope.loginuser.userid != ScheduleMap.fk_userid}">		
+			<span style="font-size: 14pt; font-weight: bold; color: black; text-align: left; margin-left: 20px;">명소</span>	
+			<br/>
+		</c:if>
+		
+		
+		<c:if test="${sessionScope.loginuser.userid == ScheduleMap.fk_userid}">		
+			<span style="font-size: 14pt; font-weight: bold; color: black; text-align: left; margin-left: 20px;">명소</span>&nbsp;
+			<img src="<%=request.getContextPath()%>/resources/images/EditBTN.png" width="20" height="20" style="margin-bottom: 10px;" onclick="editTourlist();" data-toggle="modal" data-target="#myModal">
+			<br/>	
+		</c:if>
+			
+		<c:if test="${show_tourList != null}">
+			<div style='overflow-x: auto; white-space: nowrap; margin-left: 20px;'>
+				<c:forEach var="show_tourListMap" items="${show_tourList}" varStatus="status">				
+					<div id="tour" style="display: inline-block; margin-left: 5px; text-align: center">									
+						<input id="check_tour${status.index}" type="checkbox" style="visibility:hidden">	<!--  style="visibility:hidden" : 체크박스숨김 -->
+						<label for="check_tour${status.index}"> 
+						<img src="<%=request.getContextPath()%>/resources/images/place/${show_tourListMap.image}" style="margin-top: 10px; margin-bottom: 5px;" width="150" height="200" class="img-rounded" onclick="tour_info(${show_tourListMap.seq_tourlist},'명소');" data-toggle="modal" data-target="#myModal">
+					 	</label>
+						<br/>
+						${show_tourListMap.name}<br/>												
+					</div>
+				</c:forEach>	
+			</div>
+		</c:if>	
+				
+				
 		<c:if test="${show_tourList == null}">
 			<span id="msgShow">선택된 명소 리스트가 없습니다.</span>
 		</c:if>	
 		
 		<hr/>
-		<br/>		
+		<br/>
+		
 		<!-- 음식 -->				
-		<span style="font-size: 14pt; font-weight: bold; color: black; text-align: left; margin-left: 20px;">음식</span><br/>
+		<c:if test="${sessionScope.loginuser.userid != ScheduleMap.fk_userid}">		
+			<span style="font-size: 14pt; font-weight: bold; color: black; text-align: left; margin-left: 20px;">음식</span><br/>
+		</c:if>
+		
+		<c:if test="${sessionScope.loginuser.userid == ScheduleMap.fk_userid}">		
+			<span style="font-size: 14pt; font-weight: bold; color: black; text-align: left; margin-left: 20px;">음식</span>&nbsp;
+			<img src="<%=request.getContextPath()%>/resources/images/EditBTN.png" width="20" height="20" style="margin-bottom: 10px;" onclick="editFood();" data-toggle="modal" data-target="#myModal">
+			<br/>	
+		</c:if>
+		
+		 
+			
 		<c:if test="${show_foodList != null}">
-			<c:forEach var="show_foodListMap" items="${show_foodList}">							
-				<div id="food" style="display: inline-block; margin-left: 5px; text-align: center">		
-					<img src="<%=request.getContextPath()%>/resources/images/food/${show_foodListMap.image}" style="margin:10px;" class="img-circle" width="150" height="150" onclick="food_info(${show_foodListMap.seq_food},'음식');" data-toggle="modal" data-target="#myModal"><br/> 
-					${show_foodListMap.name}				
-				</div>				
-			</c:forEach>
+			<div style='overflow-x: auto; white-space: nowrap; margin-left: 20px;'>
+				<c:forEach var="show_foodListMap" items="${show_foodList}">							
+					<div id="food" style="display: inline-block; margin-left: 5px; text-align: center">		
+						<img src="<%=request.getContextPath()%>/resources/images/food/${show_foodListMap.image}" style="margin:10px;" class="img-circle" width="150" height="150" onclick="food_info(${show_foodListMap.seq_food},'음식');" data-toggle="modal" data-target="#myModal"><br/> 
+						${show_foodListMap.name}				
+					</div>				
+				</c:forEach>
+			</div>
 		</c:if>
 		
 		<c:if test="${show_foodList == null}">
@@ -652,14 +1224,25 @@
 		<hr/>
 		
 		<!-- 쇼핑 -->		
-		<span style="font-size: 14pt; font-weight: bold; color: black; text-align: left; margin-left: 20px;">쇼핑</span><br/>
+		<c:if test="${sessionScope.loginuser.userid != ScheduleMap.fk_userid}">	
+			<span style="font-size: 14pt; font-weight: bold; color: black; text-align: left; margin-left: 20px;">쇼핑</span><br/>
+		</c:if>
+		
+		<c:if test="${sessionScope.loginuser.userid == ScheduleMap.fk_userid}">		
+			<span style="font-size: 14pt; font-weight: bold; color: black; text-align: left; margin-left: 20px;">쇼핑</span>&nbsp;
+			<img src="<%=request.getContextPath()%>/resources/images/EditBTN.png" width="20" height="20" style="margin-bottom: 10px;" onclick="editShop();" data-toggle="modal" data-target="#myModal">
+			<br/>	
+		</c:if>
+		
 		<c:if test="${show_shopList != null}">	
-			<c:forEach var="show_shopListMap" items="${show_shopList}">
-				<div id="shopping" style="display: inline-block; margin-left: 5px; text-align: center">	
-					<img src="<%=request.getContextPath()%>/resources/images/shop/${show_shopListMap.image}" style="margin:10px;" class="img-circle" width="150" height="150" onclick="shopping_info(${show_shopListMap.seq_shop},'쇼핑');" data-toggle="modal" data-target="#myModal" ><br/> 
-					 ${show_shopListMap.name}<br/>																						
-				</div>	
-			</c:forEach>
+			<div style='overflow-x: auto; white-space: nowrap; margin-left: 20px;'>
+				<c:forEach var="show_shopListMap" items="${show_shopList}">
+					<div id="shopping" style="display: inline-block; margin-left: 5px; text-align: center">	
+						<img src="<%=request.getContextPath()%>/resources/images/shop/${show_shopListMap.image}" style="margin:10px;" class="img-circle" width="150" height="150" onclick="shopping_info(${show_shopListMap.seq_shop},'쇼핑',${show_shopListMap.fk_category});" data-toggle="modal" data-target="#myModal" ><br/> 
+						 ${show_shopListMap.name}<br/>																						
+					</div>	
+				</c:forEach>
+			</div>
 		</c:if>	
 		
 		<c:if test="${show_shopList == null}">	
@@ -668,15 +1251,26 @@
 		
 		<hr/>
 		
-		<!-- 투어/액티비티 -->	
-		<span style="font-size: 14pt; font-weight: bold; color: black; text-align: left; margin-left: 20px;">투어/액티비티</span><br/>
+		<!-- 투어/액티비티 -->	 
+		<c:if test="${sessionScope.loginuser.userid != ScheduleMap.fk_userid}">	
+			<span style="font-size: 14pt; font-weight: bold; color: black; text-align: left; margin-left: 20px;">투어/액티비티</span><br/>
+		</c:if>
+		
+		<c:if test="${sessionScope.loginuser.userid == ScheduleMap.fk_userid}">		
+			<span style="font-size: 14pt; font-weight: bold; color: black; text-align: left; margin-left: 20px;">투어/액티비티</span>&nbsp;
+			<img src="<%=request.getContextPath()%>/resources/images/EditBTN.png" width="20" height="20" style="margin-bottom: 10px;" onclick="editTour();" data-toggle="modal" data-target="#myModal">
+			<br/>	
+		</c:if>
+		
 		<c:if test="${show_TourActivityList != null}">		
-			<c:forEach var="show_TourActivityListMap" items="${show_TourActivityList}">
-				<div id="worldtour" style="display: inline-block; margin-left: 5px; text-align: center">	
-					<img src="<%=request.getContextPath()%>/resources/images/tour/${show_TourActivityListMap.image}" style="margin:10px;" class="img-rounded" width="150" height="200" onclick="tourSite('${show_TourActivityListMap.addr}');"><br/> 
-					${show_TourActivityListMap.name}<br/>
-				</div>	
-			</c:forEach>
+			<div style='overflow-x: auto; white-space: nowrap; margin-left: 20px;'>
+				<c:forEach var="show_TourActivityListMap" items="${show_TourActivityList}">
+					<div id="worldtour" style="width: 160px; display: inline-block; white-space: normal; vertical-align: top; margin-right: 2%; text-align: center;">	
+						<img src="<%=request.getContextPath()%>/resources/images/tour/${show_TourActivityListMap.image}" style="margin:10px;" class="img-rounded" width="150" height="200" onclick="tourSite('${show_TourActivityListMap.addr}');"><br/> 
+						${show_TourActivityListMap.name}<br/>
+					</div>	
+				</c:forEach>
+			</div>
 		</c:if>	
 				
 		<c:if test="${show_TourActivityList == null}">		
@@ -685,14 +1279,25 @@
 		
 		<hr/>
 		<!--  셀프북  -->
-		<span style="font-size: 14pt; font-weight: bold; color: black; text-align: left; margin-left: 20px;">셀프북</span><br/>
+		<c:if test="${sessionScope.loginuser.userid != ScheduleMap.fk_userid}">	
+			<span style="font-size: 14pt; font-weight: bold; color: black; text-align: left; margin-left: 20px;">셀프북</span><br/>
+		</c:if>
+		
+		<c:if test="${sessionScope.loginuser.userid == ScheduleMap.fk_userid}">		
+			<span style="font-size: 14pt; font-weight: bold; color: black; text-align: left; margin-left: 20px;">셀프북</span>&nbsp;
+			<img src="<%=request.getContextPath()%>/resources/images/EditBTN.png" width="20" height="20" style="margin-bottom: 10px;" onclick="editBook();" data-toggle="modal" data-target="#myModal">
+			<br/>	
+		</c:if>
+		
 		<c:if test="${show_bookList != null}">
-			<c:forEach var="show_bookListMap" items="${show_bookList}">
-				<div id="book" style="display: inline-block; margin-left: 5px; text-align: center;">
-					<img src="<%=request.getContextPath()%>/resources/images/book/${show_bookListMap.image}" style="margin:10px;" class="img-rounded" width="150" height="200" onclick="tourSite('${show_bookListMap.addr}')"><br/> 
-					${show_bookListMap.name}<br/>
-				</div>	
-			</c:forEach> 
+			<div style='overflow-x: auto; white-space: nowrap; margin-left: 20px;'>
+				<c:forEach var="show_bookListMap" items="${show_bookList}">
+					<div id="book" style="width: 160px; display: inline-block; white-space: normal; vertical-align: top; margin-right: 2%; text-align: center;">
+						<img src="<%=request.getContextPath()%>/resources/images/book/${show_bookListMap.image}" style="margin:10px;" class="img-rounded" width="150" height="200" onclick="tourSite('${show_bookListMap.addr}')"><br/> 
+						${show_bookListMap.name}<br/>
+					</div>	
+				</c:forEach> 
+			</div>
 		</c:if>	
 		
 		<c:if test="${show_bookList == null}">		
@@ -701,11 +1306,16 @@
 				
 	</div>
 
-	
+	<form name="editFrm">
+		<input type="hidden" name="seq" value="${ScheduleMap.seq_schedule}">
+		<input type="hidden" name="imgseq">
+		<input type="hidden" name="fk_category">
+		<input type="hidden" name="category">
+	</form>
  
 	
 	<!-- 일정표 	-->
-	<div id="scheduler" class="tabcontent" align="left" style="background-color: white; width:70%; border: 1px solid #e5e5e5; padding-top: 20px; padding-left: 10px; padding-right: 10px; padding-bottom: 20px;">
+	<div id="scheduler" class="tabcontent" align="left" style="width:70%; border: 1px solid #e5e5e5; padding-top: 20px; padding-left: 10px; padding-right: 10px; padding-bottom: 20px;">
 		<!-- 일정표 1 -->				
 		<div id="scheduler1" style="width: 90%; display: inline-block; margin-left: 50px; margin-right: 25px;">
 			<table class="table table-bordered">
@@ -715,14 +1325,13 @@
 						<th style="text-align: center; width: 10%;">체류일</th>	
 						<th style="text-align: center; width: 30%;">교통</th>
 						<th style="text-align: center; width: 30%;">일정</th>
-						<%-- <c:if test="${session.loginuser.userid == ScheduleMap.fk_userid}"> --%>
+						<c:if test="${sessionScope.loginuser.userid == ScheduleMap.fk_userid}"> 
 							<th style="text-align: center; width: 15%;">수정여부</th>
-						<%-- </c:if>									 --%>
+						</c:if>									
 					</tr>
 				</thead>
 				
-				<tbody>			
-					<form>
+				<tbody>							
 					<c:forEach var="show_schedulerList1map" items="${show_schedulerList1}" varStatus="status">
 						<tr>								
 							<td>														
@@ -761,17 +1370,16 @@
 								</c:if>
 							</c:if>
 							
-							<%-- <c:if test="${session.loginuser.userid == ScheduleMap.fk_userid}"> --%>
+							<c:if test="${sessionScope.loginuser.userid == ScheduleMap.fk_userid}">
 								<c:if test="${status.index == 0 }">
 									<td rowspan="${length}" style="vertical-align: middle;" id="editBtn">		
 										<button type="button"  class="btn" style="width: 50px; height: 30px;"  onClick="editScheduler2()" >수정</button>
 									</td>
 								</c:if>
-							<%-- </c:if> --%>
+							</c:if>
 																											
 						</tr>
-					</c:forEach>	
-					</form>	
+					</c:forEach>						
 				</tbody>				
 			</table>
 		</div>
@@ -800,8 +1408,7 @@
 	    </div>
 	  </div>
 	</div>
-	
-		
- </div>
+
+
  
  	

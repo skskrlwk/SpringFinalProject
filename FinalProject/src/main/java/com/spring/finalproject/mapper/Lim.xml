@@ -73,10 +73,11 @@
 		<result property="name" column="name"  javaType="String" />
 		<result property="flag" column="flag"  javaType="String" />
 		<result property="days" column="days"  javaType="String" />
+		<result property="fk_category" column="fk_category"  javaType="String" />
 	</resultMap>
 	
 	<select id="getCalendar" parameterType="String" resultMap="CalendarMap">
-		select name, flag, days
+		select name, flag, days , fk_category
 		from tbl_schedule A join tbl_schedule_detail B
 		on A.seq_schedule = B.fk_seq_schedule
 		join tbl_world C
@@ -110,11 +111,11 @@
 		insert into tbl_schedule_detail2(seq_schedule_detail2, fk_schedule_detail, category, category_seq)
 		values(seq_schedule_detail2.nextval, #{seq}, #{category}, #{categoryseq})
 	</insert>
-	
+	 
 	<insert id="AddScheduler" parameterType="String">
 		insert into tbl_scheduler(seq_scheduler, fk_schedule, schedule,transfer)
 		values(seq_tbl_scheduler.nextval, #{seq}, '','')		
 	</insert>
-	
+	 
 	
 </mapper>
