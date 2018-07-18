@@ -671,13 +671,43 @@ input[type='checkbox'] {
 			}
 			
 		}
+		// 과거 날짜면 return 처리해주기
+		var startday =  document.getElementById("startDay").value;
+		
+		var date1 = new Date(); 
+		var date2 = new Date(startday);
+		
+		date1 = formatDay(date1);
+		date2 = formatDay(date2);
+		
+		if(date1 > date2){
+			alert("선택한 날짜가 과거입니다.");
+			return;
+		}
+		
+		
 		
 		var frm = document.planFrm;		
 		frm.method = "post";
 		frm.action = contextPath+"/scheduleAddEnd.action";
 		console.log(contextPath);
-		frm.submit(); 
+		// frm.submit(); 
 		
+	}
+	
+	function formatDay(date) {
+		
+		var year = date.getFullYear();
+		var month = date.getMonth() + 1;
+		if(month < 10){
+			month = "0"+ month;
+		}
+		var day = date.getDate();
+		if(day < 10){
+			day = "0"+ day; 
+		}
+		return new Date(year+"-"+month+"-"+day);
+				
 	}
 
 	
