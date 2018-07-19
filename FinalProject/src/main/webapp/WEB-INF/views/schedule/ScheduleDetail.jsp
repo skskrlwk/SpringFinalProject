@@ -543,6 +543,7 @@ $("#likecnt").html("${likecnt}");
  					var days = ${cal.days};
  		 		//	var endday = addDay(Day,days);
  		 			var endday = dateAddDel(startDay, days, 'd');
+ 		 			
  		 		//	startDay2 = to_Date(endday);
  		 			startDay2 = endday;
  		 			console.log("${status.index}.start Day:" + startDay2);
@@ -580,14 +581,14 @@ $("#likecnt").html("${likecnt}");
 		 		//	var endday = addDay(startDay2,${cal.days});
 		 			var endday = dateAddDel(startDay, ${cal.days}, 'd');
 		 		//	startDay2 = addDay(startDay2, 0);
-		 			startDay2 = dateAddDel(ifvar, ${cal.days}, 'd');
+		 		
 		 			var str = {
 				            title: '<img src="'+contextPath+'/resources/images/flag/${cal.flag}" style="width:15px;height:11px"> '+ city ,
 				            start: startDay2,
 						    end: endday,
 				            color: '#51bec9'
 				          }	
-		 			
+		 			startDay2 = dateAddDel(ifvar, ${cal.days}, 'd');	
 		 		//	startDay2 = to_Date(endday);
 		 			startDay2 = endday;
 					eventsArr.push(str);
