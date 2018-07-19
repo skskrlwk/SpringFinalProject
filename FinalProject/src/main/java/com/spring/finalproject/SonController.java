@@ -52,15 +52,25 @@ import com.spring.finalproject.service.InterSonService;
 		
 			// 메인페이지 여행일정 리스트
 			List<HashMap<String,String>> traplist = service.getindex();
+
 	/*		
 			System.out.println(traplist.get(0).get("SEQ_SCHEDULE"));
 			System.out.println(traplist.get(1).get("SEQ_SCHEDULE"));
 			System.out.println(traplist.get(2).get("SEQ_SCHEDULE"));
 		
 	*/
+
+			List<HashMap<String,String>> likeranklist = service.likerank();
+
+			for(HashMap<String, String> trapmap : traplist) {
+				 String seq_schedule = trapmap.get("SEQ_SCHEDULE");
+				 String fk_category = service.getCategory(seq_schedule);
+				 String cityImg = service.getImage(fk_category);
+				 trapmap.put("cityImg", cityImg);
+			}
 			
 			req.setAttribute("traplist", traplist);
-			
+
 	////////////////////////////////////////////////////////////
 			
 			// 메인페이지 랜덤 투어 리스트
@@ -68,6 +78,14 @@ import com.spring.finalproject.service.InterSonService;
 			
 			req.setAttribute("traplist2", traplist2);
 			
+
+			for(HashMap<String, String> likerankmap : likeranklist) {
+				 String seq_schedule = likerankmap.get("SEQ_SCHEDULE");
+				 String fk_category = service.getCategory(seq_schedule);
+				 String cityImg = service.getImage(fk_category);
+				 likerankmap.put("cityImg", cityImg);
+			}
+			req.setAttribute("likeranklist", likeranklist);
 			
 			return "index.tiles";
 		}

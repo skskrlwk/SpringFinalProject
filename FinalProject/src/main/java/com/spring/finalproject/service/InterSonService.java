@@ -20,7 +20,12 @@ public interface InterSonService {
 	
 	List<HashMap<String, String>> getindex();
 	
+
 	 List<HashMap<String, String>> getindex2();
+
+	String getCategory(String seq_schedule);
+	String getImage(String fk_category);
+	List<HashMap<String, String>> likerank();
 
 
 

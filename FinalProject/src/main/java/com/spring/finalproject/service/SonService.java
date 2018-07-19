@@ -61,6 +61,27 @@ public class SonService implements InterSonService {
 		return traplist2;
 	}
 	
+	@Override
+	public String getCategory(String seq_schedule) {
+		String str = dao.getCategory(seq_schedule);
+		return str;
+	}
+
+	@Override
+	public String getImage(String fk_category) {
+		String str = dao.getImage(fk_category);
+		return str;
+	}
+
+	@Override
+	public List<HashMap<String, String>> likerank() {
+		List<HashMap<String, String>> likeranklist = dao.likerank();
+		
+		return likeranklist;
+	}
+
+	
+	
 	
 
 
