@@ -5,115 +5,152 @@
 
 <!-- ==== #27. 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
 <mapper namespace="Son">
-<!-- 여행 게시물 목록 가져오기 -->
-	
-<select id="schedulevoList" parameterType="HashMap" resultType="com.spring.finalproject.model.ScheduleVO">
-select RNO ,fk_userid, registerday, startday, title, imagearr, seq_schedule
-from  
-	(
-	select rownum AS RNO ,fk_userid, registerday, startday, title, imagearr, seq_schedule
-	from 
-		  (
-					 select fk_userid, registerday, startday, title, A.imagearr, seq_schedule
-					 from tbl_schedule A left join tbl_schedule_detail B
-					 on A.seq_schedule = B.fk_seq_schedule
-					group by A.fk_userid, a.registerday,a.startday,A.title, A.imagearr, A.seq_schedule
-					order by registerday desc
-		  )V
-	)T
-where RNO >= #{startRno} and RNO <![CDATA[<=]]> #{endRno}
-</select>
-	
-	
-<select id="schedulevoList2" parameterType="HashMap" resultType="com.spring.finalproject.model.ScheduleVO">
-select RNO ,fk_userid, to_char(registerday, 'yyyy-mm-dd ') as registerday, to_char(startday, 'yyyy-mm-dd ') as startday, title, imagearr, seq_schedule,nvl(alldays,0) as alldays
-from  
-  (
-  	 select rownum AS RNO ,fk_userid, registerday, startday, title, imagearr, seq_schedule,alldays
- 	 from 
- 		 (
-		  select fk_userid, registerday, startday, title, imagearr, seq_schedule, sum(days) as alldays
-				from tbl_schedule A left join tbl_schedule_detail B
-				on A.seq_schedule = B.fk_seq_schedule
-				group by A.fk_userid, a.registerday,a.startday,A.title, A.imagearr, A.seq_schedule
-				order by registerday desc
-  		 )V
- 	)T
-		
-where RNO >= #{startRno} and RNO <![CDATA[<=]]> #{endRno}
-</select> 
-	
-	
-	 <!--  총게시물 건수 구하기  -->
- <select id="getTotalCount" resultType="Integer">
-	select count(*) 
-	from tbl_schedule
-	order by seq_schedule  desc	
-</select>
-	
-	
-	
-<select id="getTotalCount2" parameterType="HashMap" resultType="Integer">
-	select count(*) 
-	from tbl_schedule
-	where fk_userid = #{fk_uesrid}
-	and ${colname} like '%'|| #{search} ||'%'
-	order by seq_schedule  desc		
-</select>
-	
-	
-	
-<resultMap type="HashMap" id="trapmap">
-		<result property="RNO"   			 column="RNO"  			 	javaType="String" />
-		<result property="SEQ_SCHEDULE"   	 column="SEQ_SCHEDULE"  	javaType="String" />
-		<result property="FK_USERID"   		 column="FK_USERID"   		javaType="String" />
-		<result property="REGISTERDAY"   	 column="REGISTERDAY"   	javaType="String" />
-		<result property="STARTDAY"  		 column="STARTDAY"   		javaType="String" />
-		<result property="TITLE"   			 column="TITLE"  			javaType="String" />
-		<result property="IMAGEARR"  		 column="IMAGEARR"   		javaType="String" />
-		<result property="SEQ_SCHEDULE"  	 column="SEQ_SCHEDULE"  	javaType="String" />
-		<result property="ALLDAYS"  		 column="ALLDAYS"   		javaType="String" />
-		
-		
-</resultMap>
-	
-	
-	
-<select id="getindex" resultMap="trapmap">
-select RNO ,fk_userid, to_char(registerday, 'yyyy-mm-dd ') as registerday, to_char(startday, 'yyyy-mm-dd ') as startday, title, imagearr, seq_schedule,nvl(alldays,0) as alldays
-from  
-  	(
-  	select rownum AS RNO ,fk_userid, registerday, startday, title, imagearr, seq_schedule,alldays
- 	 from 
-  		(
-		  select fk_userid, registerday, startday, title, imagearr, seq_schedule, sum(days) as alldays
-				from tbl_schedule A left join tbl_schedule_detail B
-				on A.seq_schedule = B.fk_seq_schedule
-				group by A.fk_userid, a.registerday,a.startday,A.title, A.imagearr, A.seq_schedule
-				order by registerday desc
- 		 )V
- 	 )T
- where RNO between 1 and 3
-</select> 
+	<!-- 여행 게시물 목록 가져오기 -->
 
-<select id="getCategory" parameterType="String" resultType="String">
-	select fk_category
-	from 
-	  (
-	   select rownum as rno, seq_schedule_detail, fk_seq_schedule, fk_category, days
-	   from tbl_schedule_detail 
-	   where fk_seq_schedule = #{seq_schedule}
-	   order by 1 
-	  )
-	where rno = 1
+	<select id="schedulevoList" parameterType="HashMap"
+		resultType="com.spring.finalproject.model.ScheduleVO">
+		select RNO ,fk_userid, registerday, startday, title, image,
+		seq_schedule
+		from
+		(
+		select rownum AS RNO ,fk_userid, registerday, startday, title, image,
+		seq_schedule
+		from
+		(
+		select fk_userid, registerday, startday, title, image, seq_schedule
+		from tbl_schedule A left join tbl_schedule_detail B
+		on A.seq_schedule = B.fk_seq_schedule
+		group by A.fk_userid, a.registerday,a.startday,A.title, A.image,
+		A.seq_schedule
+		order by registerday desc
+		)V
+		)T
+		where RNO >= #{startRno} and RNO <![CDATA[<=]]>
+		#{endRno}
+	</select>
 
-</select>
 
-<select id="getImage" parameterType="String" resultType="String">
-	select image  
-	from tbl_world
-	where category = #{fk_category}
-</select>
+	<select id="schedulevoList2" parameterType="HashMap"
+		resultType="com.spring.finalproject.model.ScheduleVO">
+		select RNO ,fk_userid, to_char(registerday, 'yyyy-mm-dd ') as
+		registerday, to_char(startday, 'yyyy-mm-dd ') as startday, title,
+		image, seq_schedule,nvl(alldays,0) as alldays
+		from
+		(
+		select rownum AS RNO ,fk_userid, registerday, startday, title, image,
+		seq_schedule,alldays
+		from
+		(
+		select fk_userid, registerday, startday, title, image, seq_schedule,
+		sum(days) as alldays
+		from tbl_schedule A left join tbl_schedule_detail B
+		on A.seq_schedule = B.fk_seq_schedule
+		group by A.fk_userid, a.registerday,a.startday,A.title, A.image,
+		A.seq_schedule
+		order by registerday desc
+		)V
+		)T
+
+		where RNO >= #{startRno} and RNO <![CDATA[<=]]>
+		#{endRno}
+	</select>
+
+
+	<!-- 총게시물 건수 구하기 -->
+	<select id="getTotalCount" resultType="Integer">
+		select count(*)
+		from tbl_schedule
+		order by seq_schedule desc
+	</select>
+
+
+
+	<select id="getTotalCount2" parameterType="HashMap"
+		resultType="Integer">
+		select count(*)
+		from tbl_schedule
+		where fk_userid = #{fk_uesrid}
+		and ${colname} like '%'|| #{search} ||'%'
+		order by seq_schedule desc
+	</select>
+
+
+
+	<resultMap type="HashMap" id="trapmap">
+		<result property="RNO" column="RNO" javaType="String" />
+		<result property="FK_USERID" column="FK_USERID"
+			javaType="String" />
+		<result property="REGISTERDAY" column="REGISTERDAY"
+			javaType="String" />
+		<result property="STARTDAY" column="STARTDAY" javaType="String" />
+		<result property="TITLE" column="TITLE" javaType="String" />
+		<result property="IMAGE" column="IMAGEARR" javaType="String" />
+		<result property="SEQ_SCHEDULE" column="SEQ_SCHEDULE"
+			javaType="String" />
+		<result property="ALLDAYS" column="ALLDAYS" javaType="String" />
+
+
+	</resultMap>
+
+
+
+	<select id="getindex" resultMap="trapmap">
+		select RNO ,fk_userid, to_char(registerday, 'yyyy-mm-dd ') as registerday,
+		to_char(startday, 'yyyy-mm-dd ') as startday, title, imagearr,
+		seq_schedule,nvl(alldays,0) as alldays
+		from
+		(
+		select rownum AS RNO ,fk_userid, registerday, startday, title, imagearr,
+		seq_schedule,alldays
+		from
+		(
+		select fk_userid, registerday, startday, title, imagearr, seq_schedule,
+		sum(days) as alldays
+		from tbl_schedule A left join tbl_schedule_detail B
+		on A.seq_schedule = B.fk_seq_schedule
+		group by A.fk_userid, a.registerday,a.startday,A.title, A.imagearr,
+		A.seq_schedule
+		order by registerday desc
+		)V
+		)T
+		where RNO between 1 and 4
+	</select>
+
+
+
+	<resultMap type="HashMap" id="trapmap2">
+		<result property="SEQ_TOUR" column="SEQ_TOUR" javaType="String" />
+		<result property="FK_CATEGORY" column="FK_CATEGORY"
+			javaType="String" />
+		<result property="NAME" column="NAME" javaType="String" />
+		<result property="IMAGE" column="IMAGE" javaType="String" />
+		<result property="PRICE" column="PRICE" javaType="String" />
+		<result property="ADDR" column="ADDR" javaType="String" />
+		<result property="NAME1" column="NAME1" javaType="String" />
+		<result property="IMAGE1" column="IMAGE1" javaType="String" />
+		
+	</resultMap>
+
+
+	<select id="getindex2" resultMap="trapmap2">
+	 
+  select E.seq_tour
+      , E.fk_category
+      , E.name
+      , E.image 
+      ,E.price
+      ,E.addr
+      ,D.name as "NAME1"
+      ,D.image as "IMAGE1"
+ from tbl_tour E left join tbl_world D
+ on E.fk_category = D.category
+ where seq_tour = 1   or seq_tour= 9 or seq_tour= 23 or seq_tour = 15 
+	</select>
+
+
+
+
+
 
 
 

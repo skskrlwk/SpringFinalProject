@@ -63,6 +63,8 @@ public interface InterBoardDAO {
 
 	List<String> fk_seq2(HashMap<String, Object> map);//답글 번호 읽어옥기
 
+	void updatecommentcnt(String seq_board);// 댓글 삭제 후 댓글 수 줄이기
+
 
 	
 

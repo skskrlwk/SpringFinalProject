@@ -577,6 +577,8 @@ div.pagebar {
 	<div class="container">
 		<div class="row">
 			<div class="col text-center">
+			
+			
 				<h2 class="section_title">미리 예약해야 이득, 유럽 필수투어들!</h2>
 
 			</div>
@@ -584,35 +586,40 @@ div.pagebar {
 
 
 		<div class="row offers_items">
+		
+		<c:forEach var="trapvo2" items="${traplist2}">
 
 			<!-- Offers Item -->
 			<div class="col-lg-6 offers_col">
 				<div class="offers_item">
 					<div class="row">
 						<div class="col-lg-6">
+						
+						
 							<div class="offers_image_container">
 								<!-- Image by Egzon Bytyqi -->
-								<div class="offers_image_background"
-									style="background-image:url(<%=request.getContextPath()%>/resources/images/페러글라이딩.jpg)"></div>
+								
+							<!-- style="background-image:url(/finalproject/resources/images/${trapvo.IMAGE}) -->	
+								<div class="offers_image_background" style="background-image:url(/finalproject/resources/images/city/${trapvo2.IMAGE1})"></div>
 								<div class="offer_name">
 									<a
-										href="http://www.stubbyplanner.com/market/index_thema_n.asp?themaserial=13&l=home">스위스</a>
+										href= "${trapvo2.ADDR}"> <!-- "http://www.stubbyplanner.com/market/index_thema_n.asp?themaserial=13&l=home" -->${trapvo2.NAME1}</a>
 								</div>
 							</div>
 						</div>
 						<div class="col-lg-6">
 							<div class="offers_content">
 								<div class="offers_price">
-									$50<span>per night</span>
+									${trapvo2.PRICE}<span>원</span>
 								</div>
 								<div class="rating_r rating_r_4 offers_rating">
-									<i></i> <i></i> <i></i> <i></i> <i></i>
+									
 								</div>
-								<p class="offers_text">Suspendisse potenti. In faucibus
-									massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Nullam eu convallis tortor.</p>
+								<p class="offers_text"><span style="font-style: italic;">${trapvo2.NAME}</span></p>
+								
+								
 								<div class="offers_icons">
-									<ul class="offers_icons_list">
+								<%-- 	<ul class="offers_icons_list">
 										<li class="offers_icons_item"><img
 											src="<%=request.getContextPath()%>/resources/images/post.png"
 											alt=""></li>
@@ -625,11 +632,11 @@ div.pagebar {
 										<li class="offers_icons_item"><img
 											src="<%=request.getContextPath()%>/resources/images/sailboat.png"
 											alt=""></li>
-									</ul>
+									</ul> --%>
 								</div>
 								<div class="offers_link">
 									<a
-										href="http://www.stubbyplanner.com/market/index_thema_n.asp?themaserial=13&l=home">상세보기</a>
+										href="${trapvo2.ADDR}">상세보기</a>
 								</div>
 
 							</div>
@@ -639,7 +646,7 @@ div.pagebar {
 			</div>
 
 
-
+		</c:forEach>
 
 
 
@@ -657,6 +664,7 @@ div.pagebar {
 			<span>${pageBar}</span>
 			</div> --%>
 </div>
+
 
 
 <!-- Testimonials -->

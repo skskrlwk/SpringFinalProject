@@ -13,9 +13,7 @@ public interface InterScheduleDAO {
 	List<ScheduleVO> schedulevoList(HashMap<String, String> map);
 	
 	List<HashMap<String, String>> getindex();
-	
-	String getCategory(String seq_schedule);
-	String getImage(String fk_category);
+	List<HashMap<String, String>> getindex2();
 
 	
 }

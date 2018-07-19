@@ -50,19 +50,24 @@ import com.spring.finalproject.service.InterSonService;
 		@RequestMapping(value = "/index.action", method = RequestMethod.GET)
 		public String index(HttpServletRequest req) {
 		
-			
+			// 메인페이지 여행일정 리스트
 			List<HashMap<String,String>> traplist = service.getindex();
+	/*		
+			System.out.println(traplist.get(0).get("SEQ_SCHEDULE"));
+			System.out.println(traplist.get(1).get("SEQ_SCHEDULE"));
+			System.out.println(traplist.get(2).get("SEQ_SCHEDULE"));
+		
+	*/
 			
-			List<String> cityList = new ArrayList<String>();
-			for(HashMap<String, String> trapmap : traplist) {
-				 String seq_schedule = trapmap.get("SEQ_SCHEDULE");
-				 String fk_category = service.getCategory(seq_schedule);
-				 String cityImg = service.getImage(fk_category);
-				 trapmap.put("cityImg", cityImg);
-			}
-			
-			req.setAttribute("cityList", cityList);
 			req.setAttribute("traplist", traplist);
+			
+	////////////////////////////////////////////////////////////
+			
+			// 메인페이지 랜덤 투어 리스트
+			List<HashMap<String,String>> traplist2 = service.getindex2();
+			
+			req.setAttribute("traplist2", traplist2);
+			
 			
 			return "index.tiles";
 		}
@@ -73,7 +78,7 @@ import com.spring.finalproject.service.InterSonService;
 		@RequestMapping(value="/otherview.action", method= RequestMethod.GET)
 		public String other_detail(ScheduleVO schedulevo,HttpServletRequest req) {
 			HttpSession session = req.getSession();
-			session.setAttribute("readCountPermission", "yes");	
+			//session.setAttribute("readCountPermission", "yes");	
 			
 			List<ScheduleVO> schedulevoList  = null;
 			
@@ -85,13 +90,13 @@ import com.spring.finalproject.service.InterSonService;
 			HashMap<String,String> map = new HashMap<String,String>();
 			
 			map.put("colname",colname); // 키값  value값 기재
-			map.put("search",search);
+			 map.put("search",search);
 			
 			// 페이징 처리 //
 			String str_currentShowPageNo = req.getParameter("currentShowPageNo");
 			int totalCount  = 0; // 총 게시물 건수 초기값 선언
 			
-			int sizePerPage = 4; // 한 페이지당 보여줄 게시물 건수
+			int sizePerPage = 8; // 한 페이지당 보여줄 게시물 건수
 			int currentShowPageNo = 0; //현재 보여주는 초기치 1 페이지
 			int totalPage = 0;
 			
@@ -99,20 +104,33 @@ import com.spring.finalproject.service.InterSonService;
 			int endRno = 0;// 끝행 번호
 			
 			int blockSize = 10; // "페이지바"에 보여줄 페이지의 갯수
-						
 			
+			// System.out.println("확인용 : "+sizePerPage);
+			
+			
+			if( (colname != null & search !=null) && (!colname.equals("null") && !search.equals("null")) 
+					&& ( !colname.trim().isEmpty() && !search.trim().isEmpty() )) {
 				
-			totalCount = service.getTotalCount();
+				totalCount = service.getTotalCount2(map);
+				// 검색어가 있는 총 게시물 건수!
+			}else {
+				totalCount = service.getTotalCount();
+				// 검색어가 없는 총 게시물 건수!
+			}
+			
+			
 			
 			
 			
 			totalPage = (int)Math.ceil((double)totalCount/sizePerPage);
 			
-			if(str_currentShowPageNo == null) {
+			System.out.println("totalPage: "+totalPage);
+			
+			if(str_currentShowPageNo==null) {
 				// 게시판 초기화면에 보여지는 것은
 				// req.getParameter("currentShowPageNo");이 값이 없으므로
 				// str_currentShowPageNo은 null이 된다. 
-				currentShowPageNo = 1;
+				currentShowPageNo = 0;
 			}else {
 				try {
 					currentShowPageNo =Integer.parseInt(str_currentShowPageNo);
@@ -124,24 +142,24 @@ import com.spring.finalproject.service.InterSonService;
 				}
 			}
 			
+			// **** 가져올 게시글의 범위를 구한다.(공식임!!!) ****
+			/*
+			 *  currentShowPageNo    startRno    endRno
+			 */
+			
+			//System.out.println("str_currentShowPageNo : "+str_currentShowPageNo);
+			
 			startRno = (currentShowPageNo-1)*sizePerPage+1;
 			endRno = startRno +sizePerPage - 1;
 			
-			System.out.println("startRno : " + startRno );
-			System.out.println("endRno : " + endRno );
+			System.out.println(startRno);
 			// ===== #111. 페이징 처리를 위해 startRno, endRno를 map에 추가하여 
 			//             파라미터로 넘겨서 select되도록 한다.
 			map.put("startRno",String.valueOf(startRno));
 			map.put("endRno",String.valueOf(endRno));
-			
+		
 			schedulevoList = service.schedulevoList2(map);
-			for(ScheduleVO vo :schedulevoList) {
-				int seq = vo.getSeq_schedule();
-				String seq_str = String.valueOf(seq);
-				String fk_category = service.getCategory(seq_str);
-				String cityImg = service.getImage(fk_category);
-				vo.setImage(cityImg);
-			}
+			
 			
 			
 			totalPage = (int)Math.ceil((double)totalCount/sizePerPage);
@@ -151,22 +169,19 @@ import com.spring.finalproject.service.InterSonService;
 			pageBar += MyUtil.getPageBar1("otherview.action", currentShowPageNo, sizePerPage, totalPage, blockSize);		
 			pageBar+="</ul>";
 			
+			
 			req.setAttribute("colname", colname);
 			//req.setAttribute("search", search);
 			req.setAttribute("schedulevoList", schedulevoList);
 			req.setAttribute("pageBar", pageBar);
 			
-					
+			
 			String goBackURL = MyUtil.getCurrentURL(req);
 			req.setAttribute("goBackURL", goBackURL);
+			System.out.println("blocksize : "+blockSize);
 			
 			return "otherview.tiles";
 		}
-		
-		
-		
-		
-	
 		
 		
 		

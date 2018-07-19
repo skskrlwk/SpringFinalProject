@@ -195,4 +195,10 @@ public class BoardDAO implements InterBoardDAO {
 		return list;
 	}
 
+	@Override
+	public void updatecommentcnt(String seq_board) {
+		sqlsession.update("Jeoung.updatecommentcnt", seq_board);
+		
+	}
+
 }

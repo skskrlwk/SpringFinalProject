@@ -227,4 +227,10 @@ public class JeoungService implements InterJeoungService {
 		int n =  dao.ynseq_board(seq_board);
 		return n;
 	}
+
+	@Override
+	public void updatecommentcnt(String seq_board) {
+		dao.updatecommentcnt(seq_board);
+		
+	}
 }

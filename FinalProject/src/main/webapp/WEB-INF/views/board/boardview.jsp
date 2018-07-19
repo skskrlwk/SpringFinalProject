@@ -102,7 +102,7 @@
 	function delcomment(seq_comment) {
 		
 		var seq_comment = seq_comment;
-		alert("seq_comment : " + seq_comment);
+	//	alert("seq_comment : " + seq_comment);
 		
 		$("#deleteSeq").val(seq_comment);
 		
@@ -159,7 +159,7 @@
 <div style="width: 100%; height: 100%;" >
 	<div style=" padding-top:10%; background-size: cover; width: 100%; height: 100%; background-image:url('<%= request.getContextPath() %>/resources/images/oldboard.jpg')">
 		<input type="hidden" value="${boardvo.seq_board}"/>
-			<div style="border: 0px solid blue; margin: 2% auto; width: 40%; background-color: #ffffff; border-radius: 10px; padding-bottom: 1%;">
+			<div style="border: 1px solid blue; margin: 2% auto; width: 65%; background-color: #ffffff; border-radius: 10px; padding-bottom: 1%;">
 				<div style="border-bottom: 1px dashed gray; padding: 1%;">
 					<span style="font-size: 20pt; color: black;">${boardvo.title}</span>
 					<div align="right">
@@ -204,7 +204,7 @@
 									
 									<div id="divcomments${status.count}" style="border: 0px solid red; height:80px; width:95%; margin-left: 3%; margin-right: 0%; padding-bottom: 2%;">
 										<div style="border: 0px solid green; width:83.3%; float:left">
-											<textarea rows="3" cols="60"  name="comments" id="comments${status.count}" onKeyUp="checkLength(this);" onKeyDown="checkLength(this);" >${commentvo.comments}</textarea>
+											<textarea rows="3" cols="85"  name="comments" id="comments${status.count}" onKeyUp="checkLength(this);" onKeyDown="checkLength(this);" >${commentvo.comments}</textarea>
 										</div>
 										<div style=" border: 0px solid #d9b3ff; width: 13%;float:left; padding-top: 1%; margin-left: 1%;">
 											<button type="button" class="btn btn-default" style="width: 100%; font-size: 13pt; font-weight: bold;  padding-top: 11%; padding-bottom: 15%;" onClick="editcommentend(${status.count});">수정완료</button>
@@ -220,7 +220,7 @@
 						<input type="hidden"  name="name" value="${sessionScope.loginuser.name}" readonly /> 
 						<div style="border: 0px solid red; height:80px; width:95%; margin-left: 3%; margin-right: 0%; padding-bottom: 2%;">
 							<div style="border: 0px solid green; width:83.3%; float:left">
-								<textarea rows="3" cols="65"  name="comments" id="comments" onKeyUp="checkLength(this);" onKeyDown="checkLength(this);" ></textarea>
+								<textarea rows="3" cols="90"  name="comments" id="comments" onKeyUp="checkLength(this);" onKeyDown="checkLength(this);" ></textarea>
 							</div>
 							<div style=" border: 0px solid #d9b3ff; width: 13%;float:left; padding-top: 1%; margin-left: 1%;">
 								<button type="button" class="btn btn-default" style="width: 100%; font-size: 13pt; font-weight: bold;  padding-top: 11%; padding-bottom: 15%;" onClick="goWrite();">등록</button>

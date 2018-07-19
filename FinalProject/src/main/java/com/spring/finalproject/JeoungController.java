@@ -487,6 +487,9 @@ public class JeoungController {
 			String goBackURL = req.getParameter("goBackURL");
 		
 			int n = service.delcomment(seq_comment);
+			if(n ==1) {
+				service.updatecommentcnt(seq_board);
+			}
 			req.setAttribute("seq_board", seq_board);
 			req.setAttribute("goBackURL", goBackURL);
 			req.setAttribute("n", n);
@@ -496,7 +499,7 @@ public class JeoungController {
 		}	
 
 		@RequestMapping(value="/editcomment.action",method={RequestMethod.POST})
-		public String requireLogin_editcomment(CommentVO commentvo, HttpServletRequest req, HttpServletResponse response) {
+		public String editcomment(CommentVO commentvo, HttpServletRequest req, HttpServletResponse response) {
 			String seq_comment = req.getParameter("seq_comment");
 			String comments = req.getParameter("comments");
 			String seq_board = req.getParameter("seq_board");

@@ -48,6 +48,8 @@ public interface InterJeoungService {
 	List<String> nowsearch();//실시간 검색어 순위
 
 	int ynseq_board(String seq_board);//없는 글번호 방지
+
+	void updatecommentcnt(String seq_board);//댓글 삭제 후 댓글 숫자 줄이기
 	
 
 }

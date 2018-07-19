@@ -49,21 +49,16 @@ public class SonService implements InterSonService {
 	@Override
 	public List<HashMap<String, String>> getindex() {
 	
-		List<HashMap<String, String>> traplist = dao.getindex();
+		 List<HashMap<String, String>> traplist = dao.getindex();
+		
 		
 		return traplist;
 	}
 
 	@Override
-	public String getCategory(String seq_schedule) {
-		String str = dao.getCategory(seq_schedule);
-		return str;
-	}
-
-	@Override
-	public String getImage(String fk_category) {
-		String str = dao.getImage(fk_category);
-		return str;
+	public List<HashMap<String, String>> getindex2() {
+		List<HashMap<String, String>> traplist2 = dao.getindex2();
+		return traplist2;
 	}
 	
 	

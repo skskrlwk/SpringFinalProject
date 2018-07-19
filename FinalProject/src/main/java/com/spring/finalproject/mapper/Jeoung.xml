@@ -248,4 +248,9 @@
 		</foreach>
 	</select>
 	
+	<update id="updatecommentcnt" parameterType="String">
+		update tbl_board set commentcount = commentcount-1
+		where seq_board = #{seq_board}
+	</update>
+	
 </mapper>

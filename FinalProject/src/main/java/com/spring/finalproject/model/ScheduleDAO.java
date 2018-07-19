@@ -48,15 +48,9 @@ public class ScheduleDAO implements InterScheduleDAO {
 		}
 
 		@Override
-		public String getCategory(String seq_schedule) {
-			String str = sqlsession.selectOne("Son.getCategory", seq_schedule);
-			return str;
-		}
-
-		@Override
-		public String getImage(String fk_category) {
-			String str = sqlsession.selectOne("Son.getImage", fk_category);
-			return str;
+		public List<HashMap<String, String>> getindex2() {
+			List<HashMap<String, String>> traplist2 = sqlsession.selectList("Son.getindex2");
+			return traplist2;
 		}
 		
 		

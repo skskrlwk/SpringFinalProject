@@ -154,7 +154,7 @@
 	<div style="margin-top:2%; margin-left: 60%; border: 0px solid red; width:38%; ">
 		<form name="searchFrm">
 			<select name="colname" id="colname" style="height: 26px;"> 
-				<option value="title">글제목</option>
+				<option value="title">글제목</option> 
 				<option value="comments">내용</option>
 				<option value="name">작성자</option>
 			</select>
@@ -193,7 +193,7 @@
 					    <!-- 답변글인 경우 -->
 					    <c:if test="${boardvo.fk_seq > 0}">
 					    	<c:if test="${boardvo.commentcount > 0}">																	<!-- depthno : 원글일 경우 0, 답변일경우 1 -->
-						        <span class="title" onClick="goView('${boardvo.seq_board}');"><span style="color : red; font-style: italic; padding-left: ${boardvo.depthno*20}px;">└Re.&nbsp;&nbsp;</span>${boardvo.title}<span style="color: red; font-weight: bold; font-style: italic; font-size: smaller; vertical-align: super;"></span></span> 
+						        <span class="title" onClick="goView('${boardvo.seq_board}');"><span style="color : red; font-style: italic; padding-left: ${boardvo.depthno*20}px;">└Re.&nbsp;&nbsp;</span>${boardvo.title}<span style="color: red; font-weight: bold; font-style: italic; font-size: smaller; vertical-align: super;">[${boardvo.commentcount}]</span></span> 
 						    </c:if>
 						    <c:if test="${boardvo.commentcount == 0}">
 						        <span class="title" onClick="goView('${boardvo.seq_board}');"><span style="color : red; font-style: italic; padding-left: ${boardvo.depthno*20}px;">└Re.&nbsp;&nbsp;</span>${boardvo.title}</span>
@@ -216,6 +216,11 @@
 	  </table>
 	
 	<button type="button" style="color: black; float: right;" onclick="gowrite();">글쓰기</button>
+	<br/>
+	<div align="center" style="border:0px solid green; width: 100%;" > 
+		${pagebar}
+	</div>
+	
 	</div>
 	<div id="nowsearch" style="border: 0px solid yellow; width: 20%; float: left; padding-left: 2%;" align="left">
 	</div>
@@ -224,9 +229,7 @@
 		<input type="hidden" name="goBackURL" value="${goBackURL}" />
 	</form>
 	
-	<div align="center" style="border:0px solid green; width: 70%; margin: 25% auto; "> 
-		${pagebar}
-	</div>
+	
 </div>
 
 
