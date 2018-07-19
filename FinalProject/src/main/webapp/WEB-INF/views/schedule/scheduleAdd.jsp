@@ -285,7 +285,7 @@ input[type='checkbox'] {
 		    html += "<div style='float:left; width:70px; height:53px; padding-left:7px;background:#fff;padding-top:13px;border-radius:100px;border:3px solid #3ad195;cursor:pointer'>";
 		    html += "<div>";
 		    html += "<select name='days' style='width: 50px; border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;'>";
-		    html += "<option value='1' selected='selected'>0박</option>";
+		    html += "<option value='0' selected='selected'>0박</option>";
 		    html += "<option value='1' selected='selected'>1박</option>";
 		    html += "<option value='2'>2박</option>";
 		    html += "<option value='3'>3박</option>";
