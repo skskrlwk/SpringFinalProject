@@ -16,6 +16,7 @@ public interface InterScheduleDAO {
 	
 	String getCategory(String seq_schedule);
 	String getImage(String fk_category);
+	List<HashMap<String, String>> likerank();
 
 	
 }

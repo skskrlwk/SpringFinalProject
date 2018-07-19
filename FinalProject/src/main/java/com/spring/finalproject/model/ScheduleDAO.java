@@ -58,6 +58,13 @@ public class ScheduleDAO implements InterScheduleDAO {
 			String str = sqlsession.selectOne("Son.getImage", fk_category);
 			return str;
 		}
+
+		@Override
+		public List<HashMap<String, String>> likerank() {			
+			List<HashMap<String, String>> likeranklist = sqlsession.selectList("Son.getlikerank");
+			
+			return likeranklist;
+		}
 		
 		
 	

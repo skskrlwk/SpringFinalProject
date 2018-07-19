@@ -80,7 +80,7 @@ where RNO >= #{startRno} and RNO <![CDATA[<=]]> #{endRno}
 	
 	
 <select id="getindex" resultMap="trapmap">
-select RNO ,fk_userid, to_char(registerday, 'yyyy-mm-dd ') as registerday, to_char(startday, 'yyyy-mm-dd ') as startday, title, imagearr, seq_schedule,nvl(alldays,0) as alldays
+select RNO ,fk_userid, to_char(registerday, 'yyyy-mm-dd ') as registerday, to_char(startday, 'yyyy-mm-dd ') as startday, title, imagearr, seq_schedule, nvl(alldays, 0) as alldays
 from  
   	(
   	select rownum AS RNO ,fk_userid, registerday, startday, title, imagearr, seq_schedule,alldays
@@ -94,6 +94,21 @@ from
  		 )V
  	 )T
  where RNO between 1 and 3
+</select>
+
+<select id="getlikerank" resultMap="trapmap">
+select rank, fk_seq_schedule, fk_userid, to_char(registerday, 'yyyy-mm-dd ') as registerday, to_char(startday, 'yyyy-mm-dd ') as startday, title, imagearr, seq_schedule, nvl(alldays, 0) as alldays
+from 
+    (
+    select fk_userid, registerday, startday, title, imagearr, seq_schedule, sum(days) as alldays
+      from tbl_schedule A left join tbl_schedule_detail B
+      on A.seq_schedule = B.fk_seq_schedule
+      group by A.fk_userid, a.registerday,a.startday,A.title, A.imagearr, A.seq_schedule
+      order by registerday desc
+   )V left join likeRank L
+   on V.seq_schedule = L.fk_seq_schedule
+   where rank between 1 and 5
+   order by l.rank
 </select> 
 
 <select id="getCategory" parameterType="String" resultType="String">

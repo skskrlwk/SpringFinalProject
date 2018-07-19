@@ -52,8 +52,8 @@ import com.spring.finalproject.service.InterSonService;
 		
 			
 			List<HashMap<String,String>> traplist = service.getindex();
+			List<HashMap<String,String>> likeranklist = service.likerank();
 			
-			List<String> cityList = new ArrayList<String>();
 			for(HashMap<String, String> trapmap : traplist) {
 				 String seq_schedule = trapmap.get("SEQ_SCHEDULE");
 				 String fk_category = service.getCategory(seq_schedule);
@@ -61,8 +61,15 @@ import com.spring.finalproject.service.InterSonService;
 				 trapmap.put("cityImg", cityImg);
 			}
 			
-			req.setAttribute("cityList", cityList);
 			req.setAttribute("traplist", traplist);
+			
+			for(HashMap<String, String> likerankmap : likeranklist) {
+				 String seq_schedule = likerankmap.get("SEQ_SCHEDULE");
+				 String fk_category = service.getCategory(seq_schedule);
+				 String cityImg = service.getImage(fk_category);
+				 likerankmap.put("cityImg", cityImg);
+			}
+			req.setAttribute("likeranklist", likeranklist);
 			
 			return "index.tiles";
 		}

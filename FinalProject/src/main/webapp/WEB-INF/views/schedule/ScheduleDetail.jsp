@@ -1196,8 +1196,8 @@ $("#likecnt").html("${likecnt}");
 		<!-- 캘린더 --> 
 		<div style="border-radius: 6px; background-color: white; border: 0px solid red; margin-bottom:20px; margin-top:200px; margin-left:20px;  width: 600px; height: 600px; float: left; ">
 			<div id='calendar' style='margin: 3em 0 1em 0; font-size: 13px;'></div>
-			<button type="button" id="btnLike">
-				<span>이 일정이 마음에 들면 좋아요!&nbsp;&nbsp;&nbsp;<img src="<%=request.getContextPath()%>/resources/images/like.jpg" width="35px" height="35px"></span> 
+			<button type="button" id="btnLike" style="border:solid 0px#FFFFFF; background-color: white;">
+				<span style="background-color: white;">이 일정이 마음에 들면 좋아요!&nbsp;&nbsp;&nbsp;<img src="<%=request.getContextPath()%>/resources/images/like.jpg" width="35px" height="35px"></span> 
 			</button>
 			<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;누적 좋아요! : <span id="likecnt" style="font-size: 12pt; color: red;"></span></span>
 		</div>

@@ -65,6 +65,13 @@ public class SonService implements InterSonService {
 		String str = dao.getImage(fk_category);
 		return str;
 	}
+
+	@Override
+	public List<HashMap<String, String>> likerank() {
+		List<HashMap<String, String>> likeranklist = dao.likerank();
+		
+		return likeranklist;
+	}
 	
 	
 
