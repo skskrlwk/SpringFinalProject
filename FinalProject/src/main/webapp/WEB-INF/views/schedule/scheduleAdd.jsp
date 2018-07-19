@@ -691,7 +691,7 @@ input[type='checkbox'] {
 		frm.method = "post";
 		frm.action = contextPath+"/scheduleAddEnd.action";
 		console.log(contextPath);
-		// frm.submit(); 
+		frm.submit(); 
 		
 	}
 	

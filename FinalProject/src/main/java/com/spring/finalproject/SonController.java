@@ -108,13 +108,13 @@ import com.spring.finalproject.service.InterSonService;
 			HashMap<String,String> map = new HashMap<String,String>();
 			
 			map.put("colname",colname); // 키값  value값 기재
-			 map.put("search",search);
+			map.put("search",search);
 			
 			// 페이징 처리 //
 			String str_currentShowPageNo = req.getParameter("currentShowPageNo");
 			int totalCount  = 0; // 총 게시물 건수 초기값 선언
 			
-			int sizePerPage = 8; // 한 페이지당 보여줄 게시물 건수
+			int sizePerPage = 4; // 한 페이지당 보여줄 게시물 건수
 			int currentShowPageNo = 0; //현재 보여주는 초기치 1 페이지
 			int totalPage = 0;
 			
@@ -137,18 +137,15 @@ import com.spring.finalproject.service.InterSonService;
 			}
 			
 			
-			
-			
-			
 			totalPage = (int)Math.ceil((double)totalCount/sizePerPage);
 			
-			System.out.println("totalPage: "+totalPage);
+			//System.out.println("totalPage: "+totalPage);
 			
 			if(str_currentShowPageNo==null) {
 				// 게시판 초기화면에 보여지는 것은
 				// req.getParameter("currentShowPageNo");이 값이 없으므로
 				// str_currentShowPageNo은 null이 된다. 
-				currentShowPageNo = 0;
+				currentShowPageNo = 1;
 			}else {
 				try {
 					currentShowPageNo =Integer.parseInt(str_currentShowPageNo);
@@ -170,13 +167,20 @@ import com.spring.finalproject.service.InterSonService;
 			startRno = (currentShowPageNo-1)*sizePerPage+1;
 			endRno = startRno +sizePerPage - 1;
 			
-			System.out.println(startRno);
+			//System.out.println(startRno);
 			// ===== #111. 페이징 처리를 위해 startRno, endRno를 map에 추가하여 
 			//             파라미터로 넘겨서 select되도록 한다.
 			map.put("startRno",String.valueOf(startRno));
 			map.put("endRno",String.valueOf(endRno));
 		
 			schedulevoList = service.schedulevoList2(map);
+
+			for(ScheduleVO vo : schedulevoList) {
+				 String seq_schedule = String.valueOf(vo.getSeq_schedule());
+				 String fk_category = service.getCategory(seq_schedule);
+				 String cityImg = service.getImage(fk_category);
+				 vo.setImage(cityImg);
+			}
 			
 			
 			
@@ -196,7 +200,7 @@ import com.spring.finalproject.service.InterSonService;
 			
 			String goBackURL = MyUtil.getCurrentURL(req);
 			req.setAttribute("goBackURL", goBackURL);
-			System.out.println("blocksize : "+blockSize);
+			//System.out.println("blocksize : "+blockSize);
 			
 			return "otherview.tiles";
 		}
