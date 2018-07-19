@@ -288,7 +288,7 @@ public class YoonController {
 	
 	// ==== 회원수정 페이지 요청 ====
 	@RequestMapping(value="/myInfoEdit.action", method={RequestMethod.GET})  
-	public String requireLogin_myInfoEdit() {
+	public String requireLogin_myInfoEdit(HttpServletRequest req, HttpServletResponse res) {
 		
 		return "edit/myInfoEdit.tiles";
 	}
