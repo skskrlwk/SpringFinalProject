@@ -225,5 +225,19 @@ public class KimController {
 		return "getBooklistJSON.notiles";
 
 	}
+	
+	// 내 일정 목록 띄우기
+	@RequestMapping(value="/mypage/mySchedules.action", method={RequestMethod.GET})  
+	public String mySchedules(HttpServletRequest req) {
+		
+		String userid = req.getParameter("userid");
+		
+		List<HashMap<String, String>> myschedules = service.getMySchedules(userid);
+		
+		req.setAttribute("myschedules", myschedules);
+		
+		return "mypage/mySchedules.tiles";
+
+	}
 
 }
