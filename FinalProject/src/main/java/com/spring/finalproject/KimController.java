@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.finalproject.service.InterKimService;
+import com.spring.member.model.MemberVO;
 
 @Controller
 public class KimController {
@@ -231,18 +233,23 @@ public class KimController {
 	@RequestMapping(value="/mypage/mySchedules.action", method={RequestMethod.GET})  
 	public String mySchedules(HttpServletRequest req) {
 		
-		String userid = req.getParameter("userid");
+		HttpSession session = req.getSession();
+		MemberVO mvo = (MemberVO)session.getAttribute("loginuser");
 		
-		List<HashMap<String, String>> temp_myschedules = service.getMySchedules(userid);
-		List<HashMap<String, String>> myschedules = new ArrayList<HashMap<String, String>>();
-		
-		for(HashMap<String, String> map : temp_myschedules) {
-			String imgsrc = service.getImgsrc(map.get("seq_schedule"));
-			map.put("imgsrc", imgsrc);
-			myschedules.add(map);
+		if(mvo != null) {
+			String userid = mvo.getUserid();
+			
+			List<HashMap<String, String>> temp_myschedules = service.getMySchedules(userid);
+			List<HashMap<String, String>> myschedules = new ArrayList<HashMap<String, String>>();
+			
+			for(HashMap<String, String> map : temp_myschedules) {
+				String imgsrc = service.getImgsrc(map.get("seq_schedule"));
+				map.put("imgsrc", imgsrc);
+				myschedules.add(map);
+			}
+			
+			req.setAttribute("myschedules", myschedules);
 		}
-		
-		req.setAttribute("myschedules", myschedules);
 		
 		return "mypage/mySchedules.tiles";
 
