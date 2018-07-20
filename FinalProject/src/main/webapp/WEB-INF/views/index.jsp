@@ -36,6 +36,139 @@ div.pagebar {
 }
 </style>
 
+<script type="text/javascript">
+	function flyticket() {
+		var frm = document.search_form_3;
+		var arr = $("#arr_3").val();
+		var date0 = $("#date0").val().trim();
+		var date1 = $("#date1").val().trim();
+		
+		var adt = $("#adults_3").val();
+		var chd = $("#children_3").val();
+		var regexp_num = /^[0-9]{8}/g;
+		var regexp_num2 = /^[0-9]{8}/g;
+		if(date0 == ""){
+			alert("출발일을 입력해 주세요");
+			return;
+		}
+		if(date1 == ""){
+			alert("도착일을 입력해 주세요");
+			return;
+		}
+		var bool = regexp_num.test(date0);
+		var bool2 = regexp_num2.test(date1);
+		
+		
+		if(!bool){
+			alert("출발일은 숫자만 입력가능 합니다.");
+			return;
+		}
+	
+		if(!bool2){
+			alert("도착일은 숫자만 입력가능 합니다.");
+			return;
+		}
+	
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+		if(dd<10) {
+		    dd='0'+dd
+		} 
+		if(mm<10) {
+		    mm='0'+mm
+		} 
+		today = yyyy+mm+dd;
+		
+	
+		var daydifference = (parseInt(date0) - parseInt(today));
+		
+		
+		if(daydifference <0){
+			alert(today+"이후 날짜로 입력 해주십시오");
+			return;
+		}
+		
+		var daydifference2 = (parseInt(date0) - parseInt(date1));
+		if(daydifference2 >0){
+			alert("도착일을 출발일보다 빠를 수 없습니다.");
+			return;
+		}
+	
+		
+		var url = "http://fly.interpark.com/booking/mainFlights.do?tripType=RT&sdate0="+date0+"&sdate1="+date1+"&dep0=SEL&arr0="+arr+"&dep1=TXL&arr1=SEL&adt="+adt+"&chd="+chd+"&inf=0&val=&comp=Y&via=#list";  
+	
+		window.open(url); 
+	}
+
+	function hotel() {
+		var frm = document.search_form_1;
+		var arr = $("#arr_1").val();
+		var date0 = $("#date0").val().trim();
+		var date1 = $("#date1").val().trim();
+		
+		var adt = $("#adults_1").val();
+		var chd = $("#children_1").val();
+		var regexp_num = /^[0-9]{8}/g;
+		var regexp_num2 = /^[0-9]{8}/g;
+		if(date0 == ""){
+			alert("입실날짜를 입력해 주세요");
+			return;
+		}
+		if(date1 == ""){
+			alert("퇴실날짜를 입력해 주세요");
+			return;
+		}
+		var bool = regexp_num.test(date0);
+		var bool2 = regexp_num2.test(date1);
+		
+		
+		if(!bool){
+			alert("입실날짜는 숫자만 입력가능 합니다.");
+			return;
+		}
+	
+		if(!bool2){
+			alert("퇴실날짜는 숫자만 입력가능 합니다.");
+			return;
+		}
+	
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+		if(dd<10) {
+		    dd='0'+dd
+		} 
+		if(mm<10) {
+		    mm='0'+mm
+		} 
+		today = yyyy+mm+dd;
+		
+	
+		var daydifference = (parseInt(date0) - parseInt(today));
+		
+		
+		if(daydifference <0){
+			alert(today+"이후 날짜로 입력 해주십시오");
+			return;
+		}
+		
+		var daydifference2 = (parseInt(date0) - parseInt(date1));
+		if(daydifference2 >0){
+			alert("퇴실날짜는 일실날짜보다 빠를 수 없습니다.");
+			return;
+		}
+		var date0url = date0.substring(0,4)+"."+date0.substr(4,2)+"."+date0.substr(6,2);
+		var date1url = date1.substring(0,4)+"."+date1.substr(4,2)+"."+date1.substr(6,2);
+		var url = "https://www.expedia.co.kr/Hotel-Search?destination="+arr+"&startDate="+date0
+				url+"&endDate="+date1url+"&rooms=1&adults="+adt;  
+	
+		window.open(url); 
+	}
+</script>
+
 <!-- Home -->
 
 <div class="home">
@@ -68,7 +201,7 @@ div.pagebar {
 			<!-- Slider Item -->
 			<div class="owl-item home_slider_item">
 				<div class="home_slider_background"
-					style="background-image:url(<%=request.getContextPath()%>/resources/images/home_slider.jpg)"></div>
+					style="background-image:url(<%=request.getContextPath()%>/resources/images/home_slider2.jpg)"></div>
 
 				<div class="home_slider_content text-center">
 					<div class="home_slider_content_inner" data-animation-in="flipInX"
@@ -79,14 +212,14 @@ div.pagebar {
 							<div class="button_bcg"></div>
 							<a href="#">explore now<span></span><span></span><span></span></a>
 						</div>
-					</div>
+					</div> 
 				</div>
 			</div>
 
 			<!-- Slider Item -->
 			<div class="owl-item home_slider_item">
 				<div class="home_slider_background"
-					style="background-image:url(<%=request.getContextPath()%>/resources/images/home_slider.jpg)"></div>
+					style="background-image:url(<%=request.getContextPath()%>/resources/images/home_slider3.jpg)"></div>
 
 				<div class="home_slider_content text-center">
 					<div class="home_slider_content_inner" data-animation-in="flipInX"
@@ -186,32 +319,32 @@ div.pagebar {
 						<div
 							class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
 							<img
-								src="<%=request.getContextPath()%>/resources/images/bus.png"
-								alt="">car rentals
-						</div>
-						<div
-							class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
-							<img
 								src="<%=request.getContextPath()%>/resources/images/departure.png"
 								alt="">flights
 						</div>
 						<div
 							class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
 							<img
+								src="<%=request.getContextPath()%>/resources/images/bus.png"
+								alt="">준비중...
+						</div>
+						<div
+							class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
+							<img
 								src="<%=request.getContextPath()%>/resources/images/island.png"
-								alt="">trips
+								alt="">준비중...
 						</div>
 						<div
 							class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
 							<img
 								src="<%=request.getContextPath()%>/resources/images/cruise.png"
-								alt="">cruises
+								alt="">준비중...
 						</div>
 						<div
 							class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start">
 							<img
 								src="<%=request.getContextPath()%>/resources/images/diving.png"
-								alt="">activities
+								alt="">준비중...
 						</div>
 					</div>
 				</div>
@@ -219,42 +352,114 @@ div.pagebar {
 				<!-- Search Panel -->
 
 				<div class="search_panel active">
-					<form action="#" id="search_form_1"
+					<form id="search_form_1"
 						class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
 						<div class="search_item">
 							<div>destination</div>
-							<input type="text" class="destination search_input"
-								required="required">
+							<select name="arr" id="arr_1"
+								class="dropdown_item_select search_input">
+								<option value="파리">파리</option>
+								<option value="니스">니스</option>
+								<option value="리스본">리스본</option>
+								<option value="바르셀로나">바르셀로나</option>
+								<option value="마드리드">마드리드</option>
+								<option value="그라나다">그라나다</option>
+								<option value="로마">로마</option>
+								<option value="베니스">베니스</option>
+								<option value="피렌체">피렌체</option>
+								<option value="프랑크푸르트">프랑크푸르트</option>
+								<option value="뮌헨">뮌헨</option>
+								<option value="베를린">베를린</option>
+								<option value="브뤼셀">브뤼쉘</option>
+								<option value="부다페스트">부다페스트</option>
+							</select>
 						</div>
 						<div class="search_item">
 							<div>check in</div>
-							<input type="text" class="check_in search_input"
-								placeholder="YYYY-MM-DD">
+							<input id="date0" type="text" class="check_in search_input"
+								placeholder="20170720">
 						</div>
 						<div class="search_item">
 							<div>check out</div>
-							<input type="text" class="check_out search_input"
-								placeholder="YYYY-MM-DD">
+							<input id="date1" type="text" class="check_out search_input"
+								placeholder="20170805">
 						</div>
 						<div class="search_item">
 							<div>adults</div>
-							<select name="adults" id="adults_1"
+							<select name="adt" id="adults_1"
 								class="dropdown_item_select search_input">
-								<option>01</option>
-								<option>02</option>
-								<option>03</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+						
+						<button class="button search_button" onclick="hotel();">
+							search<span></span><span></span><span></span>
+						</button>
+					</form>
+				</div>
+				
+				<!-- Search Panel -->
+
+				<div class="search_panel">
+					<form id="search_form_3" name="search_form_3"
+						class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+						<div class="search_item">
+							<div>destination</div>
+							<select name="arr" id="arr_3"
+								class="dropdown_item_select search_input">
+								<option value="CDG">파리</option>
+								<option value="NCE">니스</option>
+								<option value="LIS">리스본</option>
+								<option value="BCN">바르셀로나</option>
+								<option value="MAD">마드리드</option>
+								<option value="GRX">그라나다</option>
+								<option value="ROM">로마</option>
+								<option value="VCE">베니스</option>
+								<option value="FLR">피렌체</option>
+								<option value="FRA">프랑크푸르트</option>
+								<option value="MUC">뮌헨</option>
+								<option value="TXL">베를린</option>
+								<option value="BRU">브뤼쉘</option>
+								<option value="BUD">부다페스트</option>
+							</select>
+						</div>
+						<div class="search_item">
+							<div>check in</div>
+							<input id="date0" type="text" class="check_in search_input"
+								placeholder="20170720">
+						</div>
+						<div class="search_item">
+							<div>check out</div>
+							<input id="date1" type="text" class="check_out search_input"
+								placeholder="20170805">
+						</div>
+						<div class="search_item">
+							<div>adults</div>
+							<select name="adt" id="adults_3"
+								class="dropdown_item_select search_input">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
 							</select>
 						</div>
 						<div class="search_item">
 							<div>children</div>
-							<select name="children" id="children_1"
+							<select name="chd" id="children_3"
 								class="dropdown_item_select search_input">
-								<option>0</option>
-								<option>02</option>
-								<option>03</option>
+								<option value="0">0</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
 							</select>
 						</div>
-						<button class="button search_button">
+						<button class="button search_button" onclick="flyticket();">
 							search<span></span><span></span><span></span>
 						</button>
 					</form>
@@ -292,50 +497,6 @@ div.pagebar {
 						<div class="search_item">
 							<div>children</div>
 							<select name="children" id="children_2"
-								class="dropdown_item_select search_input">
-								<option>0</option>
-								<option>02</option>
-								<option>03</option>
-							</select>
-						</div>
-						<button class="button search_button">
-							search<span></span><span></span><span></span>
-						</button>
-					</form>
-				</div>
-
-				<!-- Search Panel -->
-
-				<div class="search_panel">
-					<form action="#" id="search_form_3"
-						class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-						<div class="search_item">
-							<div>destination</div>
-							<input type="text" class="destination search_input"
-								required="required">
-						</div>
-						<div class="search_item">
-							<div>check in</div>
-							<input type="text" class="check_in search_input"
-								placeholder="YYYY-MM-DD">
-						</div>
-						<div class="search_item">
-							<div>check out</div>
-							<input type="text" class="check_out search_input"
-								placeholder="YYYY-MM-DD">
-						</div>
-						<div class="search_item">
-							<div>adults</div>
-							<select name="adults" id="adults_3"
-								class="dropdown_item_select search_input">
-								<option>01</option>
-								<option>02</option>
-								<option>03</option>
-							</select>
-						</div>
-						<div class="search_item">
-							<div>children</div>
-							<select name="children" id="children_3"
 								class="dropdown_item_select search_input">
 								<option>0</option>
 								<option>02</option>
