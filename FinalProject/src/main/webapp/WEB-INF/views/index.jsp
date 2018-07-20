@@ -40,13 +40,15 @@ div.pagebar {
 	function flyticket() {
 		var frm = document.search_form_3;
 		var arr = $("#arr_3").val();
-		var date0 = $("#date0").val().trim();
-		var date1 = $("#date1").val().trim();
+		var date0 = $("#date0_1").val().trim();
+		var date1 = $("#date1_1").val().trim();
 		
 		var adt = $("#adults_3").val();
 		var chd = $("#children_3").val();
 		var regexp_num = /^[0-9]{8}/g;
 		var regexp_num2 = /^[0-9]{8}/g;
+
+	
 		if(date0 == ""){
 			alert("출발일을 입력해 주세요");
 			return;
@@ -162,8 +164,7 @@ div.pagebar {
 		}
 		var date0url = date0.substring(0,4)+"."+date0.substr(4,2)+"."+date0.substr(6,2);
 		var date1url = date1.substring(0,4)+"."+date1.substr(4,2)+"."+date1.substr(6,2);
-		var url = "https://www.expedia.co.kr/Hotel-Search?destination="+arr+"&startDate="+date0
-				url+"&endDate="+date1url+"&rooms=1&adults="+adt;  
+		var url = "https://www.expedia.co.kr/Hotel-Search?destination="+arr+"&startDate="+date0url+"&endDate="+date1url+"&rooms=1&adults="+adt;  
 	
 		window.open(url); 
 	}
@@ -429,12 +430,12 @@ div.pagebar {
 						</div>
 						<div class="search_item">
 							<div>check in</div>
-							<input id="date0" type="text" class="check_in search_input"
+							<input id="date0_1" type="text" class="check_in search_input"
 								placeholder="20170720">
 						</div>
 						<div class="search_item">
 							<div>check out</div>
-							<input id="date1" type="text" class="check_out search_input"
+							<input id="date1_1" type="text" class="check_out search_input"
 								placeholder="20170805">
 						</div>
 						<div class="search_item">
