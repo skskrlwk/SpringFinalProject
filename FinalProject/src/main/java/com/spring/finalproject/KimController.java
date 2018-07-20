@@ -1,10 +1,14 @@
 package com.spring.finalproject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
@@ -14,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.spring.finalproject.common.MyUtil;
 import com.spring.finalproject.service.InterKimService;
 import com.spring.member.model.MemberVO;
 
@@ -231,7 +236,7 @@ public class KimController {
 	
 	// 내 일정 목록 띄우기
 	@RequestMapping(value="/mypage/mySchedules.action", method={RequestMethod.GET})  
-	public String mySchedules(HttpServletRequest req) {
+	public String mySchedules(HttpServletRequest req, HttpServletResponse res) {
 		
 		HttpSession session = req.getSession();
 		MemberVO mvo = (MemberVO)session.getAttribute("loginuser");
@@ -249,6 +254,31 @@ public class KimController {
 			}
 			
 			req.setAttribute("myschedules", myschedules);
+		}
+		
+		else {
+			String msg = "먼저 로그인 하세요.";
+			String loc = "/finalproject/login.action";
+			req.setAttribute("msg", msg);
+			req.setAttribute("loc", loc);
+			
+			// >>>> 로그인 성공 후 로그인 하기전 페이지로 돌아가는 작업하기 <<<<
+			// ===> 현재 페이지의 주소(URL) 알아내기 <====
+			String url = MyUtil.getCurrentURL(req);
+			
+			// System.out.println(">>>> 확인용 현재 페이지 URL : " + url);
+			
+			session.setAttribute("gobackURL", url); // 세션에 url 정보를 저장시켜둔다.
+							
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/viewsnotiles/msg.jsp");
+			
+			try {
+				dispatcher.forward(req, res);
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return "mypage/mySchedules.tiles";
