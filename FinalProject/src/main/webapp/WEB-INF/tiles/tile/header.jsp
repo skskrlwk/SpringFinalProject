@@ -28,7 +28,7 @@
 <body>
 
 <div class="super_container">
-	
+
 	<!-- Header -->
 
 	<header class="header">
@@ -57,9 +57,9 @@
 							
 							<c:if test="${sessionScope.loginuser != null}">
 								<div>
-									<div class="user_box_myplan user_box_link"><a href="<%=request.getContextPath()%>/myInfoEdit.action">${sessionScope.loginuser.name} 님 환영합니다.</a></div>
-									<div class="user_box_myplan user_box_link"><a href="<%=request.getContextPath()%>/myPlan.action">myPlan</a></div>
-									<div class="user_box_edit user_box_link"><a href="<%=request.getContextPath()%>/myInfoEdit.action">Edit</a></div>
+									<div class="user_box_myplan user_box_link"><a href="<%=request.getContextPath()%>/myInfoEdit.action">${sessionScope.loginuser.name} 님 환영합니다.&nbsp;</a></div>
+									<div class="user_box_myplan user_box_link"><a href="<%=request.getContextPath()%>/mypage/mySchedules.action?userid=${sessionScope.loginuser.userid}">MyPlan&nbsp;</a></div>
+									<div class="user_box_edit user_box_link"><a href="<%=request.getContextPath()%>/myInfoEdit.action">Edit&nbsp;</a></div>
 									<div class="user_box_logout user_box_link"><a href="<%=request.getContextPath()%>/logout.action">LogOut</a></div>
 								</div>
 							</c:if>

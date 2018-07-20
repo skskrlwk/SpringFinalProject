@@ -59,4 +59,10 @@ public class KimService implements InterKimService {
 		return myschedules;
 	}
 
+	@Override
+	public String getImgsrc(String seq_schedule) {
+		String imgsrc = mdao.getImgsrc(seq_schedule);
+		return imgsrc;
+	}
+
 }

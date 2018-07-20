@@ -19,4 +19,10 @@ public class MypageDAO implements InterMypageDAO {
 		return myschedules;
 	}
 
+	@Override
+	public String getImgsrc(String seq_schedule) {
+		String imgsrc = sqlsession.selectOne("kim.getImgsrc", seq_schedule);
+		return imgsrc;
+	}
+
 }

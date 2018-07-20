@@ -83,6 +83,7 @@
 		join tbl_world C
 		on B.fk_category = C.category
 		where seq_schedule = #{seq}		
+		order by seq_schedule_detail
 	</select>
 	
 	<insert id="AddSchedule" parameterType="HashMap">

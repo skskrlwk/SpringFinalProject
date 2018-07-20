@@ -119,6 +119,15 @@
 			)
 			group by seq_schedule, fk_userid, title, startday, registerday
 		)
+		order by startday asc
+	</select>
+	
+	<select id="getImgsrc" parameterType="String" resultType="String">
+		select image
+		from tbl_world
+		where category = (select fk_category
+						  from tbl_schedule_detail
+						  where fk_seq_schedule = #{seq_schedule} and rownum = 1)
 	</select>
 
 </mapper>

@@ -1,5 +1,6 @@
 package com.spring.finalproject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -232,7 +233,14 @@ public class KimController {
 		
 		String userid = req.getParameter("userid");
 		
-		List<HashMap<String, String>> myschedules = service.getMySchedules(userid);
+		List<HashMap<String, String>> temp_myschedules = service.getMySchedules(userid);
+		List<HashMap<String, String>> myschedules = new ArrayList<HashMap<String, String>>();
+		
+		for(HashMap<String, String> map : temp_myschedules) {
+			String imgsrc = service.getImgsrc(map.get("seq_schedule"));
+			map.put("imgsrc", imgsrc);
+			myschedules.add(map);
+		}
 		
 		req.setAttribute("myschedules", myschedules);
 		
