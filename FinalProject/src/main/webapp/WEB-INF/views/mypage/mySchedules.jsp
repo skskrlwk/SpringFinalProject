@@ -29,17 +29,18 @@
 					<div id="div_myschedules${status.index}" align="center" style="width: 100%; display: inline-block; padding: 1%;">
 						<div style="width: 80%; overflow: hidden;">
 							<img src="/finalproject/resources/images/city/${schedules.imgsrc}" height="300px" />
-						</div><br/>
+						</div>
+						<br/>
 						<span style="font-size: 16pt; font-weight: bold;">${schedules.title}</span><br/>
 						<span style="font-size: 12pt; font-weight: bold;">${schedules.startday}&nbsp;~&nbsp;${schedules.endday}</span><br/>
-						<span style="font-size: 12pt; font-weight: bold;">(${schedules.days}일)</span>
-					</div>
+						<span style="font-size: 12pt; font-weight: bold;">(${schedules.days}일)</span><br/>	
+					</div>					
 				</button>
 			</a>
 			
 		</c:forEach>
 		
-		<div id="div_myschedules${status.index}" style="display: inline-block; padding: 1%;">
+		<div id="div_myschedules${status.index}" style="display: inline-block; padding: 1%;"  >
 			
 		</div>
 		

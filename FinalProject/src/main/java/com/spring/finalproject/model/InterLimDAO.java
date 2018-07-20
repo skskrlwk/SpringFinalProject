@@ -29,5 +29,7 @@ public interface InterLimDAO {
 
 	int likecnt(String seq);
 
+	int delSchedule(String seq);
+
 
 }

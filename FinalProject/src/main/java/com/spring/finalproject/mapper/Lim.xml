@@ -117,6 +117,11 @@
 		insert into tbl_scheduler(seq_scheduler, fk_schedule, schedule,transfer)
 		values(seq_tbl_scheduler.nextval, #{seq}, '','')		
 	</insert>
+	
+	<delete id="delSchedule" parameterType="String">
+		 delete from tbl_schedule
+		 where seq_schedule = #{seq}
+	</delete>
 	 
 	
 </mapper>

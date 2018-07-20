@@ -269,5 +269,30 @@ public class LimController {
 		/*return "schedule/ScheduleDetail.tiles";*/
 	}
 	
+	@RequestMapping(value = "/scheduleDel.action", method = RequestMethod.POST)
+	public String scheduleDel(HttpServletRequest request) {
+		
+		String seq = request.getParameter("seq");
+		System.out.println("seq : " + seq);
+		int n = 0;
+		n = service.delSchedule(seq);
+		
+		String msg = "";
+		String loc = "";
+		
+		if(n == 1) {
+			msg = "삭제되었습니다.";
+			loc = request.getContextPath()+"/index.action";
+		}else {
+			msg = "삭제가 실패하였습니다.";
+			loc = request.getContextPath()+"/index.action";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		return "msg.notiles";
+	}
+	
+	
+	
 	
 }

@@ -1179,6 +1179,17 @@ $("#likecnt").html("${likecnt}");
 	
 	}// end of addBook() -----------------
  
+	
+	function godelete() {
+		
+		$("#delseq").val("${ScheduleMap.seq_schedule}");
+		
+		var frm = document.delfrm;
+		frm.method = "post";
+		frm.action = "<%= request.getContextPath() %>/scheduleDel.action";
+		frm.submit();
+		
+	}
  	
 </script>
 
@@ -1187,11 +1198,8 @@ $("#likecnt").html("${likecnt}");
 <div align="center">
 <div class="home_slider_background" style="background-image:url(<%= request.getContextPath() %>/resources/images/ScheduleDetail.jpg)"></div>
 	<div style="display: inline-block;">
-
 		<!-- 지도 -->
 		<div id="googleMap" style="border-radius: 6px; border: 0px solid red; margin-bottom:20px; margin-top:200px;  width: 600px; height: 600px; float: left; ">
-		
-		
 		
 		</div>
 		<!-- 캘린더 --> 
@@ -1207,6 +1215,9 @@ $("#likecnt").html("${likecnt}");
 	<div class="tab" style="width:70%;" >
 	  <button class="tablinks" onclick="openCity(event, 'bucketList')" id="defaultOpen">여행경험</button>
 	  <button class="tablinks" onclick="openCity(event, 'scheduler')">일정표</button>
+	  <c:if test="${sessionScope.loginuser.userid == ScheduleMap.fk_userid}">
+	  <button class="tablinks" onclick="godelete();"><span style="color: red;">일정 삭제</span></button>
+	  </c:if>
 	</div>
 
 	
@@ -1445,8 +1456,7 @@ $("#likecnt").html("${likecnt}");
 		
 		
 	</div>	
-	
-	
+		
  <!-- Modal -->
 	<div class="modal fade" id="myModal" role="dialog">
 	  <div class="modal-dialog modal-lg">
@@ -1465,6 +1475,8 @@ $("#likecnt").html("${likecnt}");
 	  </div>
 	</div>
 
-
+<form name="delfrm">
+	<input type="text" name="seq" id="delseq" />
+</form>
  
  	

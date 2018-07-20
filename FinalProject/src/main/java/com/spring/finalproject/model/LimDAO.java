@@ -88,6 +88,12 @@ public class LimDAO implements InterLimDAO {
 		return result;
 	}
 
+	@Override
+	public int delSchedule(String seq) {
+		int n = sqlsession.delete("Lim.delSchedule",seq);
+		return n;
+	}
+
 
 
 }
