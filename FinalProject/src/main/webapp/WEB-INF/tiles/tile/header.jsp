@@ -57,8 +57,8 @@
 							
 							<c:if test="${sessionScope.loginuser != null}">
 								<div>
-									<div class="user_box_myplan user_box_link"><a href="<%=request.getContextPath()%>/myInfoEdit.action">${sessionScope.loginuser.name} 님 환영합니다.&nbsp;</a></div>
-									<div class="user_box_myplan user_box_link"><a href="<%=request.getContextPath()%>/mypage/mySchedules.action?userid=${sessionScope.loginuser.userid}">MyPlan&nbsp;</a></div>
+									<div class="user_box_myplan user_box_link"><%-- <a href="<%=request.getContextPath()%>/myInfoEdit.action"> --%>${sessionScope.loginuser.name} 님 환영합니다.&nbsp;</a></div>
+									<%-- <div class="user_box_myplan user_box_link"><a href="<%=request.getContextPath()%>/mypage/mySchedules.action?userid=${sessionScope.loginuser.userid}">MyPlan&nbsp;</a></div> --%>
 									<div class="user_box_edit user_box_link"><a href="<%=request.getContextPath()%>/myInfoEdit.action">Edit&nbsp;</a></div>
 									<div class="user_box_logout user_box_link"><a href="<%=request.getContextPath()%>/logout.action">LogOut</a></div>
 								</div>
@@ -80,9 +80,11 @@
 						</div>
 						<div class="main_nav_container ml-auto">
 							<ul class="main_nav_list">
-								<li class="main_nav_item"><a href="<%= request.getContextPath() %>/index.action">나의 플래너 보기</a></li>
+								<c:if test="${sessionScope.loginuser != null}">
+									<li class="main_nav_item"><a href="<%=request.getContextPath()%>/mypage/mySchedules.action">나의 플래너 보기</a></li>
+								</c:if>
 								<li class="main_nav_item"><a href="<%= request.getContextPath() %>/scheduleAdd.action">플래너 만들기</a></li>
-								<li class="main_nav_item"><a href="#">추천플래너</a></li>
+								<!-- <li class="main_nav_item"><a href="#">추천플래너</a></li> -->
 								<li class="main_nav_item"><a href="<%= request.getContextPath() %>/boardlist.action">게시판</a></li>
 							</ul>
 						</div>
