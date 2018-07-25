@@ -230,7 +230,7 @@ public class YoonController {
 				}
 				
 				try {
-					mail.sendmail(email, certificationCode);
+					mail.sendmail(email, certificationCode, req);
 					req.setAttribute("certificationCode", certificationCode);
 					
 				} catch(Exception e) {

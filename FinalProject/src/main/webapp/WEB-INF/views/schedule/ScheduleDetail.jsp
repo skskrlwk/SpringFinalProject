@@ -76,7 +76,7 @@
 		google.maps.event.addDomListener(window, 'load', initialize);
 		calendar();	
 		
-$("#likecnt").html("${likecnt}");
+	$("#likecnt").html("${likecnt}");
 		
 		$("#btnLike").click(function(){
 			

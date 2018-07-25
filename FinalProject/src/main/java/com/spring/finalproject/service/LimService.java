@@ -176,6 +176,12 @@ public class LimService implements InterLimService {
 		int n = dao.delSchedule(seq);
 		return n;
 	}
+
+	@Override
+	public List<HashMap<String, String>> getCityRank() {
+		List<HashMap<String, String>> listmap = dao.getCityRank();
+		return listmap;
+	}
 	
 	
 }

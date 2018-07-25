@@ -32,6 +32,8 @@ public interface InterLimService {
 
 	int delSchedule(String seq);
 
+	List<HashMap<String, String>> getCityRank();
+
 
 	
 	
