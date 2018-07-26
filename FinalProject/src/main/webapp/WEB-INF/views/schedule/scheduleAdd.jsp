@@ -285,7 +285,7 @@ input[type='checkbox'] {
 		    html += "<div style='float:left; width:70px; height:53px; padding-left:7px;background:#fff;padding-top:13px;border-radius:100px;border:3px solid #3ad195;cursor:pointer'>";
 		    html += "<div>";
 		    html += "<select name='days' style='width: 50px; border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px;'>";
-		    html += "<option value='1' selected='selected'>0박</option>";
+		    html += "<option value='0' selected='selected'>0박</option>";
 		    html += "<option value='1' selected='selected'>1박</option>";
 		    html += "<option value='2'>2박</option>";
 		    html += "<option value='3'>3박</option>";
@@ -822,6 +822,17 @@ input[type='checkbox'] {
 		
 	}
 	
+	function goback() {
+		var bool = confirm("저장하지 않고 이 페이지를 나가려 합니다"); 
+		if(bool){
+			javascript:history.back();
+		}    
+
+
+		
+	}
+	
+
 </script>
 <!-- 
 </head>
@@ -844,7 +855,7 @@ input[type='checkbox'] {
 			</div>
 			<div style="height: 100px; border: solid red 0px; background-color: #3ad195;" class="navbar" >
 				  <span style="font-weight: bolder; color: white;">출발  :</span><input type="date" id="startDay" name="startDay"> <br/>
-				  <button type="button" class="btn btn-default" onclick="goInsert();">저장하기</button> <button type="button" class="btn btn-default" onclick="javascript:history.back();">돌아가기</button>	  
+				  <button type="button" class="btn btn-default" onclick="goInsert();">저장하기</button> <button type="button" class="btn btn-default" onclick="goback();">돌아가기</button>	  
 			</div>
 			<div id="travelList">
 			

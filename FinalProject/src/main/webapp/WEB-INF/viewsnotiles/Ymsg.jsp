@@ -2,5 +2,5 @@
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
 	alert("${msg}");
-	location.href="http://localhost:9090/finalproject/ScheduleDetail.action?seq=${seq}";
+	location.href="<%= request.getContextPath() %>/ScheduleDetail.action?seq=${seq}";
 </script>    

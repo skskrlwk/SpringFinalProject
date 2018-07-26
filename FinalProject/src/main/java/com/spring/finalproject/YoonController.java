@@ -1,6 +1,7 @@
 package com.spring.finalproject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.spring.finalproject.common.MyUtil;
 import com.spring.finalproject.service.InterYoonService;
 import com.spring.member.model.MemberVO;
 
@@ -56,6 +58,7 @@ public class YoonController {
 		if(loginuser != null) {
 			HttpSession session = req.getSession();
 			session.setAttribute("loginuser", loginuser);
+			session.setAttribute("userid", loginuser.getUserid());
 			
 			String gobackURL = (String)session.getAttribute("gobackURL");
 			req.setAttribute("gobackURL", gobackURL);
@@ -95,7 +98,7 @@ public class YoonController {
 		json.put("result", result);
 		String str_result = json.toString();
 		
-		System.out.println("str_result : " + str_result);
+	//	System.out.println("str_result : " + str_result);
 		
 		req.setAttribute("str_result", str_result);
 				
@@ -230,7 +233,7 @@ public class YoonController {
 				}
 				
 				try {
-					mail.sendmail(email, certificationCode);
+					mail.sendmail(email, certificationCode, req);
 					req.setAttribute("certificationCode", certificationCode);
 					
 				} catch(Exception e) {
@@ -348,7 +351,7 @@ public class YoonController {
 		HttpSession session = req.getSession();
 		
 		String method = req.getMethod();
-		System.out.println("===> 확인용 memberQuit 의 method : " + method);
+		// System.out.println("===> 확인용 memberQuit 의 method : " + method);
 		
 		req.setAttribute("method", method);
 		
@@ -445,15 +448,116 @@ public class YoonController {
 	}
 	
 	
+	@RequestMapping(value="/memberList.action", method={RequestMethod.GET})  
+	public String requireAdmin_memberList(HttpServletRequest request, HttpServletResponse response) {
+			
+		String currentURL = MyUtil.getCurrentURL(request);
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		request.setAttribute("currentURL", currentURL);
+		
+	    String str_sizePerPage = request.getParameter("sizePerPage");
+		
+	    if(str_sizePerPage == null)  // 초기화면
+	    	str_sizePerPage = "10";
+	    	    
+	    int sizePerPage = 0;
+	    
+	    int startRno = 0;          
+		int endRno = 0; 
+
+	    try{
+	    	sizePerPage = Integer.parseInt(str_sizePerPage);
+	    	
+	    	if(sizePerPage != 3 && sizePerPage != 5 && sizePerPage != 10) {
+		    	sizePerPage = 10;
+		    }
+	    } catch(NumberFormatException e){
+	    	sizePerPage = 10;
+	    }
+	    
+	    request.setAttribute("sizePerPage", sizePerPage);
+				
+		int totalMemberCount = service.getMemberCnt();
+		
+		request.setAttribute("totalMemberCount", totalMemberCount - 1);
+	    
+		
+		int totalPage = (int)Math.ceil((double)totalMemberCount / sizePerPage);   
+		request.setAttribute("totalPage", totalPage);
+        
+	    
+		String str_currentShowPageNo = request.getParameter("currentShowPageNo");
+	    int currentShowPageNo = 0; // 사용자가 보고자 하는 페이지번호    
+			    
+	    if(str_currentShowPageNo == null || str_currentShowPageNo.trim().isEmpty() ) {
+	    	currentShowPageNo = 1;
+	    	// 초기화면은 현재페이지 번호로 1 페이지로 설정한다.
+	    }
+	    else {
+	    	try{
+	    		currentShowPageNo = Integer.parseInt(str_currentShowPageNo);
+	        	// 사용자가 보고자하는 페이지번호를 클릭했을 때
+	        	// 페이지번호를 현재페이지로 설정함.
+	        	
+	        	if(currentShowPageNo < 1 || currentShowPageNo > totalPage) {
+	        		currentShowPageNo = 1;
+	        	}
+	        	
+	    	}catch(NumberFormatException e) {
+	    		currentShowPageNo = 1;
+	    	}
+	    	
+	    }
+	    
+	    startRno = (currentShowPageNo - 1) * sizePerPage + 1;
+		endRno = startRno + sizePerPage - 1;	    
+	    
+		map.put("startRno", String.valueOf(startRno));
+		map.put("endRno", String.valueOf(endRno));
+		
+	    int blockSize = 10;
+		String url = "memberList.action";
+			
+		String pageBar = MyUtil.getPageBar(url, currentShowPageNo, sizePerPage, totalPage, blockSize);
+		  
+		request.setAttribute("pageBar", pageBar);
+		request.setAttribute("currentShowPageNo", currentShowPageNo);
+	    
+		
+		
+		List<HashMap<String, String>> memberlist = service.getAllMembers(map);
+		
+		request.setAttribute("memberlist", memberlist);
+		
+		return "/memberList/memberList.tiles";
+	}
 	
 	
+	@RequestMapping(value="/memberDelete.action", method={RequestMethod.POST})  
+	public String requireAdmin_memberDelete(HttpServletRequest request, HttpServletResponse response) {
+	
+		String userid = request.getParameter("userid");
+		
+		int n = service.deleteMember(userid);
+		
+		request.setAttribute("n", n);
+		
+		return "/memberList/memberResultComment.tiles";
+	}
 	
 	
+	@RequestMapping(value="/goMemberRecover.action", method={RequestMethod.POST})  
+	public String requireAdmin_goMemberRecover(HttpServletRequest request, HttpServletResponse response) {
 	
-	
-	
-	
-	
+		String userid = request.getParameter("userid");
+		
+		int n = service.recoverMember(userid);
+				
+		request.setAttribute("n", n);
+		
+		return "/memberList/memberResultComment.tiles";
+	}
 	
 	
 	

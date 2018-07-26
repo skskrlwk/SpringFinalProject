@@ -11,7 +11,7 @@
 	</c:if>
 	
 	<c:if test="${n != 1}">
-		alert("글삭제 실패!!");
+		alert("글 삭제 실패!!");
 		location.href="<%= request.getContextPath() %>/boardlist.action";
 	</c:if>
 	

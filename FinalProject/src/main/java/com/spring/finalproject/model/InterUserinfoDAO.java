@@ -24,4 +24,12 @@ public interface InterUserinfoDAO {
 	int editMember(MemberVO membervo);				// 회원정보 수정
 
 	int memberQuit(HashMap<String, String> map);	// 회원 탈퇴
+
+	List<HashMap<String, String>> getAllMembers(HashMap<String, String> map);	// 모든 회원 정보 가져오기
+
+	int deleteMember(String userid);				// 관리자의 회원 삭제
+
+	int recoverMember(String userid);				// 관리자의 회원 복구
+
+	int getMemberCnt();								// 페이징 처리를 위한 회원 수 가져오기
 }

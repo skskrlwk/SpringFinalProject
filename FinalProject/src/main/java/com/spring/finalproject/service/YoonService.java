@@ -1,6 +1,7 @@
 package com.spring.finalproject.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -99,7 +100,32 @@ public class YoonService implements InterYoonService {
 		return n;
 	}
 
-	
+
+	@Override
+	public List<HashMap<String, String>> getAllMembers(HashMap<String, String> map) {
+		List<HashMap<String, String>> MemberList = dao.getAllMembers(map);
+		return MemberList;
+	}
+
+
+	@Override
+	public int deleteMember(String userid) {
+		int n = dao.deleteMember(userid);
+		return n;
+	}
+
+	@Override
+	public int recoverMember(String userid) {
+		int n = dao.recoverMember(userid);
+		return n;
+	}
+
+
+	@Override
+	public int getMemberCnt() {
+		int n = dao.getMemberCnt();
+		return n;
+	}
 	
 	
 }

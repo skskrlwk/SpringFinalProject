@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>tiles 를 사용한 게시판 페이지 작성하기</title>
+<title>상상속의 여행을 현실로</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   

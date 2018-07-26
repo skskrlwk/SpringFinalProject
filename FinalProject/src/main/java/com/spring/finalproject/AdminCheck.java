@@ -59,9 +59,11 @@ public class AdminCheck {
 		
 		HttpServletResponse response = (HttpServletResponse)joinPoint.getArgs()[1];
 		
+		String userid = (String)session.getAttribute("userid");
+		
 		// 보조업무 구현
 		// - 해당 요청자가 인증받지 못한 상태라면 회원 전용 페이지에 접근할 수 없기에 다른페이지(/WEB-INF/viewsnotiles/msg.jsp)로 강제 이동시킨다. 
-		if( session.getAttribute("loginuser.getUserid") != "admin" ) {
+		if( !userid.equals("admin") || session.getAttribute("loginuser") == null ) {
 			try {
 				String msg = "관리자로 로그인 하세요.";
 				String loc = "/finalproject/login.action";

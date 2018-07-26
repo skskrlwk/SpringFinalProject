@@ -84,6 +84,41 @@
 		values(#{seq_schedule}, #{userid}, default)
 	</insert>
 	
+	<resultMap type="HashMap" id="memberMap">
+		<result property="userid"	column="userid"		javaType="String" />
+		<result property="name"		column="name"		javaType="String" />
+		<result property="email"	column="email"		javaType="String" />
+		<result property="tel"		column="tel"		javaType="String" />
+		<result property="gender"	column="gender"		javaType="String" />
+		<result property="quitYN"	column="quitYN"		javaType="String" />
+	</resultMap>
+	
+	<select id="getAllMembers" parameterType="HashMap" resultMap="memberMap">
+		select RNO, userid, name, email, tel, gender, quitYN
+		from
+		(
+			select rownum as RNO, userid, name, email, tel, gender, quitYN
+			from tbl_userinfo
+			where userid != 'admin'
+		) T
+		where T.RNO >= #{startRno} and T.RNO <![CDATA[<=]]> #{endRno}
+	</select>
+	
+	<update id="deleteMember" parameterType="String">
+		update tbl_userinfo set quitYN = 0
+		where userid = #{userid}
+	</update>
+
+	<update id="recoverMember" parameterType="String">
+		update tbl_userinfo set quitYN = 1
+		where userid = #{userid}
+	</update>
+	
+	<select id="getMemberCnt" resultType="Integer">
+		select count(*)
+		from tbl_userinfo
+	</select>
+	
 </mapper>
 
 

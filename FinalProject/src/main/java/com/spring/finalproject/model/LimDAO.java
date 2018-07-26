@@ -88,6 +88,18 @@ public class LimDAO implements InterLimDAO {
 		return result;
 	}
 
+	@Override
+	public int delSchedule(String seq) {
+		int n = sqlsession.delete("Lim.delSchedule",seq);
+		return n;
+	}
+
+	@Override
+	public List<HashMap<String, String>> getCityRank() {
+		List<HashMap<String, String>> listmap = sqlsession.selectList("Lim.getCityRank");
+		return listmap;
+	}
+
 
 
 }

@@ -94,5 +94,40 @@
 		from tbl_book
 		where fk_category = #{country}
 	</select>
+	
+	<resultMap type="HashMap" id="myScheduleMap">
+		<result property="seq_schedule"		column="seq_schedule"	javaType="String" />
+		<result property="fk_userid"		column="fk_userid"		javaType="String" />
+		<result property="title"			column="title"			javaType="String" />
+		<result property="startday"			column="startday"		javaType="String" />
+		<result property="registerday"		column="registerday"	javaType="String" />
+		<result property="days"				column="days"			javaType="String" />
+		<result property="endday"			column="endday"			javaType="String" />
+	</resultMap>
+	
+	<select id="getMySchedules" parameterType="String" resultMap="myScheduleMap">
+		select seq_schedule, fk_userid, title, startday, registerday, days, to_char(registerday+days-1, 'yyyy-mm-dd') as endday
+		from
+		(
+			select seq_schedule, fk_userid, title, startday, registerday, sum(days) + 1 as days
+			from
+			(
+				select A.seq_schedule, A.fk_userid, A.title, to_char(A.startday, 'yyyy-mm-dd') as startday, A.registerday, B.days
+				from tbl_schedule A join tbl_schedule_detail B
+				on A.seq_schedule = B.fk_seq_schedule
+				where A.fk_userid = #{userid}
+			)
+			group by seq_schedule, fk_userid, title, startday, registerday
+		)
+		order by startday asc
+	</select>
+	
+	<select id="getImgsrc" parameterType="String" resultType="String">
+		select image
+		from tbl_world
+		where category = (select fk_category
+						  from tbl_schedule_detail
+						  where fk_seq_schedule = #{seq_schedule} and rownum = 1)
+	</select>
 
 </mapper>

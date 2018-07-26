@@ -68,5 +68,29 @@ public class UserinfoDAO implements InterUserinfoDAO {
 		int result = sqlsession.update("Yoon.memberQuit", map);
 		return result;
 	}
+
+	@Override
+	public List<HashMap<String, String>> getAllMembers(HashMap<String, String> map) {
+		List<HashMap<String, String>> getAllMembers = sqlsession.selectList("Yoon.getAllMembers", map);
+		return getAllMembers;
+	}
+
+	@Override
+	public int deleteMember(String userid) {
+		int result = sqlsession.update("Yoon.deleteMember", userid);
+		return result;
+	}
+	
+	@Override
+	public int recoverMember(String userid) {
+		int result = sqlsession.update("Yoon.recoverMember", userid);
+		return result;
+	}
+
+	@Override
+	public int getMemberCnt() {
+		int result = sqlsession.selectOne("Yoon.getMemberCnt");
+		return result;
+	}
 	
 }

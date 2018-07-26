@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -267,6 +269,29 @@ public class LimController {
 		
 		return "resultmsg.notiles";
 		/*return "schedule/ScheduleDetail.tiles";*/
+	}
+	
+	@RequestMapping(value = "/scheduleDel.action", method = RequestMethod.POST)
+	public String scheduleDel(HttpServletRequest request) {
+		
+		String seq = request.getParameter("seq");
+		System.out.println("seq : " + seq);
+		int n = 0;
+		n = service.delSchedule(seq);
+		
+		String msg = "";
+		String loc = "";
+		
+		if(n == 1) {
+			msg = "삭제되었습니다.";
+			loc = request.getContextPath()+"/index.action";
+		}else {
+			msg = "삭제가 실패하였습니다.";
+			loc = request.getContextPath()+"/index.action";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		return "msg.notiles";
 	}
 	
 	

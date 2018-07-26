@@ -1,6 +1,7 @@
 package com.spring.finalproject.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import com.spring.member.model.MemberVO;
 
@@ -28,5 +29,13 @@ public interface InterYoonService {
 	int checklike(HashMap<String, String> map);		// 이미 좋아요 눌렀나 체크
 
 	int addlike(HashMap<String, String> map);		// 좋아요 증가 시키기
+
+	List<HashMap<String, String>> getAllMembers(HashMap<String, String> map);	// 모든 회원 정보 가져오기
+
+	int deleteMember(String userid);				// 관리자의 회원 삭제
+
+	int recoverMember(String userid);				// 관리자의 회원 복구
+
+	int getMemberCnt();								// 회원 목록 페이징처리 위한 회원 수 가져오기
 
 }
