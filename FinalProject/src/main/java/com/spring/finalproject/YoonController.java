@@ -58,7 +58,7 @@ public class YoonController {
 		if(loginuser != null) {
 			HttpSession session = req.getSession();
 			session.setAttribute("loginuser", loginuser);
-			session.setAttribute("userid", loginuser.getUserid());
+		
 			
 			String gobackURL = (String)session.getAttribute("gobackURL");
 			req.setAttribute("gobackURL", gobackURL);

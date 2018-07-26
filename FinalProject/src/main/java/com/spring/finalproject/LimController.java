@@ -303,7 +303,7 @@ public class LimController {
 	}
 	
 	@RequestMapping(value = "/adminRegister.action", method = RequestMethod.GET)
-	public String adminRegister(HttpServletRequest request, HttpServletResponse response) {
+	public String requireAdmin_adminRegister(HttpServletRequest request, HttpServletResponse response) {
 		
 		
 		return "admin/adminRegister.tiles";

@@ -96,6 +96,7 @@
 								<li class="main_nav_item"><a href="<%= request.getContextPath() %>/boardlist.action">게시판</a></li>
 								<c:if test="${sessionScope.loginuser.userid eq 'admin'}">
 									<li class="main_nav_item"><a href="<%= request.getContextPath() %>/memberList.action">회원관리</a></li>
+									<li class="main_nav_item"><a href="<%= request.getContextPath() %>/adminRegister.action">여행정보관리</a></li>
 								</c:if>
 							</ul>
 						</div>

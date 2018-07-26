@@ -15,6 +15,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 import com.spring.finalproject.common.MyUtil;
+import com.spring.member.model.MemberVO;
 
 
 /* === 주업무(<예:글쓰기, 글수정, 댓글쓰기 등등>를 실행하기 앞서 
@@ -59,11 +60,12 @@ public class AdminCheck {
 		
 		HttpServletResponse response = (HttpServletResponse)joinPoint.getArgs()[1];
 		
-		String userid = (String)session.getAttribute("userid");
+		MemberVO loginuser = (MemberVO)session.getAttribute("loginuser");
+		String userid = loginuser.getUserid();
 		
 		// 보조업무 구현
 		// - 해당 요청자가 인증받지 못한 상태라면 회원 전용 페이지에 접근할 수 없기에 다른페이지(/WEB-INF/viewsnotiles/msg.jsp)로 강제 이동시킨다. 
-		if( !userid.equals("admin") || session.getAttribute("loginuser") == null ) {
+		if( session.getAttribute("loginuser") == null || !userid.equals("admin")  ) {
 			try {
 				String msg = "관리자로 로그인 하세요.";
 				String loc = "/finalproject/login.action";
