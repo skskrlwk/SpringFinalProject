@@ -182,6 +182,24 @@ public class LimService implements InterLimService {
 		List<HashMap<String, String>> listmap = dao.getCityRank();
 		return listmap;
 	}
+
+	@Override
+	public int addShop(HashMap<String, String> map) {
+		int n = dao.addShop(map);
+		return n;
+	}
+
+	@Override
+	public int addTour(HashMap<String, String> map) {
+		int n = dao.addTour(map);
+		return n;
+	}
+
+	@Override
+	public int addBook(HashMap<String, String> map) {
+		int n = dao.addBook(map);
+		return n;
+	}
 	
 	
 }

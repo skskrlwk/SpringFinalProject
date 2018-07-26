@@ -612,7 +612,7 @@ input[type='checkbox'] {
 	         {lat: -27.467, lng: 153.027}, 
 	    ]; 
 		 */
-		console.log(flightPlanCoordinates);
+		// console.log(flightPlanCoordinates);
 		 
 		var lineSymbol = {path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW};
 		 
@@ -690,7 +690,7 @@ input[type='checkbox'] {
 		var frm = document.planFrm;		
 		frm.method = "post";
 		frm.action = contextPath+"/scheduleAddEnd.action";
-		console.log(contextPath);
+		// console.log(contextPath);
 		frm.submit(); 
 		
 	}

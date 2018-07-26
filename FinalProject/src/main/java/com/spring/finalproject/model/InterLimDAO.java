@@ -33,5 +33,11 @@ public interface InterLimDAO {
 
 	List<HashMap<String, String>> getCityRank();
 
+	int addShop(HashMap<String, String> map);
+
+	int addTour(HashMap<String, String> map);
+
+	int addBook(HashMap<String, String> map);
+
 
 }

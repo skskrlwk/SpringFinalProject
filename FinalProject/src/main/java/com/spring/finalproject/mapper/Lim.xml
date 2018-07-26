@@ -144,6 +144,20 @@
 		)T
 		
 	</select>
+	
+	<insert id="addShop" parameterType="HashMap">
+		insert into tbl_shop(seq_shop, fk_category, name, image, comments, addr, worktime)
+		values(seq_tbl_shop.nextval, #{category}, #{name}, #{image}, #{comments}, #{addr}, #{worktime} )
+	</insert>
+	
+	<insert id="addTour" parameterType="HashMap">
+		insert into tbl_tour(seq_tour, fk_category, name, image, price, addr)
+		values (seq_tbl_tour.nextval, #{category}, #{name}, #{image}, #{price}, #{addr})
+	</insert>
 	 
+	 <insert id="addBook" parameterType="HashMap">
+	 	insert into tbl_book(seq_book, fk_category, name, image, price, addr)
+		values (seq_tbl_tour.nextval, #{category}, #{name}, #{image}, #{price}, #{addr}) 	
+	 </insert>
 	
 </mapper>

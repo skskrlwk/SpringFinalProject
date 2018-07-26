@@ -100,6 +100,24 @@ public class LimDAO implements InterLimDAO {
 		return listmap;
 	}
 
+	@Override
+	public int addShop(HashMap<String, String> map) {
+		int n = sqlsession.insert("Lim.addShop", map);
+		return n;
+	}
+
+	@Override
+	public int addTour(HashMap<String, String> map) {
+		int n = sqlsession.insert("Lim.addTour", map);
+		return n;
+	}
+
+	@Override
+	public int addBook(HashMap<String, String> map) {
+		int n = sqlsession.insert("Lim.addBook", map);
+		return n;
+	}
+
 
 
 }
