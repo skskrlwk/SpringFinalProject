@@ -1,5 +1,7 @@
 package com.spring.finalproject;
 
+import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.spring.finalproject.common.FileManager;
 import com.spring.finalproject.service.InterLimService;
 import com.spring.finalproject.service.InterYJWService;
 import com.spring.member.model.MemberVO;
@@ -34,6 +39,9 @@ public class LimController {
 	
 	@Autowired
 	private InterYJWService service2;
+	
+	@Autowired
+	private FileManager filemanager;
 	
 	private static final Logger logger = LoggerFactory.getLogger(LimController.class);
 	
@@ -293,6 +301,98 @@ public class LimController {
 		request.setAttribute("loc", loc);
 		return "msg.notiles";
 	}
+	
+	@RequestMapping(value = "/adminRegister.action", method = RequestMethod.GET)
+	public String adminRegister(HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		return "admin/adminRegister.tiles";
+	}
+	
+	@RequestMapping(value = "/adminRegisterEnd.action", method = RequestMethod.POST)
+	public String adminRegisterEnd(MultipartHttpServletRequest req, HttpSession session) {
+		
+		String tbl = req.getParameter("tbl");
+		
+		String category = req.getParameter("category");
+		String name = req.getParameter("name");
+		String comments = req.getParameter("comments");
+		String addr = req.getParameter("addr");
+		String worktime = req.getParameter("worktime");
+		String price = req.getParameter("price");
+		if(!price.equals("")) {
+			DecimalFormat df = new DecimalFormat("#,##0.00");
+			price = df.format(Integer.parseInt(price));
+		}
+		
+		MultipartFile image = req.getFile("image");
+				
+		if(!image.isEmpty()) {
+			
+			String root = session.getServletContext().getRealPath("/");
+			String path = root + "resources" + File.separator + "images/" + tbl;
+			System.out.println("path : " + path);
+			
+			String newfilename = "";	// WAS(톰캣) 디스크에 저장할 파일명.
+			
+			byte[] bytes = null;		
+			
+			long filesize = 0;			
+			
+			try {	
+				bytes = image.getBytes();
+				
+				newfilename = filemanager.doFileUpload(bytes, image.getOriginalFilename(), path);
+				// 파일을 업로드 한 후 현재시간+나노타임.확장자로 되어진 파일명을
+				// 리턴받아 newFileName 으로 저장한다.
+				// boardvo.getAttach().getOriginalFilename() 은 첨부된 파일의 실제 파일명(문자열)을 얻어오는 것이다. 
+				
+				// System.out.println("newfilename : "+newfilename);
+				HashMap<String, String> map = new HashMap<String, String>();
+				map.put("category", category);
+				map.put("name", name);
+				map.put("comments", comments);
+				map.put("addr", addr);
+				map.put("image", newfilename);
+				map.put("worktime", worktime);
+				map.put("price", price);
+				
+				int n = 0;
+				if(tbl.equals("shop")) {
+					n = service.addShop(map);
+				}
+				else if(tbl.equals("tour")) {
+					n = service.addTour(map);
+				}
+				else if(tbl.equals("book")) {
+					n = service.addBook(map);
+				}
+				
+				
+				String msg = "";
+				String loc = req.getContextPath()+"/adminRegister.action";
+				
+				if(n == 1) {
+					msg = "등록 성공!";
+				}else {
+					msg = "등록 실패!";
+				}
+				req.setAttribute("msg", msg);
+				req.setAttribute("loc", loc);
+				
+				return "msg.notiles";
+				
+			} catch (Exception e) {
+				
+			}
+		
+		}
+		
+		return "msg.notiles";
+		
+		
+	}
+	
 	
 	
 }
