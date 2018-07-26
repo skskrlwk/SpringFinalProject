@@ -117,6 +117,33 @@
 		insert into tbl_scheduler(seq_scheduler, fk_schedule, schedule,transfer)
 		values(seq_tbl_scheduler.nextval, #{seq}, '','')		
 	</insert>
+	
+	<delete id="delSchedule" parameterType="String">
+		 delete from tbl_schedule
+		 where seq_schedule = #{seq}
+	</delete>
+	
+	<resultMap type="HashMap" id="CityRankMap">
+		<result property="name" column="name"  javaType="String" />
+		<result property="cnt" column="cnt"  javaType="String" />
+	</resultMap>
+	
+	<select id="getCityRank" resultMap="CityRankMap">
+		select name, cnt
+		from
+		(
+		 select rownum as rno, name, cnt
+		 from 
+		 (
+		  select name, count(name) as cnt
+		  from tbl_schedule_detail A join tbl_world B
+		  on A.fk_category = B.category
+		  group by name
+		  order by cnt desc
+		 )V
+		)T
+		
+	</select>
 	 
 	
 </mapper>

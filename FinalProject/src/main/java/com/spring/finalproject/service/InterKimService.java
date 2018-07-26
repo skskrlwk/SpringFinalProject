@@ -22,5 +22,11 @@ public interface InterKimService {
 
 	// 도서 목록 가져오기
 	List<HashMap<String, String>> getBooklist(String country);
+	
+	// 내 일정 목록 가져오기
+	List<HashMap<String, String>> getMySchedules(String userid);
+
+	// 일정 대표이미지 가져오기
+	String getImgsrc(String seq_schedule);
 
 }

@@ -7,6 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import com.spring.finalproject.common.FileManager;
 import com.spring.finalproject.common.MyUtil;
 import com.spring.finalproject.model.ScheduleDetailVO;
 import com.spring.finalproject.model.ScheduleVO;
+import com.spring.finalproject.service.InterLimService;
 import com.spring.finalproject.service.InterSonService;
 
 	
@@ -40,6 +43,9 @@ import com.spring.finalproject.service.InterSonService;
 		// ===== #33. 의존객체 주입하기(DI : Dependency Injection) =====
 		@Autowired
 		private InterSonService service;
+		
+		@Autowired
+		private InterLimService service2;
 		
 		// ===== #132. 파일업로드 및 다운로드를 해주는 FileManager클래스 의존객체 주입하기 =====
 		@Autowired
@@ -87,6 +93,17 @@ import com.spring.finalproject.service.InterSonService;
 			}
 			req.setAttribute("likeranklist", likeranklist);
 			
+			List<HashMap<String, String>> chartListmap = service2.getCityRank();
+			JSONArray jsonArr = new JSONArray();
+			
+			for(HashMap<String, String> map : chartListmap) {
+				JSONObject obj = new JSONObject();
+				obj.put("name", map.get("name"));
+				obj.put("cnt", map.get("cnt"));
+				jsonArr.put(obj);
+			}
+			String str_jsonArr = jsonArr.toString();
+			req.setAttribute("str_jsonArr", str_jsonArr);
 			return "index.tiles";
 		}
 		

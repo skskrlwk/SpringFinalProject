@@ -5,15 +5,19 @@ import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
 import javax.mail.Address;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.mail.Session;
 import javax.mail.Authenticator;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.util.Properties;
 import com.spring.finalproject.MySMTPAuthenticator;
 
  
 public class GoogleMail {
 	
-    public void sendmail(String recipient, String certificationCode)  
+    public void sendmail(String recipient, String certificationCode, HttpServletRequest req)  
     		throws Exception{
         
     	// 1. 정보를 담기 위한 객체
@@ -51,7 +55,7 @@ public class GoogleMail {
     	MimeMessage msg = new MimeMessage(ses);
 
     	// 제목 설정
-    	String subject = "localhost:9090/finalproject/index.action 회원님의 비밀번호를 찾기위한 인증코드 발송";
+    	String subject = req.getContextPath()+"/index.action 회원님의 비밀번호를 찾기위한 인증코드 발송";
     	msg.setSubject(subject);
     	        
     	// 보내는 사람의 메일주소

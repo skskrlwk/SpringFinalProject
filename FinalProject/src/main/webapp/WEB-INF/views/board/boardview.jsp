@@ -197,6 +197,9 @@
                               <a style="cursor: pointer;" onclick="delcomment(${commentvo.seq_comment})">삭제</a>|</div>
                               <div id="editcancel${status.count}" style="cursor: pointer; float: right;" onclick="editcancel(${status.count})">수정취소</div>
                               </c:if>
+                              <c:if test="${sessionScope.loginuser.userid eq 'admin'}">
+                              	<div id="deledit${status.count}" style="float: right;">|<a style="cursor: pointer;" onclick="delcomment(${commentvo.seq_comment})">삭제</a>|</div>
+                              </c:if>
                               <br/>
                            <div id="precomment${status.count}" style="padding-left: 4%; padding-right: 4%; color:black; word-break:break-all;" >
                               <pre oncontextmenu="return false" ondragstart="return false">${commentvo.comments} </pre>
@@ -233,6 +236,10 @@
                   <button type="button" onclick="javascript:location.href='<%= request.getContextPath() %>/${goBackURL}'">목록 보기</button>
                   <button type="button" onclick="javascript:location.href='<%= request.getContextPath() %>/boardadd.action?fk_seq=${boardvo.seq_board}&groupno=${boardvo.groupno}&depthno=${boardvo.depthno}'">답변쓰기</button>
                   <c:if test="${boardvo.fk_userid == sessionScope.loginuser.userid}">
+                     <button type="button" onClick="javascript:location.href='<%= request.getContextPath() %>/edit.action?seq_board=${boardvo.seq_board}'">수정</button>
+                     <button type="button" onClick="deleteboard();">삭제</button>
+                  </c:if>
+                  <c:if test="${sessionScope.loginuser.userid eq 'admin'}">
                      <button type="button" onClick="javascript:location.href='<%= request.getContextPath() %>/edit.action?seq_board=${boardvo.seq_board}'">수정</button>
                      <button type="button" onClick="deleteboard();">삭제</button>
                   </c:if>

@@ -95,7 +95,7 @@ public class YoonController {
 		json.put("result", result);
 		String str_result = json.toString();
 		
-		System.out.println("str_result : " + str_result);
+	//	System.out.println("str_result : " + str_result);
 		
 		req.setAttribute("str_result", str_result);
 				
@@ -230,7 +230,7 @@ public class YoonController {
 				}
 				
 				try {
-					mail.sendmail(email, certificationCode);
+					mail.sendmail(email, certificationCode, req);
 					req.setAttribute("certificationCode", certificationCode);
 					
 				} catch(Exception e) {
@@ -348,7 +348,7 @@ public class YoonController {
 		HttpSession session = req.getSession();
 		
 		String method = req.getMethod();
-		System.out.println("===> 확인용 memberQuit 의 method : " + method);
+		// System.out.println("===> 확인용 memberQuit 의 method : " + method);
 		
 		req.setAttribute("method", method);
 		
