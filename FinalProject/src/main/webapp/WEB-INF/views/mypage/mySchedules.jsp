@@ -20,25 +20,37 @@
 
 <div align="center" style="padding-top: 200px;">
 	
-	<div align="left" style="width: 90%; display: inline-block; margin-left: 5%; vertical-align: top;">
+	<div align="left" style="width: 90%; display: inline-block; margin-left: 5%;">
 		
-		<c:forEach var="schedules" items="${myschedules}" varStatus="status">
-			
-			<a href="../ScheduleDetail.action?seq=${schedules.seq_schedule}">
-				<button type="button" class="btn_myschedules">
-					<div id="div_myschedules${status.index}" align="center" style="width: 100%; display: inline-block; padding: 1%;">
-						<div style="width: 80%; overflow: hidden;">
-							<img src="/finalproject/resources/images/city/${schedules.imgsrc}" height="300px" />
+		<c:if test="${myschedules != null || !empty myschedules}">
+			<c:forEach var="schedules" items="${myschedules}" varStatus="status">
+				
+				<a href="../ScheduleDetail.action?seq=${schedules.seq_schedule}">
+					<button type="button" class="btn_myschedules">
+						<div id="div_myschedules${status.index}" align="center" style="width: 100%; padding: 1%;">
+							<div style="width: 80%; overflow: hidden;">
+								<img src="/finalproject/resources/images/city/${schedules.imgsrc}" height="300px" />
+							</div>
+							<br/>
+							<span style="font-size: 16pt; font-weight: bold;">${schedules.title}</span><br/>
+							<span style="font-size: 12pt; font-weight: bold;">${schedules.startday}&nbsp;~&nbsp;${schedules.endday}</span><br/>
+							<span style="font-size: 12pt; font-weight: bold;">(${schedules.days}일)</span><br/>	
 						</div>
-						<br/>
-						<span style="font-size: 16pt; font-weight: bold;">${schedules.title}</span><br/>
-						<span style="font-size: 12pt; font-weight: bold;">${schedules.startday}&nbsp;~&nbsp;${schedules.endday}</span><br/>
-						<span style="font-size: 12pt; font-weight: bold;">(${schedules.days}일)</span><br/>	
-					</div>					
-				</button>
-			</a>
-			
-		</c:forEach>
+					</button>
+				</a>
+				
+			</c:forEach>
+		</c:if>
+		
+		<a href="../scheduleAdd.action" style="height: 0%;">
+			<button type="button" class="btn_myschedules" style="height: 445px;">
+				<div id="div_myschedules${status.index}" align="center" style="width: 100%; padding: 10%;">
+					<span style="font-size: 14pt; font-weight: bold; color: red;">일정 추가하기</span>
+					<br/><br/><br/>
+					<img src="<%= request.getContextPath() %>/resources/images/plus.png" width="30%">
+				</div>					
+			</button>
+		</a>
 		
 		<div id="div_myschedules${status.index}" style="display: inline-block; padding: 1%;"  >
 			
