@@ -304,7 +304,7 @@ input[type='checkbox'] {
 		    html += "<span style='font-size: 16px; font-weight: bold; color: black;'>"+title+"</span>";
 		    html += "</div>";
 		    html += "<div style='font-size: 14px; height: 20px; margin-top: 7px;'>";
-		    html += "공백";
+		    html += "";
 		    html += "</div>";
 		    html += "</div>";
 		    html += "<div style=' float:left; width: 60px; height: 53px; margin-left: 15px;'>";
@@ -351,6 +351,9 @@ input[type='checkbox'] {
 			html2 += "</div><hr/><br/>";
 			html2 += "<div id='div_booklist"+cnt+"' style='overflow-x: auto; overflow-y: hidden; white-space: nowrap;'>";
 			html2 += "</div><hr/><br/>";
+			html2 += "<div align='center'>"
+			html2 += "<button type='button' class='btn btn_info' onClick='goSubmit("+cnt+")' data-dismiss='modal' style='font-size: 16pt;'>확인</button>";
+			html2 += "</div>"
 			html2 += "</div>";
 			html2 += "<div id='div_foodoverlay"+cnt+"' class='div_foodoverlay' />";
 			html2 += "</div>";

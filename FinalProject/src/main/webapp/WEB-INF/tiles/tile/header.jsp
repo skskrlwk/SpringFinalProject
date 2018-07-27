@@ -11,8 +11,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/styles/bootstrap4/bootstrap.min.css">
 <link href="<%= request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="<%= request.getContextPath() %>/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-<link href="<%= request.getContextPath() %>/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 <link href="<%= request.getContextPath() %>/resources/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
@@ -20,11 +18,7 @@
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/styles/responsive.css">
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/styles/login_styles.css">
-<script src="<%= request.getContextPath() %>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="<%= request.getContextPath() %>/vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="<%= request.getContextPath() %>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="<%= request.getContextPath() %>/vendor/datatables/jquery.dataTables.js"></script>
-<script src="<%= request.getContextPath() %>/vendor/datatables/dataTables.bootstrap4.js"></script>
+
 <script src="<%= request.getContextPath() %>/resources/js/jquery-3.2.1.min.js"></script>
 <script src="<%= request.getContextPath() %>/resources/styles/bootstrap4/popper.js"></script>
 <script src="<%= request.getContextPath() %>/resources/styles/bootstrap4/bootstrap.min.js"></script>
