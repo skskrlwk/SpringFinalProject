@@ -18,7 +18,6 @@
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/styles/responsive.css">
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/styles/login_styles.css">
-
 <script src="<%= request.getContextPath() %>/resources/js/jquery-3.2.1.min.js"></script>
 <script src="<%= request.getContextPath() %>/resources/styles/bootstrap4/popper.js"></script>
 <script src="<%= request.getContextPath() %>/resources/styles/bootstrap4/bootstrap.min.js"></script>
