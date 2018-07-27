@@ -89,7 +89,7 @@
 		
 		var frm = document.searchFrm;
 		frm.search2.value="2";
-		
+		frm.colname.value="title";
 		frm.search.value = title;
 		frm.action = "<%= request.getContextPath() %>/boardlist.action"; 
 		frm.method = "GET";
